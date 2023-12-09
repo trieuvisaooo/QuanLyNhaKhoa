@@ -10,15 +10,22 @@
     mc:Ignorable="d">
 
     <Grid>
-        <NavigationView IsTitleBarAutoPaddingEnabled="False" AlwaysShowHeader="True" IsBackButtonVisible="Collapsed"
-            Header="Default Header" Margin="0 50 0 0">
+        <NavigationView x:Name="NvgtView" IsTitleBarAutoPaddingEnabled="False"
+                        AlwaysShowHeader="True" IsBackButtonVisible="Collapsed"
+                        Header="Default Header" Margin="0 50 0 0"
+                        IsSettingsVisible="False"
+                        ItemInvoked="NvgtView_ItemInvoked"
+                        SelectionChanged="NvgtView_SelectionChanged"
+                        Background="Transparent"
+                        >
             <NavigationView.MenuItems>
-                <NavigationViewItem Icon="Play" Content="Menu Item1" Tag="SamplePage1" />
-                <NavigationViewItem Icon="Save" Content="Menu Item2" Tag="SamplePage2" />
-                <NavigationViewItem Icon="Refresh" Content="Menu Item3" Tag="SamplePage3" />
-                <NavigationViewItem Icon="Download" Content="Menu Item4" Tag="SamplePage4" />
+                <NavigationViewItem Icon="Calendar" Content="Lịch Hẹn" Tag="1" />
+                <NavigationViewItem Icon="List" Content="Hồ Sơ Bệnh Án" Tag="2" />
             </NavigationView.MenuItems>
-            <Frame x:Name="contentFrame" Margin="20" Padding="55,10,0,0"/>
+            <NavigationView.PaneFooter>
+                <NavigationViewItem Icon="Contact" Content="Đăng Xuất" Tag="SignOut" />
+            </NavigationView.PaneFooter>
+            <Frame x:Name="contentFrame" Margin="20"/>
         </NavigationView>
         <Grid IsHitTestVisible="True"
               VerticalAlignment="Top"
@@ -28,23 +35,18 @@
               Grid.Row="0"
               Background="Transparent"> 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="45"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Button Background="Transparent"
-            BorderThickness="0"
-            VerticalAlignment="Center"
-            Width="36"
-            Height="36"
-            VerticalContentAlignment="Center"
-            Margin="6, 0, 0, 0"
-            Grid.Column="0">
-                <Button.Flyout>
-                    <Flyout>
-                        <TextBlock Style="{ThemeResource  BodyStrongTextBlockStyle}" Text="Hệ QTCSDL"/>
-                    </Flyout>
-                </Button.Flyout>
-                <FontIcon Glyph="&#xE77B;" FontSize="14"/>
+                    BorderThickness="0"
+                    VerticalAlignment="Center"
+                    Width="36"
+                    Height="36"
+                    VerticalContentAlignment="Center"
+                    Margin="6, 0, 0, 0"
+                    Grid.Column="0">
+                <FontIcon Glyph="&#xE946;" FontSize="14"/>
             </Button>
             <Border x:Name="TitleBar"
             Background="Transparent"
@@ -52,7 +54,7 @@
             Grid.Column="1">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <TextBlock x:Name="AppTitle"
-                       Text="English Vocabulary"
+                       Text="Quản Lý Nha Khoa"
                        VerticalAlignment="Center"
                        Margin="5,0,0,0"
                        Style="{StaticResource CaptionTextBlockStyle}"/>

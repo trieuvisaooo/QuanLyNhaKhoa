@@ -13,6 +13,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="MakeAppointmentPage.xaml" />
+    <None Remove="Views\CustomerRecords.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,7 +46,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\" />
+    <Page Update="Views\CustomerRecords.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <!-- 

@@ -7,17 +7,27 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="Transparent">
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         <StackPanel Orientation="Vertical"
                 Padding="20"
                 HorizontalAlignment="Center"
+                VerticalAlignment="Stretch">
+           
+        </StackPanel>
+        <StackPanel Grid.Row="1"
+                Orientation="Horizontal"
+                HorizontalAlignment="Right"
                 VerticalAlignment="Center">
-            <Button x:Name="myButton"
+            <Button x:Name="SetAppointment"
                 Click="myButton_Click"
-                Margin="0 0 0 20">Click Me Senpai</Button>
-            <CheckBox Content="Two-state CheckBox"/>
+                Style="{StaticResource AccentButtonStyle}"
+                Margin="0 0 0 8">Đăng Ký Lịch Hẹn</Button>
         </StackPanel>
     </Grid>
 </Page>

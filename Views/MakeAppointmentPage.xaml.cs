@@ -19,7 +19,7 @@ namespace QuanLyNhaKhoa.Views
 
         private void myButton_Click(object sender, RoutedEventArgs e)
         {
-            myButton.Content = "Clicked";
+            SetAppointment.Content = "Clicked";
         }
     }
 }
