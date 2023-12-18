@@ -6,6 +6,8 @@
     xmlns:local="using:QuanLyNhaKhoa"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="using:QuanLyNhaKhoa.ViewModels"
+    d:DataContext="{d:DesignInstance Type=viewmodels:AppointmentCustomerViewModel}"
     mc:Ignorable="d"
     Background="Transparent">
 
@@ -14,11 +16,21 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Vertical"
+        <StackPanel Orientation="Horizontal"
                 Padding="20"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Stretch">
-           
+                VerticalAlignment="Center">
+            <ListView ItemsSource="{Binding}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="10">
+                            <TextBlock Text="{Binding Id}" Style="{StaticResource BodyTextBlockStyle}"/>
+                            <TextBlock Text="{Binding Name}" Style="{StaticResource BodyStrongTextBlockStyle}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
         </StackPanel>
         <StackPanel Grid.Row="1"
                 Orientation="Horizontal"
