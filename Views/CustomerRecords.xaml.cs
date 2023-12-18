@@ -27,5 +27,10 @@ namespace QuanLyNhaKhoa.Views
         {
             this.InitializeComponent();
         }
+
+        private void ViewInvoice_Click(object sender, RoutedEventArgs e)
+        {
+            ViewInvoice.Content = "Clicked";
+        }
     }
 }
