@@ -10,11 +10,16 @@ using Windows.UI;
 
 namespace QuanLyNhaKhoa
 {
+
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
     public partial class App : Application
     {
+        //conect to db in sql server
+        //private string connectionString = @"Data Source=LAPTOP-QHS1R0BJ;Initial Catalog=QLPK;Integrated Security=True;Trust Server Certificate=True";
+        //public string ConnectionString { get => connectionString; set => connectionString = value; }
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -32,8 +37,10 @@ namespace QuanLyNhaKhoa
         {
             //Window _mWindow = new MainWindow();
             //_mWindow.Activate();
-            Window mainWindow = new MainWindow();
-            mainWindow.Activate();
+            //Window mainWindow = new MainWindow();
+            //mainWindow.Activate();
+            Window CusWindow = new CustomerWindow();
+            CusWindow.Activate();
         }
 
         public static bool SetTitleBarColors(Window window)
