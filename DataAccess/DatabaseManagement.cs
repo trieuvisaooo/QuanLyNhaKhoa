@@ -1,10 +1,8 @@
 ﻿using Microsoft.Win32;
 using QuanLyNhaKhoa.Models;
 using System;
-using System.Management;
 using System.Data.SqlClient;
 using System.Diagnostics;
-using System.Data;
 
 namespace QuanLyNhaKhoa.DataAccess
 {
@@ -16,33 +14,36 @@ namespace QuanLyNhaKhoa.DataAccess
 
         public DatabaseManagement()
         {
-            GetServerName();
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-
-                    connection.Open();
-                    // Check if the database exists
-                    if (!DatabaseExists(connection, databaseName))
-                    {
-                        // If not, create the database
-                        CreateDatabase(connection, databaseName);
-                        Debug.WriteLine($"Database '{databaseName}' created successfully.");
-                        connection.Close();
-                    }
-                    else
-                    {
-                        Debug.WriteLine($"Database '{databaseName}' already exists.");
-                        connection.Close();
-                    }
-                    Reconnect();
-
-                }
+                TryConnection();
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Error: {ex.Message}");
+            }
+        }
+
+        public static void TryConnection()
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    Debug.WriteLine($"Successfully connected to '{serverName}'.");
+                    // Continue with additional operations if needed
+                    connection.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Connection error: {ex.Message}");
+                if (serverName == "localhost")
+                {
+                    GetServerName();
+                }
+                TryConnection();
             }
         }
         public static void GetServerName()
@@ -57,8 +58,8 @@ namespace QuanLyNhaKhoa.DataAccess
                     foreach (var instanceName in instanceKey.GetValueNames())
                     {
                         Debug.WriteLine("HELLO: " + serverName + "\\" + instanceName);
-                        serverName = serverName + "\\" + instanceName;
-                        connectionString = $"Data Source={serverName};Integrated Security=True";
+                        serverName = serverName + instanceName;
+                        connectionString = $"Data Source={serverName}; Integrated Security=True";
                         break;
                     }
                 }
