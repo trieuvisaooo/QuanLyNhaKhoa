@@ -2,7 +2,8 @@
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
-using System.Data.SqlClient;
+using QuanLyNhaKhoa.DataAccess;
+using QuanLyNhaKhoa.Views;
 using Windows.Graphics;
 using Windows.UI;
 
@@ -20,6 +21,20 @@ namespace QuanLyNhaKhoa
         //conect to db in sql server
         private string connectionString = @"Data Source=localhost;Initial Catalog=QLPK;Integrated Security=True";
         public string ConnectionString { get => connectionString; set => connectionString = value; }
+        private Interfaces.Account _currentAccount;
+        private DatabaseManagement _databaseManagement;
+
+        public Interfaces.Account CurrentAccount
+        {
+            get
+            {
+                return _currentAccount;
+            }
+            set
+            {
+
+            }
+        }
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -28,6 +43,7 @@ namespace QuanLyNhaKhoa
         public App()
         {
             this.InitializeComponent();
+            this._databaseManagement = new DatabaseManagement();
         }
 
         /// <summary>
@@ -40,8 +56,10 @@ namespace QuanLyNhaKhoa
             //_mWindow.Activate();
             //Window mainWindow = new MainWindow();
             //mainWindow.Activate();
-            Window CusWindow = new CustomerWindow();
-            CusWindow.Activate();
+            //Window CusWindow = new CustomerWindow();
+            //CusWindow.Activate();
+            Window _loginWindow = new LogInWindow();
+            _loginWindow.Activate();
         }
 
         public static bool SetTitleBarColors(Window window)

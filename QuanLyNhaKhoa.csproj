@@ -18,6 +18,7 @@
     <None Remove="Views\CustomerInfo.xaml" />
     <None Remove="Views\CustomerMakeAppointment.xaml" />
     <None Remove="Views\CustomerRecords.xaml" />
+    <None Remove="Views\LogInWindow.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,6 +45,11 @@
   -->
   <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <ProjectCapability Include="Msix" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\LogInWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\CustomerMakeAppointment.xaml">
@@ -74,6 +80,10 @@
     <Page Update="Views\CustomerRecords.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Windows\" />
+    <Folder Include="Views\Pages\" />
   </ItemGroup>
 
   <!-- 
