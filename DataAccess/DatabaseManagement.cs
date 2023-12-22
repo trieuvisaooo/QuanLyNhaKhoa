@@ -1,18 +1,22 @@
-﻿using QuanLyNhaKhoa.Models;
+﻿using Microsoft.Win32;
+using QuanLyNhaKhoa.Models;
 using System;
+using System.Management;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Data;
 
 namespace QuanLyNhaKhoa.DataAccess
 {
     public class DatabaseManagement
     {
-        private static string serverName = "localhost\\SQLEXPRESS";
+        private static string serverName = "localhost";
         private static string databaseName = "QLPK";
         private static string connectionString = $"Data Source={serverName};Integrated Security=True";
 
         public DatabaseManagement()
         {
+            GetServerName();
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
@@ -39,6 +43,24 @@ namespace QuanLyNhaKhoa.DataAccess
             catch (Exception ex)
             {
                 Debug.WriteLine($"Error: {ex.Message}");
+            }
+        }
+        public static void GetServerName()
+        {
+            serverName = Environment.MachineName;
+            RegistryView registryView = Environment.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Registry32;
+            using (RegistryKey hklm = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, registryView))
+            {
+                RegistryKey instanceKey = hklm.OpenSubKey(@"SOFTWARE\Microsoft\Microsoft SQL Server\Instance Names\SQL", false);
+                if (instanceKey != null)
+                {
+                    foreach (var instanceName in instanceKey.GetValueNames())
+                    {
+                        Debug.WriteLine("HELLO: " + serverName + "\\" + instanceName);
+                        serverName = serverName + "\\" + instanceName;
+                        break;
+                    }
+                }
             }
         }
 
