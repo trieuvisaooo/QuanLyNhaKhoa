@@ -7,7 +7,7 @@ namespace QuanLyNhaKhoa.DataAccess
 {
     public class DatabaseManagement
     {
-        private static string serverName = "localHost";
+        private static string serverName = "localhost\\SQLEXPRESS";
         private static string databaseName = "QLPK";
         private static string connectionString = $"Data Source={serverName};Integrated Security=True";
 
