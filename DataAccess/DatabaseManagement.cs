@@ -5,6 +5,7 @@ using System.Management;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Data;
+using System.IO;
 
 namespace QuanLyNhaKhoa.DataAccess
 {
@@ -34,6 +35,10 @@ namespace QuanLyNhaKhoa.DataAccess
                     else
                     {
                         Debug.WriteLine($"Database '{databaseName}' already exists.");
+                        using (SqlCommand command = new SqlCommand("DROP DATABASE [QLPK]", connection))
+                        {
+                            command.ExecuteNonQuery();
+                        }
                         connection.Close();
                     }
                     Reconnect();
@@ -99,7 +104,8 @@ namespace QuanLyNhaKhoa.DataAccess
 
         static void CreateDatabase(SqlConnection connection, string databaseName)
         {
-            string createDatabaseQuery = $"CREATE DATABASE {databaseName}";
+            string sqlFilePath = "ms-appx:///DataAccess/gendata1512.sql";
+            string createDatabaseQuery = File.ReadAllText(sqlFilePath);
 
             using (SqlCommand command = new SqlCommand(createDatabaseQuery, connection))
             {
