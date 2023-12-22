@@ -58,6 +58,7 @@ namespace QuanLyNhaKhoa.DataAccess
                     {
                         Debug.WriteLine("HELLO: " + serverName + "\\" + instanceName);
                         serverName = serverName + "\\" + instanceName;
+                        connectionString = $"Data Source={serverName};Integrated Security=True";
                         break;
                     }
                 }
