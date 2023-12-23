@@ -9,8 +9,9 @@ namespace QuanLyNhaKhoa.DataAccess
     public class DatabaseManagement
     {
         private static string serverName = "localhost";
+        private static string connectionName = "localhost";
         private static string databaseName = "QLPK";
-        private static string connectionString = $"Data Source={serverName};Integrated Security=True";
+        private static string connectionString = $"Data Source={connectionName};Integrated Security=True";
 
         public DatabaseManagement()
         {
@@ -24,26 +25,36 @@ namespace QuanLyNhaKhoa.DataAccess
             }
         }
 
-        public static void TryConnection()
+        public void TryConnection()
         {
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
+                    Debug.WriteLine($"Attempting to connect to '{connectionName}'...");
                     connection.Open();
-                    Debug.WriteLine($"Successfully connected to '{serverName}'.");
-                    // Continue with additional operations if needed
+                    if (!DatabaseExists(connection, databaseName))
+                    {
+                        // If not, create the database
+                        CreateDatabase(connection, databaseName);
+                        Debug.WriteLine($"Database '{databaseName}' created successfully.");
+                    }
+                    else
+                    {
+                        Debug.WriteLine($"Database '{databaseName}' already exists.");
+                    }
                     connection.Close();
+                    Reconnect();
                 }
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Connection error: {ex.Message}");
+                Debug.WriteLine($"\nConnection error: {ex.Message} with serverName {connectionName}.\n");
                 if (serverName == "localhost")
                 {
                     GetServerName();
+                    TryConnection();
                 }
-                TryConnection();
             }
         }
         public static void GetServerName()
@@ -58,9 +69,8 @@ namespace QuanLyNhaKhoa.DataAccess
                     foreach (var instanceName in instanceKey.GetValueNames())
                     {
                         Debug.WriteLine("HELLO: " + serverName + "\\" + instanceName);
-                        serverName = serverName + instanceName;
-                        connectionString = $"Data Source={serverName}; Integrated Security=True";
-                        break;
+                        connectionName = serverName + "\\" + instanceName;
+                        connectionString = $"Data Source={connectionName}; Integrated Security=True";
                     }
                 }
             }
@@ -69,7 +79,7 @@ namespace QuanLyNhaKhoa.DataAccess
         private void Reconnect()
         {
             // Attempt to reconnect using the new database
-            string newConnectionString = $"Data Source={serverName};Initial Catalog={databaseName};Integrated Security=True";
+            string newConnectionString = $"Data Source={connectionName};Initial Catalog={databaseName};Integrated Security=True";
 
             try
             {
@@ -100,9 +110,20 @@ namespace QuanLyNhaKhoa.DataAccess
 
         static void CreateDatabase(SqlConnection connection, string databaseName)
         {
+            // create a blank database of the same names
             string createDatabaseQuery = $"CREATE DATABASE {databaseName}";
 
             using (SqlCommand command = new SqlCommand(createDatabaseQuery, connection))
+            {
+                command.ExecuteNonQuery();
+            }
+        }
+
+        static void DropDatabase(SqlConnection connection, string databaseName)
+        {
+            string dropDatabaseQuery = $"DROP DATABASE {databaseName}";
+
+            using (SqlCommand command = new SqlCommand(dropDatabaseQuery, connection))
             {
                 command.ExecuteNonQuery();
             }
