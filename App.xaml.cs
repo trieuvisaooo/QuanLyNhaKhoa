@@ -18,7 +18,7 @@ namespace QuanLyNhaKhoa
     public partial class App : Application
     {
         //conect to db in sql server
-        private string connectionString = @"Data Source=localhost;Initial Catalog=QLPK;Integrated Security=True";
+        private string connectionString = @"Data Source=DESKTOP-3TQQ5PF\MSSQLSERVER01;Initial Catalog=QLPK;Integrated Security=True";
         public string ConnectionString { get => connectionString; set => connectionString = value; }
 
         /// <summary>
@@ -40,8 +40,10 @@ namespace QuanLyNhaKhoa
             //_mWindow.Activate();
             //Window mainWindow = new MainWindow();
             //mainWindow.Activate();
-            Window CusWindow = new CustomerWindow();
-            CusWindow.Activate();
+            /*            Window CusWindow = new CustomerWindow();
+                        CusWindow.Activate();*/
+            Window staffWindow = new StaffWindow();
+            staffWindow.Activate();
         }
 
         public static bool SetTitleBarColors(Window window)
