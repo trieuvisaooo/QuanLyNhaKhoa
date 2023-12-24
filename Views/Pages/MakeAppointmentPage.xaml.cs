@@ -30,6 +30,7 @@ namespace QuanLyNhaKhoa.Views
         private void myButton_Click(object sender, RoutedEventArgs e)
         {
             SetAppointment.Content = "Clicked";
+            appointmentCustomerViewModels[0].Name = "Vân Duy Quang Khùng";
         }
     }
 }
