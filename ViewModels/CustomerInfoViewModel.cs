@@ -72,7 +72,7 @@ namespace QuanLyNhaKhoa.Models
 
         public CustomerInfoViewModel GetCustomerInfo(string connectionString, CustomerInfoViewModel customerInfo)
         {
-            string CusID = "KH0002";
+            string CusID = "KH0001";
             string GetCustomerInfoQuery = "select MAKH, HOTEN, NGAYSINH, SDT, DIACHI from KHACH_HANG " +
                                                 "where MAKH = " + "'" + CusID + "'";
 
@@ -96,6 +96,7 @@ namespace QuanLyNhaKhoa.Models
                                     customerInfo.CusName = reader.GetString(1);
                                     DateTime date = reader.GetDateTime(2);
                                     customerInfo.DateOfBirth = DateOnly.FromDateTime(date);
+                                    //customerInfo.DateOfBirth = reader.GetDateTime(2);
                                     customerInfo.PhoneNum = reader.GetString(3);
                                     customerInfo.Addr = reader.GetString(4);
                                 }

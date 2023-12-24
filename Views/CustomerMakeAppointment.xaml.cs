@@ -79,11 +79,12 @@ namespace QuanLyNhaKhoa.Views
         private async void makeAppointment_Click(object sender, RoutedEventArgs e)
         {
             var builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "LAPTOP-QHS1R0BJ";
+            builder.DataSource = @".\SQLSERVER";
             builder.InitialCatalog = "QLPK";
             builder.IntegratedSecurity = true;
             string connectionString = builder.ConnectionString;
             SqlConnection con = new SqlConnection(@connectionString);
+            Debug.WriteLine(@connectionString);
             //string appointID = "LH5555";
             string denName = (string)DenList.SelectedValue;
             try

@@ -14,6 +14,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -48,7 +49,7 @@ namespace QuanLyNhaKhoa.Views
             {
                 con.Open();
 
-                string update_statement = "UPDATE KHACH_HANG SET SDT = '" + phoneNum + "', DIACHI = N'" + address + "' WHERE MAKH = '" + customerInfo.CusID + "'";
+                string update_statement = "UPDATE KHACH_HANG SET SDT = '" + phoneNum + "', DIACHI = N'" + address + "', NGAYSINH = '" + ModifyDateOfBirth.Date + "' WHERE MAKH = '" + customerInfo.CusID + "'";
                 Debug.WriteLine(update_statement);
                 SqlCommand cmnd = new SqlCommand(update_statement, con);
                 cmnd.ExecuteNonQuery();
@@ -84,7 +85,13 @@ namespace QuanLyNhaKhoa.Views
         private void modify_Click(object sender, RoutedEventArgs e)
         {
             Modify.Visibility = Visibility.Collapsed;
-            DateOfBirth.Background.Opacity = 0;
+            DateOfBirth.Visibility = Visibility.Collapsed;
+            ModifyDateOfBirth.Visibility = Visibility.Visible;
+            //DateTime datetime = DateTime;
+            //ModifyDateOfBirth.Date = customerInfo.DateOfBirth.Date;
+            DateTime dateTime = customerInfo.DateOfBirth.ToDateTime(TimeOnly.MinValue);
+            ModifyDateOfBirth.Date = dateTime;
+            DateRow.Spacing = 15;
             //DateOfBirth.IsReadOnly = false;
             PhoneNum.IsReadOnly = false;
             Addr.IsReadOnly = false;
@@ -93,18 +100,17 @@ namespace QuanLyNhaKhoa.Views
 
         private void save_Click(object sender, RoutedEventArgs e)
         {
-            Modify.Visibility = Visibility.Visible;
-            //DateOfBirth.IsReadOnly = true;
-            PhoneNum.IsReadOnly = true;
-            Addr.IsReadOnly = true;
-            SaveAndCancel.Visibility = Visibility.Collapsed;
             modifyInfo(sender, e, (App.Current as App).ConnectionString);
+            this.Frame.Navigate(typeof(CustomerInfo));
+
         }
 
         private void cancel_Click(object sender, RoutedEventArgs e)
         {
             Modify.Visibility= Visibility.Visible;
-            //DateOfBirth.IsReadOnly = true;
+            DateRow.Spacing = 30;
+            DateOfBirth.Visibility = Visibility.Visible;
+            ModifyDateOfBirth.Visibility = Visibility.Collapsed;
             PhoneNum.IsReadOnly = true;
             Addr.IsReadOnly = true;
             SaveAndCancel.Visibility= Visibility.Collapsed;

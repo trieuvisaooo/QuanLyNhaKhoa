@@ -40,13 +40,17 @@
                          Text="{x:Bind customerInfo.CusName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal" Spacing="30">
+            <StackPanel Name="DateRow" Orientation="Horizontal" Spacing="30">
                 <TextBlock Text="Ngày sinh: " Width="100"/>
                 <TextBox x:Name="DateOfBirth"
                          AutomationProperties.Name="simple TextBox"
                          IsReadOnly="True"
                          Width="200" Height="30"
                          Text="{x:Bind customerInfo.DateOfBirth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <CalendarDatePicker Name="ModifyDateOfBirth"
+                                    Width="200" Height="30"
+                                    Visibility="Collapsed"
+                                    DateFormat="{}{day.integer}/{month.integer}/{year.full}"/> 
             </StackPanel>
 
             <StackPanel  Orientation="Horizontal" Spacing="30">
@@ -88,7 +92,7 @@
                     Spacing="10"
                     Margin="0 5 0 0"
                     Visibility="Collapsed">
-            <TextBlock FontStyle="Italic" Text="Note: Khách hàng chỉ được sửa số điện thoại và địa chỉ."/>
+            <TextBlock FontStyle="Italic" Text="Note: Khách hàng chỉ được sửa ngày sinh, số điện thoại và địa chỉ."/>
             <StackPanel x:Name="SaveAndCancel_Btn"
                     Grid.Row="1"
                     Orientation="Horizontal"

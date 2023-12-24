@@ -3,6 +3,7 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using Windows.Graphics;
 using Windows.UI;
 
@@ -18,7 +19,7 @@ namespace QuanLyNhaKhoa
     public partial class App : Application
     {
         //conect to db in sql server
-        private string connectionString = @"Data Source=localhost;Initial Catalog=QLPK;Integrated Security=True";
+        private string connectionString = @"Data Source=.\SQLSERVER;Initial Catalog=QLPK;Integrated Security=True";
         public string ConnectionString { get => connectionString; set => connectionString = value; }
 
         /// <summary>
