@@ -3,6 +3,8 @@ using QuanLyNhaKhoa.Models;
 using System;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.IO;
+using System.Reflection;
 
 namespace QuanLyNhaKhoa.DataAccess
 {
@@ -10,8 +12,8 @@ namespace QuanLyNhaKhoa.DataAccess
     {
         private static string serverName = "localhost";
         private static string connectionName = "localhost";
-        private static string databaseName = "QLPK";
-        private static string connectionString = $"Data Source={connectionName};Integrated Security=True";
+        private static string databaseName = "BOOKSTORE";
+        private static string connectionString = $"Data Source={connectionName};Integrated Security=True;TrustServerCertificate=True;Connect Timeout=2;";
 
         public DatabaseManagement()
         {
@@ -41,10 +43,13 @@ namespace QuanLyNhaKhoa.DataAccess
                     }
                     else
                     {
+                        DropDatabase(connection, databaseName);
+                        CreateDatabase(connection, databaseName);
                         Debug.WriteLine($"Database '{databaseName}' already exists.");
                     }
-                    connection.Close();
                     Reconnect();
+                    connection.Close();
+                    //Reconnect();
                 }
             }
             catch (Exception ex)
@@ -70,7 +75,7 @@ namespace QuanLyNhaKhoa.DataAccess
                     {
                         Debug.WriteLine("HELLO: " + serverName + "\\" + instanceName);
                         connectionName = serverName + "\\" + instanceName;
-                        connectionString = $"Data Source={connectionName}; Integrated Security=True";
+                        connectionString = $"Data Source={connectionName};Integrated Security=True;TrustServerCertificate=True;Connect Timeout=2;";
                     }
                 }
             }
@@ -79,11 +84,11 @@ namespace QuanLyNhaKhoa.DataAccess
         private void Reconnect()
         {
             // Attempt to reconnect using the new database
-            string newConnectionString = $"Data Source={connectionName};Initial Catalog={databaseName};Integrated Security=True";
+            connectionString = $"Data Source={connectionName};Initial Catalog={databaseName};Integrated Security=True;TrustServerCertificate=True;Connect Timeout=2;";
 
             try
             {
-                using (SqlConnection newConnection = new SqlConnection(newConnectionString))
+                using (SqlConnection newConnection = new SqlConnection(connectionString))
                 {
                     newConnection.Open();
                     Debug.WriteLine($"Successfully reconnected to '{databaseName}'.");
@@ -97,7 +102,7 @@ namespace QuanLyNhaKhoa.DataAccess
             }
         }
 
-        static bool DatabaseExists(SqlConnection connection, string databaseName)
+        bool DatabaseExists(SqlConnection connection, string databaseName)
         {
             string query = $"SELECT COUNT(*) FROM sys.databases WHERE name = '{databaseName}'";
 
@@ -108,18 +113,61 @@ namespace QuanLyNhaKhoa.DataAccess
             }
         }
 
-        static void CreateDatabase(SqlConnection connection, string databaseName)
+        void CreateDatabase(SqlConnection connection, string databaseName)
         {
-            // create a blank database of the same names
-            string createDatabaseQuery = $"CREATE DATABASE {databaseName}";
-
-            using (SqlCommand command = new SqlCommand(createDatabaseQuery, connection))
+            try
             {
-                command.ExecuteNonQuery();
+                // create database
+                string createDatabaseQuery = $"CREATE DATABASE {databaseName}";
+
+                using (connection)
+                {
+                    using (SqlCommand command = new SqlCommand(createDatabaseQuery, connection))
+                    {
+                        command.ExecuteNonQuery();
+                        Debug.WriteLine("Create Database executed successfully. Now creating tables.");
+                        CreateTable(connection, databaseName);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error executing script: {ex.Message}");
+            }
+
+        }
+
+        void CreateTable(SqlConnection connection, string databaseName)
+        {
+            try
+            {
+                Assembly ass = Assembly.GetEntryAssembly();
+                string dir = Path.GetDirectoryName(ass.Location);
+                Debug.WriteLine("dis is: " + dir);
+                string script = File.ReadAllText(Path.Combine(dir, "DataAccess/database.sql"));
+                Debug.WriteLine(script.Substring(0, 100));
+
+                using (SqlConnection tableConnection = new SqlConnection(connectionString + $"Initial Catalog={databaseName}"))
+                {
+                    tableConnection.Open(); // Open the connection explicitly for the table creation
+
+                    using (SqlCommand command = new SqlCommand(script, tableConnection))
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                    tableConnection.Close();
+                }
+
+                Debug.WriteLine("Script for tables executed successfully.");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error executing script: {ex.Message}");
             }
         }
 
-        static void DropDatabase(SqlConnection connection, string databaseName)
+        void DropDatabase(SqlConnection connection, string databaseName)
         {
             string dropDatabaseQuery = $"DROP DATABASE {databaseName}";
 
