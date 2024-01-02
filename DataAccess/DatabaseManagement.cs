@@ -32,6 +32,7 @@ namespace QuanLyNhaKhoa.DataAccess
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     Debug.WriteLine($"Attempting to connect to '{connectionName}'...");
+                    // set the timer for the command below before throwing some exception to terminate it
                     connection.Open();
                     if (!DatabaseExists(connection, databaseName))
                     {
