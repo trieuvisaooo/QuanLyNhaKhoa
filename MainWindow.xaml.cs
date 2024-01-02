@@ -14,8 +14,8 @@ namespace QuanLyNhaKhoa
         public MainWindow()
         {
             this.InitializeComponent();
-            App.SetTitleBarColors(this);
             this.AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
+            App.SetTitleBarColors(this);
             this.SetTitleBar(TitleBar);
             contentFrame.CacheSize = 4;
             NvgtView.SelectedItem = NvgtView.MenuItems[0];

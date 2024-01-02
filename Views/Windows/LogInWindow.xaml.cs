@@ -15,8 +15,8 @@ namespace QuanLyNhaKhoa.Views
         public LogInWindow()
         {
             this.InitializeComponent();
-            App.SetTitleBarColors(this);
             this.AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
+            App.SetTitleBarColors(this);
             this.SetTitleBar(TitleBar);
         }
 
