@@ -12,7 +12,7 @@ namespace QuanLyNhaKhoa.DataAccess
     {
         private static string serverName = "localhost";
         private static string connectionName = "localhost";
-        private static string databaseName = "BOOKSTORE";
+        private static string databaseName = "QLPK";
         private static string connectionString = $"Data Source={connectionName};Integrated Security=True;TrustServerCertificate=True;Connect Timeout=2;";
 
         public DatabaseManagement()
