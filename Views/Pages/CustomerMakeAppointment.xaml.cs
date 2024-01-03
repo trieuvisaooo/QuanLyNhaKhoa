@@ -76,16 +76,51 @@ namespace QuanLyNhaKhoa.Views
 
 
 
+        //public List<string> getDentists(string connectionString)
+        //{
+        //    string getDenListQuery = "select HOTEN from NHA_SI";
+
+        //    try
+        //    {
+        //        using (var conn = new SqlConnection(connectionString))
+        //        {
+        //            conn.Open();
+        //            if (conn.State == System.Data.ConnectionState.Open)
+        //            {
+        //                using (SqlCommand cmd = conn.CreateCommand())
+        //                {
+        //                    cmd.CommandText = getDenListQuery;
+        //                    using (SqlDataReader reader = cmd.ExecuteReader())
+        //                    {
+        //                        while (reader.Read())
+        //                        {
+        //                            DenNameList.Add(reader.GetString(0));
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        return DenNameList;
+        //    }
+        //    catch (Exception eSql)
+        //    {
+        //        Debug.WriteLine($"Exception: {eSql.Message}");
+        //    }
+        //    return null;
+        //}
+
+
+
         private async void makeAppointment_Click(object sender, RoutedEventArgs e)
         {
-            var builder = new SqlConnectionStringBuilder();
-            builder.DataSource = @".\SQLSERVER";
-            builder.InitialCatalog = "QLPK";
-            builder.IntegratedSecurity = true;
-            string connectionString = builder.ConnectionString;
+            //var builder = new SqlConnectionStringBuilder();
+            //builder.DataSource = @".\SQLSERVER";
+            //builder.InitialCatalog = "QLPK";
+            //builder.IntegratedSecurity = true;
+            //string connectionString = builder.ConnectionString;
+            string connectionString = (App.Current as App).ConnectionString;
             SqlConnection con = new SqlConnection(@connectionString);
             Debug.WriteLine(@connectionString);
-            //string appointID = "LH5555";
             string denName = (string)DenList.SelectedValue;
             try
             {

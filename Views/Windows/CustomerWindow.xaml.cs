@@ -1,4 +1,5 @@
 ﻿using Microsoft.UI.Xaml;
+using QuanLyNhaKhoa.Models;
 using QuanLyNhaKhoa.Views;
 
 
@@ -22,6 +23,8 @@ namespace QuanLyNhaKhoa
             NvgtView.SelectedItem = NvgtView.MenuItems[0];
             FrameInflate(0);
         }
+
+        public CustomerAccount customer = new CustomerAccount();
 
         private void FrameInflate(int index)
         {

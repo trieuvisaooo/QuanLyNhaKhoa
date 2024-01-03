@@ -31,9 +31,6 @@
                     VerticalAlignment="Center"
                     Spacing="10">
             <TextBlock Text="Chọn nha sĩ: "/>
-            <!--<TextBox Name="DenID" 
-                     AutomationProperties.Name="simple TextBox"
-                     Width="200" Height="30"/>-->
             <ComboBox Name="DenList" IsEditable="True" Width="200" />
         </StackPanel>
 

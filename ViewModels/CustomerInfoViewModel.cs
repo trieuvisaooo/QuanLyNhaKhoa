@@ -1,14 +1,7 @@
-﻿using QuanLyNhaKhoa.ViewModels;
-using QuanLyNhaKhoa.Views;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System;
 using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QuanLyNhaKhoa.Models
 {
@@ -78,7 +71,7 @@ namespace QuanLyNhaKhoa.Models
 
             try
             {
-                using (var conn = new SqlConnection(connectionString))
+                using (var conn = new SqlConnection(@connectionString))
                 {
                     conn.Open();
                     if (conn.State == System.Data.ConnectionState.Open)
@@ -96,7 +89,6 @@ namespace QuanLyNhaKhoa.Models
                                     customerInfo.CusName = reader.GetString(1);
                                     DateTime date = reader.GetDateTime(2);
                                     customerInfo.DateOfBirth = DateOnly.FromDateTime(date);
-                                    //customerInfo.DateOfBirth = reader.GetDateTime(2);
                                     customerInfo.PhoneNum = reader.GetString(3);
                                     customerInfo.Addr = reader.GetString(4);
                                 }
