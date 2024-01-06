@@ -13,6 +13,7 @@ namespace QuanLyNhaKhoa.ViewModels
     public class CustomerRecordViewModel : INotifyPropertyChanged
     {
         private string _recordID;
+        private string _cusID;
         private string _denID;
         private string _denName;
         private string _description;
@@ -21,11 +22,42 @@ namespace QuanLyNhaKhoa.ViewModels
         //private ObservableCollection<Medicine> _medicine = new ObservableCollection<Medicine>();
         private List<Medicine> _medicines = new List<Medicine>();
         private List<Service> _services = new List<Service>();
-        
+
+        public CustomerRecordViewModel()
+        {
+
+        }
+
+        public CustomerRecordViewModel(string recordID)
+        {
+            _recordID = recordID;
+        }
+
 
         public string RecordID
         {
-            get; set;
+            get
+            {
+                return _recordID;
+            }
+            set
+            {
+                _recordID = value;
+                NotifyPropertyChanged(nameof(_recordID));
+            }
+        }
+
+        public string CusID
+        {
+            get
+            {
+                return _cusID;
+            }
+            set
+            {
+                _cusID = value;
+                NotifyPropertyChanged(nameof(_cusID));
+            }
         }
         public string DenID
         {
@@ -164,88 +196,134 @@ namespace QuanLyNhaKhoa.ViewModels
             return null;
         }
 
-        public void GetMedicine(string connectionString, ObservableCollection<CustomerRecordViewModel> records)
+        public ObservableCollection<CustomerRecordViewModel> GetRecordsByDenName(string connectionString, string cusID, string denName)
         {
+            //string CusID = "KH0002";
+            string getRecordQuery = "SELECT BA.MABA, NS.MANS, NS.HOTEN, BA.MOTA, BA.NGAYKHAM, HD.TONGTIEN FROM BENH_AN BA JOIN NHA_SI NS ON BA.NHASITHUCHIEN = NS.MANS " +
+                                    " JOIN HOA_DON HD ON HD.MABA = BA.MABA " +
+                                    "WHERE BA.MAKH = " + "'" + cusID + "' AND NS.HOTEN = N" + "'" + denName + "'";
 
-            foreach (var item in records)
+
+
+            var records = new ObservableCollection<CustomerRecordViewModel>();
+            try
             {
-                string getMedicineQuery = "SELECT T.MATHUOC, T.TENTHUOC, CTDT.SOLUONG, T.DONVITINH FROM CT_DON_THUOC CTDT JOIN THUOC T ON CTDT.MATHUOC = T.MATHUOC WHERE CTDT.MABA = " +
-                                            "'" + item.RecordID + "'";
-
-                try
+                using (var conn = new SqlConnection(connectionString))
                 {
-                    using (var conn = new SqlConnection(connectionString))
+                    conn.Open();
+                    if (conn.State == System.Data.ConnectionState.Open)
                     {
-                        conn.Open();
-                        if (conn.State == System.Data.ConnectionState.Open)
+                        using (SqlCommand cmd = conn.CreateCommand())
                         {
-                            using (SqlCommand cmd = conn.CreateCommand())
+                            cmd.CommandText = getRecordQuery;
+                            using (SqlDataReader reader = cmd.ExecuteReader())
                             {
-                                cmd.CommandText = getMedicineQuery;
-                                using (SqlDataReader reader = cmd.ExecuteReader())
+                                while (reader.Read())
                                 {
-                                    while (reader.Read())
-                                    {
-                                        var medicine = new Medicine();
-                                        medicine.MedicineId = reader.GetString(0);
-                                        medicine.MedicineName = reader.GetString(1);
-                                        medicine.MedicineQuantity = reader.GetInt32(2);
-                                        medicine.MedicineUnit = reader.GetString(3);
-                                        item.Medicines.Add(medicine);
-                                    }
+                                    var CustomerRecord = new CustomerRecordViewModel();
+                                    CustomerRecord.RecordID = reader.GetString(0);
+                                    CustomerRecord.DenID = reader.GetString(1);
+                                    CustomerRecord.DenName = reader.GetString(2);
+                                    CustomerRecord.Description = reader.GetString(3);
+                                    DateTime date = reader.GetDateTime(4);
+                                    CustomerRecord.RecordDate = DateOnly.FromDateTime(date);
+                                    CustomerRecord.TotalCost = reader.GetInt32(5);
+
+                                    records.Add(CustomerRecord);
                                 }
                             }
                         }
                     }
                 }
-                catch (Exception eSql)
-                {
-                    Debug.WriteLine($"Exception: {eSql.Message}");
-                }
-
+                return records;
             }
+            catch (Exception eSql)
+            {
+                Debug.WriteLine($"Exception: {eSql.Message}");
+            }
+            return null;
+        }
+
+        public List<Medicine> GetMedicine(string connectionString)
+        {
+            this.Medicines.Clear();
+            string getMedicineQuery = "SELECT T.MATHUOC, T.TENTHUOC, CTDT.SOLUONG, T.DONVITINH, T.DONGIA FROM CT_DON_THUOC CTDT JOIN THUOC T ON CTDT.MATHUOC = T.MATHUOC WHERE CTDT.MABA = " +
+                                        "'" + this.RecordID + "'";
+
+            try
+            {
+                using (var conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    if (conn.State == System.Data.ConnectionState.Open)
+                    {
+                        using (SqlCommand cmd = conn.CreateCommand())
+                        {
+                            cmd.CommandText = getMedicineQuery;
+                            using (SqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    var medicine = new Medicine();
+                                    medicine.ID = reader.GetString(0);
+                                    medicine.Name = reader.GetString(1);
+                                    medicine.Count = reader.GetInt32(2);
+                                    medicine.Unit = reader.GetString(3);
+                                    medicine.Price = reader.GetInt32(4);
+                                    medicine.Total = medicine.Count * medicine.Price;
+                                    this.Medicines.Add(medicine);
+                                }
+                            }
+                        }
+                    }
+                }
+                return this.Medicines;
+            }
+            catch (Exception eSql)
+            {
+                Debug.WriteLine($"Exception: {eSql.Message}");
+            }
+            return null;
 
         }
 
-        public void GetService(string connectionString, ObservableCollection<CustomerRecordViewModel> records)
+        public List<Service> GetService(string connectionString)
         {
+            this.Services.Clear();
+            string getServiceQuery = "SELECT DV.MADV, DV.TENDICHVU, DV.DONGIA FROM PHIEU_DV PDV JOIN DICH_VU DV ON PDV.MADV = DV.MADV WHERE PDV.MABA = " +
+                                        "'" + this.RecordID + "'";
 
-            foreach (var item in records)
+            try
             {
-                string getServiceQuery = "SELECT DV.MADV, DV.TENDICHVU, DV.DONGIA FROM PHIEU_DV PDV JOIN DICH_VU DV ON PDV.MADV = DV.MADV WHERE PDV.MABA = " +
-                                            "'" + item.RecordID + "'";
-
-                try
+                using (var conn = new SqlConnection(connectionString))
                 {
-                    using (var conn = new SqlConnection(connectionString))
+                    conn.Open();
+                    if (conn.State == System.Data.ConnectionState.Open)
                     {
-                        conn.Open();
-                        if (conn.State == System.Data.ConnectionState.Open)
+                        using (SqlCommand cmd = conn.CreateCommand())
                         {
-                            using (SqlCommand cmd = conn.CreateCommand())
+                            cmd.CommandText = getServiceQuery;
+                            using (SqlDataReader reader = cmd.ExecuteReader())
                             {
-                                cmd.CommandText = getServiceQuery;
-                                using (SqlDataReader reader = cmd.ExecuteReader())
+                                while (reader.Read())
                                 {
-                                    while (reader.Read())
-                                    {
-                                        var service = new Service();
-                                        service.ServiceID = reader.GetString(0);
-                                        service.ServiceName = reader.GetString(1);
-                                        service.ServiceCost= reader.GetInt32(2);
-                                        item.Services.Add(service);
-                                    }
+                                    var service = new Service();
+                                    service.ID = reader.GetString(0);
+                                    service.Name = reader.GetString(1);
+                                    service.Price = reader.GetInt32(2);
+                                    this.Services.Add(service);
                                 }
                             }
                         }
                     }
                 }
-                catch (Exception eSql)
-                {
-                    Debug.WriteLine($"Exception: {eSql.Message}");
-                }
-
+                return this.Services;
             }
+            catch (Exception eSql)
+            {
+                Debug.WriteLine($"Exception: {eSql.Message}");
+            }
+            return null;
 
         }
 

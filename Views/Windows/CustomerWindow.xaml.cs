@@ -1,4 +1,6 @@
 ﻿using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Media.Animation;
+using Microsoft.UI.Xaml.Navigation;
 using QuanLyNhaKhoa.Models;
 using QuanLyNhaKhoa.Views;
 
@@ -77,6 +79,16 @@ namespace QuanLyNhaKhoa
                     FrameInflate(2);
                     break;
             }
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            contentFrame.GoBack(new SuppressNavigationTransitionInfo());
+        }
+
+        private void Frame_Navigated(object sender, NavigationEventArgs e)
+        {
+            BackButton.Visibility = contentFrame.CanGoBack ? Visibility.Visible : Visibility.Collapsed;
         }
 
     }

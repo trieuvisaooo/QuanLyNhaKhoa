@@ -20,7 +20,8 @@
     <None Remove="Views\CustomerMakeAppointment.xaml" />
     <None Remove="Views\CustomerRecords.xaml" />
     <None Remove="Views\LogInWindow.xaml" />
-    <None Remove="Views\Pages\CustomerInvoice.xaml" />
+    <None Remove="Views\Pages\CustomerInvoiceDetail.xaml" />
+    <None Remove="Views\Pages\CustomerRecordDetail.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -91,7 +92,10 @@
     <None Update="DataAccess\gendata2012.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Page Update="Views\Pages\CustomerInvoice.xaml">
+    <Page Update="Views\Pages\CustomerInvoiceDetail.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\Pages\CustomerRecordDetail.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

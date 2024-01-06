@@ -26,14 +26,14 @@ namespace QuanLyNhaKhoa.Views
 
         private async void modifyInfo(object sender, RoutedEventArgs e, string connectionString)
         {
-            string phoneNum = PhoneNum.Text;
-            string address = Addr.Text;
+            //string phoneNum = ;
+            //string address = ;
             SqlConnection con = new SqlConnection(@connectionString);
             try
             {
                 con.Open();
 
-                string update_statement = "UPDATE KHACH_HANG SET SDT = '" + phoneNum + "', DIACHI = N'" + address + "', NGAYSINH = '" + ModifyDateOfBirth.Date + "' WHERE MAKH = '" + customerInfo.CusID + "'";
+                string update_statement = "UPDATE KHACH_HANG SET SDT = '" + PhoneNum.Text + "', DIACHI = N'" + Addr.Text + "', NGAYSINH = '" + ModifyDateOfBirth.Date + "' WHERE MAKH = '" + customerInfo.CusID + "'";
                 Debug.WriteLine(update_statement);
                 SqlCommand cmnd = new SqlCommand(update_statement, con);
                 cmnd.ExecuteNonQuery();
