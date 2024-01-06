@@ -14,7 +14,7 @@
             <RowDefinition Height="60"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid>
+        <Grid Grid.Row="0" Margin="32 0 0 0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200"/>
                 <ColumnDefinition Width="Auto"/>
@@ -91,19 +91,6 @@
                                         <TextBlock Text="Tổng tiền: "/>
                                         <TextBlock Text="{x:Bind TotalCost}"/>
                                     </StackPanel>
-                                    <!--<Button Name="ViewRecordDetail"
-                                        Click="ViewRecordDetail_Click"
-                                        Style="{StaticResource AccentButtonStyle}"
-                                        Margin="0 0 0 8">
-                                        Xem chi tiết
-                                    </Button>-->
-                                    
-                                    <!--<Button Name="ViewInvoice"
-                                        Click="ViewInvoice_Click"
-                                        Style="{StaticResource AccentButtonStyle}"
-                                        Margin="0 0 0 8">
-                                        Xem hóa đơn
-                                    </Button>-->
                                 </StackPanel>
                             </StackPanel>
 

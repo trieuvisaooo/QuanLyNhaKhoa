@@ -1,6 +1,4 @@
-﻿using QuanLyNhaKhoa.Models;
-using QuanLyNhaKhoa.Views;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -18,7 +16,9 @@ namespace QuanLyNhaKhoa.ViewModels
         private string _denName;
         private string _description;
         private DateOnly _recordDate;
+        private int _baseCost;
         private int _totalCost;
+        private int _status;
         //private ObservableCollection<Medicine> _medicine = new ObservableCollection<Medicine>();
         private List<Medicine> _medicines = new List<Medicine>();
         private List<Service> _services = new List<Service>();
@@ -120,6 +120,32 @@ namespace QuanLyNhaKhoa.ViewModels
             }
         }
 
+        public int BaseCost
+        {
+            get
+            {
+                return _baseCost;
+            }
+            set
+            {
+                _baseCost = value;
+                NotifyPropertyChanged(nameof(_baseCost));
+            }
+        }
+
+        public int InvoiceStatus
+        {
+            get
+            {
+                return _status;
+            }
+            set
+            {
+                _status = value;
+                NotifyPropertyChanged(nameof(_status));
+            }
+        }
+
         public List<Medicine> Medicines
         {
             get
@@ -152,9 +178,9 @@ namespace QuanLyNhaKhoa.ViewModels
         public ObservableCollection<CustomerRecordViewModel> GetRecords(string connectionString, string cusID)
         {
             //string CusID = "KH0002";
-            string getRecordQuery = "SELECT BA.MABA, NS.MANS, NS.HOTEN, BA.MOTA, BA.NGAYKHAM, HD.TONGTIEN FROM BENH_AN BA JOIN NHA_SI NS ON BA.NHASITHUCHIEN = NS.MANS " +
+            string getRecordQuery = "SELECT BA.MABA, NS.MANS, NS.HOTEN, BA.MOTA, BA.NGAYKHAM, HD.PHIKHAM, HD.TONGTIEN, HD.TINHTRANG FROM BENH_AN BA JOIN NHA_SI NS ON BA.NHASITHUCHIEN = NS.MANS " +
                                                 " JOIN HOA_DON HD ON HD.MABA = BA.MABA " +    
-                                                "where BA.MAKH = " + "'" + cusID + "'";
+                                                "where BA.MAKH = " + "'" + cusID + "' ORDER BY BA.NGAYKHAM DESC";
             
 
             var records = new ObservableCollection<CustomerRecordViewModel>();
@@ -179,7 +205,9 @@ namespace QuanLyNhaKhoa.ViewModels
                                     CustomerRecord.Description = reader.GetString(3);
                                     DateTime date = reader.GetDateTime(4);
                                     CustomerRecord.RecordDate = DateOnly.FromDateTime(date);
-                                    CustomerRecord.TotalCost = reader.GetInt32(5);
+                                    CustomerRecord.BaseCost = reader.GetInt32(5);
+                                    CustomerRecord.TotalCost = reader.GetInt32(6);
+                                    CustomerRecord.InvoiceStatus = reader.GetInt32(7);
 
                                     records.Add(CustomerRecord);
                                 }
@@ -199,9 +227,9 @@ namespace QuanLyNhaKhoa.ViewModels
         public ObservableCollection<CustomerRecordViewModel> GetRecordsByDenName(string connectionString, string cusID, string denName)
         {
             //string CusID = "KH0002";
-            string getRecordQuery = "SELECT BA.MABA, NS.MANS, NS.HOTEN, BA.MOTA, BA.NGAYKHAM, HD.TONGTIEN FROM BENH_AN BA JOIN NHA_SI NS ON BA.NHASITHUCHIEN = NS.MANS " +
-                                    " JOIN HOA_DON HD ON HD.MABA = BA.MABA " +
-                                    "WHERE BA.MAKH = " + "'" + cusID + "' AND NS.HOTEN = N" + "'" + denName + "'";
+            string getRecordQuery = "SELECT BA.MABA, NS.MANS, NS.HOTEN, BA.MOTA, BA.NGAYKHAM, HD.PHIKHAM, HD.TONGTIEN, HD.TINHTRANG FROM BENH_AN BA JOIN NHA_SI NS ON BA.NHASITHUCHIEN = NS.MANS " +
+                                    "JOIN HOA_DON HD ON HD.MABA = BA.MABA " +
+                                    "WHERE BA.MAKH = " + "'" + cusID + "' AND NS.HOTEN = N" + "'" + denName + "' ORDER BY BA.NGAYKHAM DESC";
 
 
 

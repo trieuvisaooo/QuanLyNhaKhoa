@@ -1,18 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
+using Windows.UI;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using QuanLyNhaKhoa.ViewModels;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -34,9 +25,25 @@ public sealed partial class CustomerInvoiceDetail : Page
     {
         base.OnNavigatedTo(e);
         CRViewModel = e.Parameter as CustomerRecordViewModel;
+
         medicine_list.ItemsSource = CRViewModel.Medicines;
         service_list.ItemsSource = CRViewModel.Services;
     }
+
+    private void Status_Loaded(object sender, RoutedEventArgs e)
+    {
+        if (CRViewModel.InvoiceStatus == 0)
+        {
+            status_txtb.Text = "Chưa thanh toán";
+            Color red = Color.FromArgb(255, 255, 0, 0);
+            status_txtb.Foreground = new SolidColorBrush(red);
+        }
+        else
+        {
+            status_txtb.Text = "Đã thanh toán";
+        }
+    }
+
 
     private void ViewRecord_Click(object sender, RoutedEventArgs e)
     {

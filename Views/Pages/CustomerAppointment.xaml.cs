@@ -2,12 +2,6 @@
 using Microsoft.UI.Xaml.Controls;
 using QuanLyNhaKhoa.Models;
 using QuanLyNhaKhoa.ViewModels;
-using System;
-using System.Collections.ObjectModel;
-using System.Data;
-using System.Data.SqlClient;
-using System.Diagnostics;
-using Windows.ApplicationModel.Appointments;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
