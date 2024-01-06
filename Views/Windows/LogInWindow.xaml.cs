@@ -1,5 +1,7 @@
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using QuanLyNhaKhoa.ViewModels;
+using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -22,6 +24,21 @@ namespace QuanLyNhaKhoa.Views
 
         private async void LogInSummit_Click(object sender, RoutedEventArgs e)
         {
+            LoadingRing.IsActive = true;
+            (sender as Button).Visibility = Visibility.Collapsed;
+            try
+            {
+                bool isSuccess = await Task.Run(() => loginViewModel.SignIn());
+                if (isSuccess)
+                {
+                    Window mainWindow = new AdminWindow();
+                    mainWindow.Activate();
+                    this.Close();
+                }
+            }
+            catch (System.Exception) { }
+            LoadingRing.IsActive = false;
+            (sender as Button).Visibility = Visibility.Visible;
 
         }
 

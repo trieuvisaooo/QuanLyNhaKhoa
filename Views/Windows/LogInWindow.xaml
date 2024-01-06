@@ -75,27 +75,35 @@
                     Text="{x:Bind loginViewModel.PhoneNumber, Mode=TwoWay}"
                     GotFocus="txt_GotFocus"
                     ></TextBox>
-                <PasswordBox
+                <Grid ColumnSpacing="15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <PasswordBox
+                    Grid.Column="0"
                     x:Name="txtPassword"
                     Header="Mật khẩu"
                     PlaceholderText="Nhập mật khẩu"
                     GotFocus="txt_GotFocus"
+                    Password="{x:Bind loginViewModel.Password, Mode=TwoWay}"
                     ></PasswordBox>
-                <StackPanel Spacing="10">
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}">Tôi là:</TextBlock>
-                    <DropDownButton
+                    <StackPanel Spacing="10" Grid.Column="1">
+                        <TextBlock Style="{StaticResource BodyTextBlockStyle}">Tôi là</TextBlock>
+                        <DropDownButton
                         Content="{x:Bind loginViewModel.SelectedRole, Mode=OneWay}"
                         x:Name="rolesButton">
-                        <DropDownButton.Flyout>
-                            <MenuFlyout Placement="Bottom">
-                                <MenuFlyoutItem Text="{x:Bind loginViewModel.Roles[0]}"  Tag="KH" Click="RoleSelected_Click" />
-                                <MenuFlyoutItem Text="{x:Bind loginViewModel.Roles[1]}" Tag="NV" Click="RoleSelected_Click"/>
-                                <MenuFlyoutItem Text="{x:Bind loginViewModel.Roles[2]}" Tag="NS" Click="RoleSelected_Click"/>
-                                <MenuFlyoutItem Text="{x:Bind loginViewModel.Roles[3]}" Tag="QTV" Click="RoleSelected_Click"/>
-                            </MenuFlyout>
-                        </DropDownButton.Flyout>
-                    </DropDownButton>
-                </StackPanel>
+                            <DropDownButton.Flyout>
+                                <MenuFlyout Placement="Bottom">
+                                    <MenuFlyoutItem Text="{x:Bind loginViewModel.Roles[0]}"  Tag="KH" Click="RoleSelected_Click" />
+                                    <MenuFlyoutItem Text="{x:Bind loginViewModel.Roles[1]}" Tag="NV" Click="RoleSelected_Click"/>
+                                    <MenuFlyoutItem Text="{x:Bind loginViewModel.Roles[2]}" Tag="NS" Click="RoleSelected_Click"/>
+                                    <MenuFlyoutItem Text="{x:Bind loginViewModel.Roles[3]}" Tag="QTV" Click="RoleSelected_Click"/>
+                                </MenuFlyout>
+                            </DropDownButton.Flyout>
+                        </DropDownButton>
+                    </StackPanel>
+                </Grid>
                 <Grid Margin="0, 20, 0, 0"
                             HorizontalAlignment="Stretch">
                     <Grid.ColumnDefinitions>
@@ -108,11 +116,14 @@
                         HorizontalAlignment="Stretch"
                         Spacing="10"
                         MaxWidth="300">
-                        <Button
+                        <Grid>
+                            <ProgressRing x:Name="LoadingRing" IsActive="False"></ProgressRing>
+                            <Button
                             HorizontalAlignment="Stretch"
                             Style="{StaticResource AccentButtonStyle}"
                             Click="LogInSummit_Click"
                             >Đăng nhập</Button>
+                        </Grid>
                         <HyperlinkButton HorizontalAlignment="Center">Đăng kí tài khoản</HyperlinkButton>
                     </StackPanel>
                 </Grid>

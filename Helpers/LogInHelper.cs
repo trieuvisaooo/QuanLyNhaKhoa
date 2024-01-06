@@ -8,11 +8,10 @@ namespace QuanLyNhaKhoa.Helpers
         {
             Customer = 0,
             Receptionist = 1,
-            Doctor = 2,
+            Dentist = 2,
             Admin = 3,
         }
         public Role selectedRole = Role.Customer;
-
 
         public string phoneNumber = "";
         public string password = "";

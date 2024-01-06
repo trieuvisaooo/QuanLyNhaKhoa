@@ -21,20 +21,8 @@ namespace QuanLyNhaKhoa
         //conect to db in sql server
         private string connectionString = @"Data Source=localhost;Initial Catalog=QLPK;Integrated Security=True";
         public string ConnectionString { get => connectionString; set => connectionString = value; }
-        private Interfaces.Account _currentAccount;
         private DatabaseManagement _databaseManagement;
-
-        public Interfaces.Account CurrentAccount
-        {
-            get
-            {
-                return _currentAccount;
-            }
-            set
-            {
-
-            }
-        }
+        public AccountData CurrentAccount;
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -44,6 +32,8 @@ namespace QuanLyNhaKhoa
         {
             this.InitializeComponent();
             this._databaseManagement = new DatabaseManagement();
+            this.CurrentAccount = new AccountData(_databaseManagement.ConnectionString);
+
         }
 
         /// <summary>
@@ -52,9 +42,9 @@ namespace QuanLyNhaKhoa
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            //Window _mWindow = new MainWindow();
+            //Window _mWindow = new AdminWindow();
             //_mWindow.Activate();
-            //Window mainWindow = new MainWindow();
+            //Window mainWindow = new AdminWindow();
             //mainWindow.Activate();
             //Window CusWindow = new CustomerWindow();
             //CusWindow.Activate();

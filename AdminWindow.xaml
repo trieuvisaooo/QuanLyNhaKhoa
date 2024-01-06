@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Window
-    x:Class="QuanLyNhaKhoa.MainWindow"
+    x:Class="QuanLyNhaKhoa.AdminWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:QuanLyNhaKhoa"
+    xmlns:local1="using:QuanLyNhaKhoa.ViewModels"
+    xmlns:usercontrol="using:QuanLyNhaKhoa.Views.UserControls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Quản Lý Nha Khoa"
@@ -12,20 +14,35 @@
     <Grid>
         <NavigationView x:Name="NvgtView" IsTitleBarAutoPaddingEnabled="False"
                         AlwaysShowHeader="True" IsBackButtonVisible="Collapsed"
+                        IsPaneOpen="False"
                         Header="Default Header" Margin="0 50 0 0"
                         IsSettingsVisible="False"
                         ItemInvoked="NvgtView_ItemInvoked"
                         SelectionChanged="NvgtView_SelectionChanged"
                         Background="Transparent"
                         >
+            <NavigationView.PaneHeader>
+                <StackPanel Orientation="Horizontal" Padding="10 50 0 10" Spacing="10">
+                    <usercontrol:AvatarCircle Width="40" Height="40" InfoViewModel="{x:Bind infoViewModel}"></usercontrol:AvatarCircle>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="{x:Bind infoViewModel.Name, Mode=OneWay}"
+                                   Style="{StaticResource BodyStrongTextBlockStyle}"/>
+                        <TextBlock Text="{x:Bind infoViewModel.Id, Mode=OneWay}"
+                                   Style="{StaticResource CaptionTextBlockStyle}"/>
+                    </StackPanel>
+                </StackPanel>
+            </NavigationView.PaneHeader>
             <NavigationView.MenuItems>
-                <NavigationViewItem Icon="Calendar" Content="Lịch Hẹn" Tag="1" />
-                <NavigationViewItem Icon="List" Content="Hồ Sơ Bệnh Án" Tag="2" />
+                <NavigationViewItem Icon="Contact" Content="Nhân Viên" Tag="1" />
+                <NavigationViewItem Icon="Contact2" Content="Khách Hàng" Tag="2" />
+                <NavigationViewItem Icon="People" Content="Nha Sĩ" Tag="3" />
+                <NavigationViewItem Icon="List" Content="Thuốc" Tag="4" />
+                <NavigationViewItem Icon="Admin" Content="Quản Trị Viên" Tag="5" />
             </NavigationView.MenuItems>
             <NavigationView.PaneFooter>
                 <NavigationViewItem Icon="Contact" Content="Đăng Xuất" Tag="SignOut" />
             </NavigationView.PaneFooter>
-            <Frame x:Name="contentFrame" Margin="20"/>
+            <Frame x:Name="contentFrame" Margin="56 10 50 50"/>
         </NavigationView>
         <Grid IsHitTestVisible="True"
               VerticalAlignment="Top"
