@@ -54,7 +54,7 @@
         </Grid.RowDefinitions>
         <TextBlock
             Grid.Row="0"
-            Text="Đăng nhập"
+            Text="Tạo tài khoản mới"
             FontSize="30"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
