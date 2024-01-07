@@ -71,6 +71,11 @@ namespace QuanLyNhaKhoa
                 case "5":
                     FrameInflate(5);
                     break;
+                case "SignOut":
+                    Window LogInWindow = new LogInWindow();
+                    LogInWindow.Activate();
+                    this.Close();
+                    break;
             }
         }
 
@@ -94,7 +99,14 @@ namespace QuanLyNhaKhoa
                 case "5":
                     FrameInflate(5);
                     break;
+                case "SignOut":
+                    break;
             }
+        }
+        private void Add_Account_Click(object sender, RoutedEventArgs e)
+        {
+            Window addAccountWindow = new AddAccountWindow();
+            addAccountWindow.Activate();
         }
 
     }

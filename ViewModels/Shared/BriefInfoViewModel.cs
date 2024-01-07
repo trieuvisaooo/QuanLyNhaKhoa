@@ -34,9 +34,31 @@ namespace QuanLyNhaKhoa.ViewModels
             }
         }
 
+        public bool Status
+        {
+            get
+            {
+                return !(_account.Status == 0);
+            }
+
+            set
+            {
+                _account.Status = value ? 1 : 0;
+                NotifyPropertyChanged(nameof(Status));
+            }
+        }
+
         public BriefInfoViewModel(Interfaces.Account account)
         {
             _account = account;
+            Id = account.Id;
+            Name = account.Name;
+            Status = account.Status == 1;
+        }
+
+        public Interfaces.Account GetAccount()
+        {
+            return _account;
         }
 
 

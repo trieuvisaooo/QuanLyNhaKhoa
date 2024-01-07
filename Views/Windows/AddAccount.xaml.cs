@@ -11,32 +11,27 @@ namespace QuanLyNhaKhoa.Views
     /// <summary>
     /// An empty window that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class LogInWindow : Window
+    public sealed partial class AddAccountWindow : Window
     {
-        public LoginViewModel loginViewModel { get; private set; } = new LoginViewModel();
-        public LogInWindow()
+        public AccountViewModel accountViewModel { get; private set; } = new();
+        public AddAccountWindow()
         {
             this.InitializeComponent();
-            this.AppWindow.Resize(new Windows.Graphics.SizeInt32(720, 500));
             this.AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
             App.SetTitleBarColors(this);
-            App.SetResizability(this, false);
             this.SetTitleBar(TitleBar);
             // Reset the stored account
-            (App.Current as App).CurrentAccount.StoredAccount = null;
         }
 
-        private async void LogInSummit_Click(object sender, RoutedEventArgs e)
+        private async void AddAccount_Click(object sender, RoutedEventArgs e)
         {
             LoadingRing.IsActive = true;
             (sender as Button).Visibility = Visibility.Collapsed;
             try
             {
-                bool isSuccess = await Task.Run(() => loginViewModel.SignIn());
+                bool isSuccess = await Task.Run(() => accountViewModel.AddAccount());
                 if (isSuccess)
                 {
-                    Window mainWindow = new AdminWindow();
-                    mainWindow.Activate();
                     this.Close();
                 }
             }
@@ -49,7 +44,7 @@ namespace QuanLyNhaKhoa.Views
         private void RoleSelected_Click(object sender, RoutedEventArgs e)
         {
             var menuFlyoutItem = sender as Microsoft.UI.Xaml.Controls.MenuFlyoutItem;
-            loginViewModel.SelectedRole = menuFlyoutItem.Text;
+            accountViewModel.SelectedRole = menuFlyoutItem.Text;
         }
 
         private void txt_GotFocus(object sender, RoutedEventArgs e)

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Diagnostics;
 
 namespace QuanLyNhaKhoa.DataAccess
 {
@@ -20,7 +21,7 @@ namespace QuanLyNhaKhoa.DataAccess
             {
                 accountType = "QTV";
             }
-            string query = $"SELECT COUNT(*) FROM {accountType} WHERE SDT = '{account.PhoneNumber}' AND MATKHAU = '{account.Password}'";
+            string query = $"SELECT COUNT(*) FROM {accountType} WHERE SDT = '{account.PhoneNumber}' AND MATKHAU = '{account.Password}' AND TRANGTHAI != 0";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -131,9 +132,9 @@ namespace QuanLyNhaKhoa.DataAccess
             throw new NotImplementedException();
         }
 
-        public List<ReceptionistView> GetReceptionists(string byName = null)
+        public List<ReceptionistAccount> GetReceptionists(string byName = null, int offset = 0, int fetchSize = 50)
         {
-            List<ReceptionistView> receps = new();
+            List<ReceptionistAccount> receps = new();
             // query the database to get all orders
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -142,9 +143,9 @@ namespace QuanLyNhaKhoa.DataAccess
                 string query = "SELECT * FROM NHAN_VIEN ";
                 if (byName is not null)
                 {
-                    query += $"WHERE HOTEN LIKE '%{byName}%'";
+                    query += $"WHERE HOTEN LIKE N'%{byName}%' ";
                 }
-
+                query += $"ORDER BY MANV OFFSET {offset} ROWS FETCH NEXT {fetchSize} ROWS ONLY";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -161,16 +162,238 @@ namespace QuanLyNhaKhoa.DataAccess
                             // Access columns from the result set
                             string id = reader.GetString(reader.GetOrdinal("MANV"));
                             string name = reader.GetString(reader.GetOrdinal("HOTEN"));
-                            receps.Add(new ReceptionistView()
+                            int status = reader.GetInt32(reader.GetOrdinal("TRANGTHAI"));
+                            receps.Add(new ReceptionistAccount()
                             {
                                 Id = id,
                                 Name = name,
+                                Status = status,
                             });
                         }
                     }
                 }
             }
             return receps;
+        }
+
+        public bool UpdateAccount(Interfaces.Account account)
+        {
+            string accountType;
+            string accountIdName;
+            if (account is AdministratorAccount)
+            {
+                accountType = "QTV";
+                accountIdName = "MAQTV";
+            }
+            else if (account is ReceptionistAccount)
+            {
+                accountType = "NHAN_VIEN";
+                accountIdName = "MANV";
+            }
+            else if (account is DentistAccount)
+            {
+                accountType = "NHA_SI";
+                accountIdName = "MANS";
+            }
+            else if (account is CustomerAccount)
+            {
+                accountType = "KHACH_HANG";
+                accountIdName = "MAKH";
+            }
+            else
+            {
+                return false;
+            }
+
+            string query = $"UPDATE {accountType} SET SDT = @SDT, HOTEN = @HOTEN, NGAYSINH = @NGAYSINH, DIACHI = @DIACHI, MATKHAU = @MATKHAU WHERE {accountIdName} = '{account.Id}'";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@SDT", account.PhoneNumber);
+                        command.Parameters.AddWithValue("@HOTEN", account.Name);
+                        command.Parameters.AddWithValue("@NGAYSINH", account.Birthday.ToString("yyyy-MM-dd"));
+                        command.Parameters.AddWithValue("@DIACHI", account.Address);
+                        command.Parameters.AddWithValue("@MATKHAU", account.Password);
+
+                        command.ExecuteNonQuery();
+                        return true;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool LockOrUnlockAccount(Interfaces.Account account, bool isLocked)
+        {
+            string accountType;
+            string accountIdName;
+            if (account is AdministratorAccount)
+            {
+                accountType = "QTV";
+                accountIdName = "MAQTV";
+            }
+            else if (account is ReceptionistAccount)
+            {
+                accountType = "NHAN_VIEN";
+                accountIdName = "MANV";
+            }
+            else if (account is DentistAccount)
+            {
+                accountType = "NHA_SI";
+                accountIdName = "MANS";
+            }
+            else if (account is CustomerAccount)
+            {
+                accountType = "KHACH_HANG";
+                accountIdName = "MAKH";
+            }
+            else
+            {
+                return false;
+            }
+
+            string query = $"UPDATE {accountType} SET TRANGTHAI = @TRANGTHAI WHERE {accountIdName} = '{account.Id}'";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@TRANGTHAI", isLocked ? 0 : 1);
+
+                        command.ExecuteNonQuery();
+                        return true;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool AddAccount(Interfaces.Account account)
+        {
+            string accountType;
+            string accountIdName;
+            if (account is AdministratorAccount)
+            {
+                accountType = "QTV";
+                accountIdName = "MAQTV";
+            }
+            else if (account is ReceptionistAccount)
+            {
+                accountType = "NHAN_VIEN";
+                accountIdName = "MANV";
+            }
+            else if (account is DentistAccount)
+            {
+                accountType = "NHA_SI";
+                accountIdName = "MANS";
+            }
+            else if (account is CustomerAccount)
+            {
+                accountType = "KHACH_HANG";
+                accountIdName = "MAKH";
+            }
+            else
+            {
+                return false;
+            }
+
+            string query = $"INSERT INTO {accountType} ({accountIdName}, SDT, HOTEN, NGAYSINH, DIACHI, MATKHAU, TRANGTHAI) VALUES (@ID, @SDT, @HOTEN, @NGAYSINH, @DIACHI, @MATKHAU, @TRANGTHAI)";
+            string latestId = LatestId(account).Substring(2, 4);
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@ID", $"{accountType.Substring(0, 2)}" + $"{int.Parse(latestId) + 1}".PadLeft(4, '0'));
+                        command.Parameters.AddWithValue("@SDT", account.PhoneNumber);
+                        command.Parameters.AddWithValue("@HOTEN", account.Name);
+                        command.Parameters.AddWithValue("@NGAYSINH", account.Birthday.ToString("yyyy-MM-dd"));
+                        command.Parameters.AddWithValue("@DIACHI", account.Address);
+                        command.Parameters.AddWithValue("@MATKHAU", account.Password);
+                        command.Parameters.AddWithValue("@TRANGTHAI", account.Status);
+
+                        command.ExecuteNonQuery();
+                        return true;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                Debug.WriteLine("Ooopsss");
+                return false;
+            }
+        }
+
+        public string LatestId(Interfaces.Account account)
+        {
+            string accountType = "UNKNOWN";
+            string accountIdName;
+            if (account is AdministratorAccount)
+            {
+                accountType = "QTV";
+                accountIdName = "MAQTV";
+            }
+            else if (account is ReceptionistAccount)
+            {
+                accountType = "NHAN_VIEN";
+                accountIdName = "MANV";
+            }
+            else if (account is DentistAccount)
+            {
+                accountType = "NHA_SI";
+                accountIdName = "MANS";
+            }
+            else if (account is CustomerAccount)
+            {
+                accountType = "KHACH_HANG";
+                accountIdName = "MAKH";
+            }
+            else
+            {
+                return "";
+            }
+
+            string query = $"SELECT {accountIdName} FROM {accountType}";
+            string id = "";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        ;
+                        while (reader.Read())
+                        {
+                            // check if there are result
+                            if (!reader.HasRows)
+                            {
+                                return "";
+                            }
+                            // Access columns from the result set
+                            id = reader.GetString(reader.GetOrdinal($"{accountIdName}"));
+                        }
+                    }
+                }
+            }
+            return id;
         }
     }
 }

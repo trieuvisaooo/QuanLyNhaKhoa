@@ -15,12 +15,20 @@
         <converters:GetFirstCharacter x:Key="GetFirstCharacter"></converters:GetFirstCharacter>
     </UserControl.Resources>
     <Grid>
-        <Ellipse Width="40" Height="40" Fill="{StaticResource AccentAAFillColorDefaultBrush}"></Ellipse>
-        <TextBlock HorizontalAlignment="Center" 
-                   VerticalAlignment="Center" 
-                   Margin="0 0  0 2"
-                   Text="{x:Bind InfoViewModel.Name, Mode=OneWay, Converter={StaticResource GetFirstCharacter}}"
-                   Style="{StaticResource BodyStrongTextBlockStyle}"
-                   Foreground="{StaticResource TextOnAccentAAFillColorPrimary}"></TextBlock>
+        <Ellipse Width="40" Height="40" Fill="DarkRed"></Ellipse>
+        <FontIcon HorizontalAlignment="Center" 
+                VerticalAlignment="Center" 
+                FontFamily="Segoe MDL2 Assets" Glyph="&#xE72E;"
+                Margin="0 0  0 2"
+                Foreground="White"></FontIcon>   
+        <Grid Visibility="{x:Bind InfoViewModel.Status}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Ellipse Width="40" Height="40" Fill="{StaticResource AccentAAFillColorDefaultBrush}"></Ellipse>
+            <TextBlock HorizontalAlignment="Center" 
+                       VerticalAlignment="Center" 
+                       Margin="0 0  0 2"
+                       Text="{x:Bind InfoViewModel.Name, Mode=OneWay, Converter={StaticResource GetFirstCharacter}}"
+                       Style="{StaticResource BodyStrongTextBlockStyle}"
+                       Foreground="{StaticResource TextOnAccentAAFillColorPrimary}"></TextBlock>
+        </Grid>
     </Grid>
 </UserControl>

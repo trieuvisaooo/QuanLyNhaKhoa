@@ -85,5 +85,13 @@ namespace QuanLyNhaKhoa
 
             return false;
         }
+
+        public static void SetResizability(Window window, bool isResizable = true)
+        {
+            var _presenter = window.AppWindow.Presenter as OverlappedPresenter;
+            _presenter.IsResizable = isResizable;
+            _presenter.IsMaximizable = isResizable;
+            _presenter.IsMinimizable = isResizable;
+        }
     }
 }

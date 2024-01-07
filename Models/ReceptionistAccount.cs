@@ -2,7 +2,7 @@
 
 namespace QuanLyNhaKhoa.Models
 {
-    public class ReceptionistView : Interfaces.Account
+    public class ReceptionistAccount : Interfaces.Account
     {
         public string Name { get; set; }
         public string Id { get; set; }
@@ -10,7 +10,7 @@ namespace QuanLyNhaKhoa.Models
         public string Password { get; set; }
         public string Address { get; set; }
         public DateTime Birthday { get; set; }
-        public int Status { get; set; }
+        public int Status { get; set; } = 1;
 
     }
 }

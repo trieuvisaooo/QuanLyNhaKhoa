@@ -2,7 +2,7 @@
 
 namespace QuanLyNhaKhoa.Models
 {
-    public class AdministratorAccount : Interfaces.Account
+    public class CustomerAccount : Interfaces.Account
     {
         public string Name { get; set; }
         public string Id { get; set; }

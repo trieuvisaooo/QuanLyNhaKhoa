@@ -21,32 +21,33 @@
         <StackPanel Orientation="Vertical" Spacing="20">
             <TextBlock Style="{StaticResource BodyTextBlockStyle}">Danh sách các nhân viên phòng khám.</TextBlock>
             <AutoSuggestBox PlaceholderText="Nhập tên nhân viên" TextChanged="ReQuery_Change"
-                            QueryIcon="Find"/>
+                            QueryIcon="Find" ToolTipService.ToolTip="Tìm kiếm nhân viên theo tên"/>
         </StackPanel>
         <StackPanel Grid.Row="2" HorizontalAlignment="Left" Orientation="Horizontal" Spacing="10">
             <Button x:Name="edit_btn"  IsEnabled="False" Click="Edit_Click">
                 <StackPanel Orientation="Horizontal" Spacing="10">
                     <FontIcon Margin="0 4 0 0" FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" FontSize="14"/>
-                    <TextBlock>Edit</TextBlock>
+                    <TextBlock>Chỉnh sửa</TextBlock>
                 </StackPanel>
             </Button>
             <Button x:Name="remove_btn" IsEnabled="False" Click="Remove_Click">
-                <StackPanel Orientation="Horizontal" Spacing="10" >
-                    <FontIcon Margin="0 4 0 0" FontFamily="Segoe MDL2 Assets" Glyph="&#xE711;" FontSize="14"/>
-                    <TextBlock>Remove</TextBlock>
-                </StackPanel>
-            </Button>
-            <Button x:Name="add_btn" Click="Add_Click">
-                <StackPanel Orientation="Horizontal" Spacing="10" >
-                    <FontIcon Margin="0 4 0 0" FontFamily="Segoe MDL2 Assets" Glyph="&#xE710;" FontSize="14"/>
-                    <TextBlock>Add Item</TextBlock>
-                </StackPanel>
+                <Grid>
+                    <StackPanel x:Name="LockContent" Orientation="Horizontal" Spacing="10" >
+                        <FontIcon  Margin="0 4 0 0" FontFamily="Segoe MDL2 Assets" Glyph="&#xE72E;" FontSize="14"/>
+                        <TextBlock>Khoá</TextBlock>
+                    </StackPanel>
+                    <StackPanel x:Name="UnLockContent" Orientation="Horizontal" Spacing="10" Visibility="Collapsed">
+                        <FontIcon x:Name="UnlockIcon" Margin="0 4 0 0" FontFamily="Segoe MDL2 Assets" Glyph="&#xE785;" FontSize="14" />
+                        <TextBlock>Mở khoá</TextBlock>
+                    </StackPanel>
+                </Grid>
             </Button>
         </StackPanel>
         <Grid Padding="0 10" Grid.Row="1">
             <Rectangle Grid.Row="0" Fill="{ThemeResource LayerOnAccentAcrylicFillColorDefault}"
                RadiusX="4" RadiusY="4"></Rectangle>
-            <ListView  ItemsSource="{x:Bind ReceptionistList.receptionistList, Mode=TwoWay}"
+            <ProgressBar x:Name="LoadingBar" IsIndeterminate="True" VerticalAlignment="Top" Visibility="Collapsed" />
+            <ListView x:Name="RecListView"  ItemsSource="{x:Bind ReceptionistList.receptionistList, Mode=TwoWay}"
               Padding="4 0 16 0"
               Margin="0 10 4 10"
               SelectionChanged="ListView_SelectionChanged">
@@ -63,7 +64,7 @@
                                 </StackPanel>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                <Button Background="Transparent" Padding="10" Style="{StaticResource ButtonRevealStyle}">
+                                <Button Background="Transparent" Padding="10" Style="{StaticResource ButtonRevealStyle}" ToolTipService.ToolTip="Xem chi tiết">
                                     <FontIcon VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" Glyph="&#xE76C;" FontSize="14"/>
                                 </Button>
                             </StackPanel>

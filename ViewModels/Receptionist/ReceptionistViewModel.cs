@@ -4,7 +4,7 @@ namespace QuanLyNhaKhoa.ViewModels.Receptionist
 {
     public class ReceptionistViewModel : INotifyPropertyChanged
     {
-        private readonly Models.ReceptionistView _receptionist = new();
+        private readonly Models.ReceptionistAccount _receptionist = new();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -34,7 +34,7 @@ namespace QuanLyNhaKhoa.ViewModels.Receptionist
             }
         }
 
-        public ReceptionistViewModel(Models.ReceptionistView receptionist)
+        public ReceptionistViewModel(Models.ReceptionistAccount receptionist)
         {
             Update(receptionist);
         }
@@ -45,7 +45,7 @@ namespace QuanLyNhaKhoa.ViewModels.Receptionist
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public void Update(Models.ReceptionistView receptionist)
+        public void Update(Models.ReceptionistAccount receptionist)
         {
             Id = receptionist.Id;
             Name = receptionist.Name;

@@ -14,9 +14,10 @@
     <Grid>
         <NavigationView x:Name="NvgtView" IsTitleBarAutoPaddingEnabled="False"
                         AlwaysShowHeader="True" IsBackButtonVisible="Collapsed"
-                        IsPaneOpen="False"
                         Header="Default Header" Margin="0 50 0 0"
                         IsSettingsVisible="False"
+                        IsPaneOpen="True"
+                        PaneDisplayMode="Auto"
                         ItemInvoked="NvgtView_ItemInvoked"
                         SelectionChanged="NvgtView_SelectionChanged"
                         Background="Transparent"
@@ -39,8 +40,26 @@
                 <NavigationViewItem Icon="List" Content="Thuốc" Tag="4" />
                 <NavigationViewItem Icon="Admin" Content="Quản Trị Viên" Tag="5" />
             </NavigationView.MenuItems>
+            <NavigationView.FooterMenuItems>
+                <NavigationViewItem Icon="BlockContact" Content="Đăng Xuất" Tag="SignOut" />
+            </NavigationView.FooterMenuItems>
             <NavigationView.PaneFooter>
-                <NavigationViewItem Icon="Contact" Content="Đăng Xuất" Tag="SignOut" />
+                <Grid>
+                    <Grid HorizontalAlignment="Center"  Margin="10">
+                        <Button Style="{StaticResource AccentButtonStyle}" 
+                                Click="Add_Account_Click"
+                            HorizontalAlignment="Left">
+                            <StackPanel Orientation="Horizontal" Spacing="5" Padding="0">
+                                <FontIcon VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets"
+                                          Foreground="{StaticResource AccentAAFillColorDefaultBrush}"
+                                          Glyph="&#xE8FA;" FontSize="14" Margin="-4  0  0  0"/>
+                                <TextBlock >Tạo Mới Tài Khoản</TextBlock>
+                            </StackPanel>
+                        </Button>
+                        
+                        <FontIcon HorizontalAlignment="Left" Foreground="{StaticResource TextOnAccentAAFillColorPrimary}" FontFamily="Segoe MDL2 Assets" Glyph="&#xE8FA;" FontSize="14" Margin="8  0  0  2"/>
+                    </Grid>
+                </Grid>
             </NavigationView.PaneFooter>
             <Frame x:Name="contentFrame" Margin="56 10 50 50"/>
         </NavigationView>
