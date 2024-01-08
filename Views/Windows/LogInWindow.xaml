@@ -23,30 +23,32 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Button Background="Transparent"
-        BorderThickness="0"
-        VerticalAlignment="Center"
-        Width="36"
-        Height="36"
-        VerticalContentAlignment="Center"
-        Margin="6, 0, 0, 0"
-        Grid.Column="0">
-            <FontIcon Glyph="&#xE77B;" FontSize="14"/>
-        </Button>
-        <Border x:Name="TitleBar"
+            <ColumnDefinition Width="10"/>
+            </Grid.ColumnDefinitions>
+            <Border x:Name="TitleBar"
         Background="Transparent"
         Margin="0,0,0,0"
         Grid.Column="1">
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                <TextBlock x:Name="AppTitle"
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Button Background="Transparent"
+                            x:Name="InfoButton"
+                    BorderThickness="0"
+                    VerticalAlignment="Center"
+                    Width="36"
+                    Height="36"
+                    VerticalContentAlignment="Center"
+                    Margin="6, 0, 0, 0"
+                    Grid.Column="0">
+                        <FontIcon Glyph="&#xE77B;" FontSize="14"/>
+                    </Button>
+                    <TextBlock x:Name="AppTitle"
                    Text="Đăng nhập"
                    VerticalAlignment="Center"
                    Margin="5,0,0,0"
                    Style="{StaticResource CaptionTextBlockStyle}"/>
-            </StackPanel>
-        </Border>
-    </Grid>
+                </StackPanel>
+            </Border>
+        </Grid>
     <Grid Grid.Row="1">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

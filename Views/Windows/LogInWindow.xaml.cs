@@ -22,6 +22,10 @@ namespace QuanLyNhaKhoa.Views
             App.SetTitleBarColors(this);
             App.SetResizability(this, false);
             this.SetTitleBar(TitleBar);
+            //DispatcherQueue.TryEnqueue(() =>
+            //{
+            //    App.SetDragRegion(this, Microsoft.UI.Input.NonClientRegionKind.Passthrough, new FrameworkElement[] { InfoButton });
+            //});
             // Reset the stored account
             (App.Current as App).CurrentAccount.StoredAccount = null;
         }

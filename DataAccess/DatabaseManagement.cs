@@ -21,6 +21,7 @@ namespace QuanLyNhaKhoa.DataAccess
                 try
                 {
                     TryConnection();
+                    break;
                 }
                 catch (Exception e)
                 {
@@ -52,6 +53,7 @@ namespace QuanLyNhaKhoa.DataAccess
         }
         public static IEnumerable<string> GetServerNames()
         {
+            yield return connectionName;
             RegistryView registryView = Environment.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Registry32;
 
             using (RegistryKey hklm = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, registryView))
