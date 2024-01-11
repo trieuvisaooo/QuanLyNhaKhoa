@@ -370,7 +370,8 @@ namespace QuanLyNhaKhoa.DataAccess
             }
 
             string query = $"SELECT {accountIdName} FROM {accountType}";
-            string id = "";
+            string latestId = "";
+            int latestIdParse = -1;
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -388,12 +389,18 @@ namespace QuanLyNhaKhoa.DataAccess
                                 return "";
                             }
                             // Access columns from the result set
-                            id = reader.GetString(reader.GetOrdinal($"{accountIdName}"));
+                            string tempIdString = reader.GetString(reader.GetOrdinal($"{accountIdName}"));
+                            int tempId = int.Parse(tempIdString.Substring(2, 4));
+                            if (tempId > latestIdParse)
+                            {
+                                latestIdParse = tempId;
+                                latestId = tempIdString;
+                            }
                         }
                     }
                 }
             }
-            return id;
+            return latestId;
         }
     }
 }

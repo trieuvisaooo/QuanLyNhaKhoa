@@ -66,14 +66,14 @@
                                             FontFamily="Segoe MDL2 Assets" Glyph="&#xE72E;"
                                             Margin="0 0  0 2"
                                             Foreground="White"></FontIcon>
-                                                                <Grid Visibility="{x:Bind Status, Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                                                    <Ellipse Width="40" Height="40" Fill="{StaticResource AccentAAFillColorDefaultBrush}"></Ellipse>
-                                                                <TextBlock HorizontalAlignment="Center" 
-                                                    VerticalAlignment="Center" 
-                                                    Margin="0 0  0 2"
-                                                    Text="{x:Bind Name, Mode=OneWay, Converter={StaticResource GetFirstCharacter}}"
-                                                    Style="{StaticResource BodyStrongTextBlockStyle}"
-                                                    Foreground="{StaticResource TextOnAccentAAFillColorPrimary}"></TextBlock>        
+                                    <Grid Visibility="{x:Bind Status, Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                        <Ellipse Width="40" Height="40" Fill="{StaticResource AccentAAFillColorDefaultBrush}"></Ellipse>
+                                        <TextBlock HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center" 
+                                            Margin="0 0  0 2"
+                                            Text="{x:Bind Name, Mode=OneWay, Converter={StaticResource GetFirstCharacter}}"
+                                            Style="{StaticResource BodyStrongTextBlockStyle}"
+                                            Foreground="{StaticResource TextOnAccentAAFillColorPrimary}"></TextBlock>        
                                     </Grid>
                                 </Grid>
                                 <StackPanel Orientation="Vertical">
