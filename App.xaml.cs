@@ -1,9 +1,12 @@
 ﻿using Microsoft.UI;
+using Microsoft.UI.Input;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using QuanLyNhaKhoa.DataAccess;
 using QuanLyNhaKhoa.Views;
+using System.Collections.Generic;
+using System;
 using Windows.Graphics;
 using Windows.UI;
 
@@ -93,5 +96,27 @@ namespace QuanLyNhaKhoa
             _presenter.IsMaximizable = isResizable;
             _presenter.IsMinimizable = isResizable;
         }
+
+
+        //public static void SetDragRegion(Window window, NonClientRegionKind nonClientRegionKind, params FrameworkElement[] frameworkElements)
+        //{
+        //    var nonClientInputSrc = InputNonClientPointerSource.GetForWindowId(window.AppWindow.Id);
+        //    List<Windows.Graphics.RectInt32> rects = new List<Windows.Graphics.RectInt32>();
+
+        //    foreach (var frameworkElement in frameworkElements)
+        //    {
+        //        GeneralTransform transformElement = frameworkElement.TransformToVisual(null);
+        //        Windows.Foundation.Rect bounds = transformElement.TransformBounds(new Windows.Foundation.Rect(0, 0, frameworkElement.ActualWidth, frameworkElement.ActualHeight));
+        //        var transparentRect = new Windows.Graphics.RectInt32(
+        //            _X: (int)Math.Round(bounds.X),
+        //            _Y: (int)Math.Round(bounds.Y),
+        //            _Width: (int)Math.Round(bounds.Width),
+        //            _Height: (int)Math.Round(bounds.Height)
+        //        );
+        //        rects.Add(transparentRect);
+        //    }
+
+        //    nonClientInputSrc.SetRegionRects(nonClientRegionKind, rects.ToArray());
+        //}
     }
 }
