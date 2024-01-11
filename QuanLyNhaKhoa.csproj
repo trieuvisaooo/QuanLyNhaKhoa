@@ -19,7 +19,11 @@
     <None Remove="Views\CustomerMakeAppointment.xaml" />
     <None Remove="Views\CustomerRecords.xaml" />
     <None Remove="Views\LogInWindow.xaml" />
+    <None Remove="Views\Pages\Administrator\AdministratorViewAdministrator.xaml" />
+    <None Remove="Views\Pages\Administrator\AdministratorViewDentist.xaml" />
     <None Remove="Views\Pages\Administrator\AdministratorViewReceptionist.xaml" />
+    <None Remove="Views\Pages\Customer\AdministratorViewCustomer.xaml" />
+    <None Remove="Views\Pages\Dentist\AdministratorViewReceptionist.xaml" />
     <None Remove="Views\UserControls\AvatarCircle.xaml" />
     <None Remove="Views\Windows\AddAccount.xaml" />
   </ItemGroup>
@@ -87,17 +91,30 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="NewFolder\" />
-    <Folder Include="Views\Pages\Customer\" />
+    <Folder Include="Views\Pages\Dentist\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="DataAccess\gendata2012.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\Pages\Administrator\AdministratorViewAdministrator.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Views\Pages\Administrator\AdministratorViewDentist.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Pages\Customer\AdministratorViewCustomer.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\UserControls\AvatarCircle.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\Pages\Administrator\AdministratorViewReceptionist.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Windows\AddAccount.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>

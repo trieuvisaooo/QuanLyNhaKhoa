@@ -5,14 +5,14 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace QuanLyNhaKhoa.ViewModels.Receptionist
+namespace QuanLyNhaKhoa.ViewModels.Dentist
 {
-    // make ReceptionistListViewModel to be a list of ReceptionistViewModel but bindable and updateable
-    public class ReceptionistListViewModel
+    // make DentistListViewModel to be a list of DentistViewModel but bindable and updateable
+    public class DentistListViewModel
     {
-        public ObservableCollection<BriefInfoViewModel> receptionistList { get; set; } = new();
+        public ObservableCollection<BriefInfoViewModel> DentistList { get; set; } = new();
         public readonly static int PageSize = 10;
-        public ReceptionistListViewModel()
+        public DentistListViewModel()
         {
             UpdateSource();
         }
@@ -20,16 +20,16 @@ namespace QuanLyNhaKhoa.ViewModels.Receptionist
         public async Task<bool> UpdateSource(string withName = null)
         {
             // get all books from database
-            List<ReceptionistAccount> receps = ((App)Application.Current).CurrentAccount.GetReceptionists(withName);
+            List<DentistAccount> dentists = ((App)Application.Current).CurrentAccount.GetDentists(withName);
             var disQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
             disQueue.TryEnqueue(() =>
             {
 
-                receptionistList.Clear();
+                DentistList.Clear();
                 // add each book to the list
-                for (int i = 0; i < receps.Count; i++)
+                for (int i = 0; i < dentists.Count; i++)
                 {
-                    receptionistList.Add(new BriefInfoViewModel(receps[i]));
+                    DentistList.Add(new BriefInfoViewModel(dentists[i]));
                 };
             });
             return true;
@@ -39,22 +39,22 @@ namespace QuanLyNhaKhoa.ViewModels.Receptionist
         {
             ((App)Application.Current).CurrentAccount.
             LockOrUnlockAccount(
-            receptionistList[index].GetAccount() as ReceptionistAccount,
-            receptionistList[index].Status);
-            receptionistList.ElementAt(index).Status = !receptionistList.ElementAt(index).Status;
+            DentistList[index].GetAccount() as DentistAccount,
+            DentistList[index].Status);
+            DentistList.ElementAt(index).Status = !DentistList.ElementAt(index).Status;
         }
 
         public void ReLoad(int index)
         {
-            receptionistList.Insert(index + 1, receptionistList[index]);
-            receptionistList.RemoveAt(index);
+            DentistList.Insert(index + 1, DentistList[index]);
+            DentistList.RemoveAt(index);
         }
 
         public void ResetPassword(int index)
         {
             ((App)Application.Current).CurrentAccount.
             ResetPassword(
-            receptionistList[index].GetAccount() as ReceptionistAccount);
+            DentistList[index].GetAccount() as DentistAccount);
         }
     }
 }

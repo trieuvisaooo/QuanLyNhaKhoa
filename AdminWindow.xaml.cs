@@ -1,6 +1,7 @@
 ﻿using Microsoft.UI.Xaml;
 using QuanLyNhaKhoa.Views;
 using QuanLyNhaKhoa.Views.Pages.Administrator;
+using QuanLyNhaKhoa.Views.Pages.Customer;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -34,11 +35,11 @@ namespace QuanLyNhaKhoa
                     break;
                 case 2:
                     NvgtView.Header = "Khách Hàng";
-                    contentFrame.Navigate(typeof(CustomerRecords));
+                    contentFrame.Navigate(typeof(AdministratorViewCustomer));
                     break;
                 case 3:
                     NvgtView.Header = "Nha Sĩ";
-                    contentFrame.Navigate(typeof(CustomerRecords));
+                    contentFrame.Navigate(typeof(AdministratorViewDentist));
                     break;
                 case 4:
                     NvgtView.Header = "Thuốc";
@@ -46,7 +47,7 @@ namespace QuanLyNhaKhoa
                     break;
                 case 5:
                     NvgtView.Header = "Quản Trị Viên";
-                    contentFrame.Navigate(typeof(CustomerRecords));
+                    contentFrame.Navigate(typeof(AdministratorViewAdministrator));
                     break;
             }
         }

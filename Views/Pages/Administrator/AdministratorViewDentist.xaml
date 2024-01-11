@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Page
-    x:Class="QuanLyNhaKhoa.Views.Pages.Administrator.AdministratorViewReceptionist"
+    x:Class="QuanLyNhaKhoa.Views.Pages.Administrator.AdministratorViewDentist"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:QuanLyNhaKhoa.Views.Pages.Administrator"
@@ -23,9 +23,9 @@
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Vertical" Spacing="20">
-            <TextBlock Style="{StaticResource BodyTextBlockStyle}">Danh sách các nhân viên phòng khám.</TextBlock>
-            <AutoSuggestBox PlaceholderText="Nhập tên nhân viên" TextChanged="ReQuery_Change"
-                            QueryIcon="Find" ToolTipService.ToolTip="Tìm kiếm nhân viên theo tên"/>
+            <TextBlock Style="{StaticResource BodyTextBlockStyle}">Danh sách các nha sĩ phòng khám.</TextBlock>
+            <AutoSuggestBox PlaceholderText="Nhập tên nha sĩ" TextChanged="ReQuery_Change"
+                            QueryIcon="Find" ToolTipService.ToolTip="Tìm kiếm nha sĩ theo tên"/>
         </StackPanel>
         <StackPanel Grid.Row="2" HorizontalAlignment="Left" Orientation="Horizontal" Spacing="10">
             <Button x:Name="edit_btn"  IsEnabled="False" Click="Edit_Click">
@@ -56,7 +56,7 @@
         <Grid Padding="0 10" Grid.Row="1">
             <Rectangle Grid.Row="0" Fill="{ThemeResource LayerOnAccentAcrylicFillColorDefault}"
                RadiusX="4" RadiusY="4"></Rectangle>
-            <ListView x:Name="RecListView"  ItemsSource="{x:Bind ReceptionistList.receptionistList, Mode=TwoWay}"
+            <ListView x:Name="RecListView"  ItemsSource="{x:Bind DentistList.DentistList, Mode=TwoWay}"
               Padding="4 0 16 0"
               Margin="0 10 4 10"
               SelectionChanged="ListView_SelectionChanged">
