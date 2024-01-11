@@ -9,6 +9,7 @@ namespace QuanLyNhaKhoa.Views.UserControls
 {
     public sealed partial class AvatarCircle : UserControl
     {
+
         public ViewModels.BriefInfoViewModel InfoViewModel
         {
             get { return (ViewModels.BriefInfoViewModel)GetValue(SelectedAccount); }
@@ -19,6 +20,7 @@ namespace QuanLyNhaKhoa.Views.UserControls
         public static readonly DependencyProperty SelectedAccount =
         DependencyProperty.Register(nameof(InfoViewModel), typeof(ViewModels.BriefInfoViewModel), typeof(AvatarCircle),
         new PropertyMetadata(defaultView));
+
         public AvatarCircle()
         {
             this.InitializeComponent();
@@ -26,7 +28,7 @@ namespace QuanLyNhaKhoa.Views.UserControls
 
         private void UserControl_Loaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
-            Bindings.Update();
+            //Bindings.Update();
         }
     }
 }

@@ -53,7 +53,10 @@ namespace QuanLyNhaKhoa.Views.Pages.Administrator
             }
             else
             {
+                bool isLocked = ReceptionistList.receptionistList[(RecListView).SelectedIndex].Status;
                 ReceptionistList.LockOrUnlock(RecListView.SelectedIndex);
+                LockContent.Visibility = isLocked ? Visibility.Visible : Visibility.Collapsed;
+                UnLockContent.Visibility = isLocked ? Visibility.Collapsed : Visibility.Visible;
             }
         }
 

@@ -21,7 +21,7 @@
                 FontFamily="Segoe MDL2 Assets" Glyph="&#xE72E;"
                 Margin="0 0  0 2"
                 Foreground="White"></FontIcon>   
-        <Grid Visibility="{x:Bind InfoViewModel.Status}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid Visibility="{x:Bind InfoViewModel.Status, Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Ellipse Width="40" Height="40" Fill="{StaticResource AccentAAFillColorDefaultBrush}"></Ellipse>
             <TextBlock HorizontalAlignment="Center" 
                        VerticalAlignment="Center" 

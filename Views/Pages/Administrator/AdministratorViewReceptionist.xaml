@@ -6,11 +6,15 @@
     xmlns:local="using:QuanLyNhaKhoa.Views.Pages.Administrator"
     xmlns:local1="using:QuanLyNhaKhoa.ViewModels"
     xmlns:usercontrol="using:QuanLyNhaKhoa.Views.UserControls"
+    xmlns:converters="using:QuanLyNhaKhoa.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     >
 
+    <UserControl.Resources>
+        <converters:GetFirstCharacter x:Key="GetFirstCharacter"></converters:GetFirstCharacter>
+    </UserControl.Resources>
 
     <Grid RowSpacing="10">
         <Grid.RowDefinitions>
@@ -55,7 +59,23 @@
                     <DataTemplate x:DataType="local1:BriefInfoViewModel">
                         <Grid Padding="0 16">
                             <StackPanel Orientation="Horizontal" Spacing="10">
-                                <usercontrol:AvatarCircle InfoViewModel="{x:Bind}"></usercontrol:AvatarCircle>
+                                <Grid>
+                                    <Ellipse Width="40" Height="40" Fill="DarkRed"></Ellipse>
+                                    <FontIcon HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center" 
+                                            FontFamily="Segoe MDL2 Assets" Glyph="&#xE72E;"
+                                            Margin="0 0  0 2"
+                                            Foreground="White"></FontIcon>
+                                                                <Grid Visibility="{x:Bind Status, Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                                    <Ellipse Width="40" Height="40" Fill="{StaticResource AccentAAFillColorDefaultBrush}"></Ellipse>
+                                                                <TextBlock HorizontalAlignment="Center" 
+                                                    VerticalAlignment="Center" 
+                                                    Margin="0 0  0 2"
+                                                    Text="{x:Bind Name, Mode=OneWay, Converter={StaticResource GetFirstCharacter}}"
+                                                    Style="{StaticResource BodyStrongTextBlockStyle}"
+                                                    Foreground="{StaticResource TextOnAccentAAFillColorPrimary}"></TextBlock>        
+                                    </Grid>
+                                </Grid>
                                 <StackPanel Orientation="Vertical">
                                     <TextBlock Text="{x:Bind Name, Mode=OneWay}"
                                    Style="{StaticResource BodyStrongTextBlockStyle}"/>

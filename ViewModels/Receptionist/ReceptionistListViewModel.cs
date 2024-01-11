@@ -42,7 +42,6 @@ namespace QuanLyNhaKhoa.ViewModels.Receptionist
             receptionistList[index].GetAccount() as ReceptionistAccount,
             receptionistList[index].Status);
             receptionistList.ElementAt(index).Status = !receptionistList.ElementAt(index).Status;
-            ReLoad(index);
         }
 
         public void ReLoad(int index)
