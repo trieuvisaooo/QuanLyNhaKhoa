@@ -43,7 +43,7 @@ namespace QuanLyNhaKhoa
                     break;
                 case 4:
                     NvgtView.Header = "Thuốc";
-                    contentFrame.Navigate(typeof(CustomerRecords));
+                    contentFrame.Navigate(typeof(AdministratorViewMedicine));
                     break;
                 case 5:
                     NvgtView.Header = "Quản Trị Viên";
@@ -110,5 +110,12 @@ namespace QuanLyNhaKhoa
             addAccountWindow.Activate();
         }
 
+        private void NavigateBack_Click(object sender, RoutedEventArgs e)
+        {
+            if (contentFrame.CanGoBack)
+            {
+                contentFrame.GoBack();
+            }
+        }
     }
 }
