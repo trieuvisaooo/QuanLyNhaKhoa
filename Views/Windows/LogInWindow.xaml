@@ -109,24 +109,25 @@
                 <Grid Margin="0, 20, 0, 0"
                             HorizontalAlignment="Stretch">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Grid.Column="1"
-                        HorizontalAlignment="Stretch"
-                        Spacing="10"
-                        MaxWidth="300">
+                        HorizontalAlignment="Center"
+                        >
                         <Grid>
                             <ProgressRing x:Name="LoadingRing" IsActive="False"></ProgressRing>
                             <Button
                             HorizontalAlignment="Stretch"
                             Style="{StaticResource AccentButtonStyle}"
                             Click="LogInSummit_Click"
+                                Margin="8 8 8 16"
                             >Đăng nhập</Button>
                         </Grid>
-                        <HyperlinkButton HorizontalAlignment="Center">Đăng kí tài khoản</HyperlinkButton>
+                        <HyperlinkButton HorizontalAlignment="Center" Click="SignUp_Click">Đăng kí tài khoản</HyperlinkButton>
+                        <HyperlinkButton HorizontalAlignment="Center" >Đăng kí lịch hẹn không cần tài khoản</HyperlinkButton>
                     </StackPanel>
                 </Grid>
             </StackPanel>

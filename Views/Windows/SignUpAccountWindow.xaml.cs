@@ -1,5 +1,6 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using QuanLyNhaKhoa.Helpers;
 using QuanLyNhaKhoa.ViewModels;
 using System.Threading.Tasks;
 
@@ -11,14 +12,15 @@ namespace QuanLyNhaKhoa.Views
     /// <summary>
     /// An empty window that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class AddAccountWindow : Window
+    public sealed partial class SignUpAccountWindow : Window
     {
         public AccountViewModel accountViewModel { get; private set; } = new();
-        public AddAccountWindow()
+        public SignUpAccountWindow()
         {
             this.InitializeComponent();
             this.AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
             App.SetTitleBarColors(this);
+            accountViewModel.accountHelper.selectedRole = AccountHelper.Role.Customer;
             this.SetTitleBar(TitleBar);
             // Reset the stored account
         }
@@ -33,6 +35,8 @@ namespace QuanLyNhaKhoa.Views
                 bool isSuccess = await Task.Run(() => accountViewModel.AddAccount());
                 if (isSuccess)
                 {
+                    Window logInWindow = new LogInWindow();
+                    logInWindow.Activate();
                     this.Close();
                 }
             }
@@ -42,11 +46,6 @@ namespace QuanLyNhaKhoa.Views
 
         }
 
-        private void RoleSelected_Click(object sender, RoutedEventArgs e)
-        {
-            var menuFlyoutItem = sender as Microsoft.UI.Xaml.Controls.MenuFlyoutItem;
-            accountViewModel.SelectedRole = menuFlyoutItem.Text;
-        }
 
         private void txt_GotFocus(object sender, RoutedEventArgs e)
         {

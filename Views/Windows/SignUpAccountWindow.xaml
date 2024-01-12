@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Window
-    x:Class="QuanLyNhaKhoa.Views.AddAccountWindow"
+    x:Class="QuanLyNhaKhoa.Views.SignUpAccountWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:QuanLyNhaKhoa.Views"
@@ -40,7 +40,7 @@
         Grid.Column="1">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                 <TextBlock x:Name="AppTitle"
-                   Text="Tạo Tài Khoản Mới"
+                   Text="Đăng Ký Tài Khoản"
                    VerticalAlignment="Center"
                    Margin="5,0,0,0"
                    Style="{StaticResource CaptionTextBlockStyle}"/>
@@ -54,7 +54,7 @@
         </Grid.RowDefinitions>
         <TextBlock
             Grid.Row="0"
-            Text="Tạo tài khoản mới"
+            Text="Đăng kí tài khoản"
             FontSize="30"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
@@ -82,20 +82,6 @@
                     Text="{x:Bind accountViewModel.Name, Mode=TwoWay}"
                     GotFocus="txt_GotFocus"
                     ></TextBox>
-                <TextBox
-                    
-                    Header="Địa chỉ"
-                    PlaceholderText="Nhập địa chỉ"
-                    Text="{x:Bind accountViewModel.Address, Mode=TwoWay}"
-                    GotFocus="txt_GotFocus"
-                    ></TextBox>
-                <DatePicker x:Name="DatePickerControl" Header="Ngày sinh" MonthFormat="{}{month.integer(2)}" />
-                
-                <Grid ColumnSpacing="15">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="3*"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
                     <PasswordBox
                     Grid.Column="0"
                     x:Name="txtPassword"
@@ -104,21 +90,20 @@
                     GotFocus="txt_GotFocus"
                     Password="{x:Bind accountViewModel.Password, Mode=TwoWay}"
                     ></PasswordBox>
-                    <StackPanel Spacing="10" Grid.Column="1">
-                        <TextBlock Style="{StaticResource BodyTextBlockStyle}">Tôi là</TextBlock>
-                        <DropDownButton
-                        Content="{x:Bind accountViewModel.SelectedRole, Mode=OneWay}"
-                        x:Name="rolesButton">
-                            <DropDownButton.Flyout>
-                                <MenuFlyout Placement="Bottom">
-                                    <MenuFlyoutItem Text="{x:Bind accountViewModel.Roles[0]}"  Tag="KH" Click="RoleSelected_Click" />
-                                    <MenuFlyoutItem Text="{x:Bind accountViewModel.Roles[1]}" Tag="NV" Click="RoleSelected_Click"/>
-                                    <MenuFlyoutItem Text="{x:Bind accountViewModel.Roles[2]}" Tag="NS" Click="RoleSelected_Click"/>
-                                    <MenuFlyoutItem Text="{x:Bind accountViewModel.Roles[3]}" Tag="QTV" Click="RoleSelected_Click"/>
-                                </MenuFlyout>
-                            </DropDownButton.Flyout>
-                        </DropDownButton>
-                    </StackPanel>
+                <DatePicker x:Name="DatePickerControl" Header="Ngày sinh" MonthFormat="{}{month.integer(2)}" />
+                <TextBox
+                    
+                    Header="Địa chỉ"
+                    PlaceholderText="Nhập địa chỉ"
+                    Text="{x:Bind accountViewModel.Address, Mode=TwoWay}"
+                    GotFocus="txt_GotFocus"
+                    ></TextBox>
+                
+                <Grid ColumnSpacing="15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
                 </Grid>
                 <Grid Margin="0, 20, 0, 0"
                             HorizontalAlignment="Stretch">
@@ -138,7 +123,7 @@
                             HorizontalAlignment="Stretch"
                             Style="{StaticResource AccentButtonStyle}"
                             Click="AddAccount_Click"
-                            >Tạo tài khoản</Button>
+                            >Đăng kí</Button>
                         </Grid>
                     </StackPanel>
                 </Grid>

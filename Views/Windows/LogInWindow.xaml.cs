@@ -67,5 +67,13 @@ namespace QuanLyNhaKhoa.Views
                 (sender as Microsoft.UI.Xaml.Controls.PasswordBox).SelectAll();
             }
         }
+
+        private void SignUp_Click(object sender, RoutedEventArgs e)
+        {
+            Window signUpWindow = new SignUpAccountWindow();
+            signUpWindow.Activate();
+            this.Close();
+        }
+
     }
 }
