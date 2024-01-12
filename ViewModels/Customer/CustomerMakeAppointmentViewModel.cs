@@ -27,8 +27,6 @@ namespace QuanLyNhaKhoa.ViewModels
 
         }
 
-
-
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged(string propertyName)
         {

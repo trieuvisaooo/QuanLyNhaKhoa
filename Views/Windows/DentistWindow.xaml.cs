@@ -1,5 +1,9 @@
 ﻿using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Media.Animation;
+using Microsoft.UI.Xaml.Navigation;
+using QuanLyNhaKhoa.Models;
 using QuanLyNhaKhoa.Views;
+
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -9,9 +13,9 @@ namespace QuanLyNhaKhoa
     /// <summary>
     /// An empty window that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainWindow : Window
+    public sealed partial class DentistWindow : Window
     {
-        public MainWindow()
+        public DentistWindow()
         {
             this.InitializeComponent();
             App.SetTitleBarColors(this);
@@ -19,21 +23,23 @@ namespace QuanLyNhaKhoa
             this.SetTitleBar(TitleBar);
             contentFrame.CacheSize = 4;
             NvgtView.SelectedItem = NvgtView.MenuItems[0];
-            FrameInflate(1);
+            FrameInflate(0);
         }
+
+        public DentistAccount customer = new DentistAccount();
 
         private void FrameInflate(int index)
         {
             switch (index)
             {
+                case 0:
+                    NvgtView.Header = "Lịch hẹn";
+                    contentFrame.Navigate(typeof(DentistAppointment));
+                    break;
                 case 1:
-                    NvgtView.Header = "Lịch Hẹn";
-                    contentFrame.Navigate(typeof(MakeAppointmentPage));
-                    break;
-                case 2:
-                    NvgtView.Header = "Hồ Sơ Bệnh Án";
-                    contentFrame.Navigate(typeof(CustomerRecords));
-                    break;
+                    NvgtView.Header = "Khách hàng";
+                    contentFrame.Navigate(typeof(CustomerAppointment));
+                    break;              
             }
         }
 
@@ -42,12 +48,12 @@ namespace QuanLyNhaKhoa
             // Inflate frame according to the index invoked
             switch (args.InvokedItemContainer.Tag)
             {
+                case "0":
+                    FrameInflate(0);
+                    break;
                 case "1":
                     FrameInflate(1);
-                    break;
-                case "2":
-                    FrameInflate(2);
-                    break;
+                    break;               
             }
         }
 
@@ -56,13 +62,23 @@ namespace QuanLyNhaKhoa
             // Inflate frame according to the index selected
             switch (args.SelectedItemContainer.Tag)
             {
+                case "0":
+                    FrameInflate(0);
+                    break;
                 case "1":
                     FrameInflate(1);
                     break;
-                case "2":
-                    FrameInflate(2);
-                    break;
             }
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            contentFrame.GoBack(new SuppressNavigationTransitionInfo());
+        }
+
+        private void Frame_Navigated(object sender, NavigationEventArgs e)
+        {
+            BackButton.Visibility = contentFrame.CanGoBack ? Visibility.Visible : Visibility.Collapsed;
         }
 
     }
