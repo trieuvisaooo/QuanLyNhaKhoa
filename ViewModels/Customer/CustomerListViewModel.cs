@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 namespace QuanLyNhaKhoa.ViewModels.Receptionist
 {
     // make ReceptionistListViewModel to be a list of ReceptionistViewModel but bindable and updateable
-    public class ReceptionistListViewModel
+    public class CustomerListViewModel
     {
-        public ObservableCollection<BriefInfoViewModel> receptionistList { get; set; } = new();
+        public ObservableCollection<BriefInfoViewModel> CustomerList { get; set; } = new();
         public readonly static int PageSize = 10;
-        public ReceptionistListViewModel()
+        public CustomerListViewModel()
         {
             UpdateSource();
         }
@@ -20,16 +20,16 @@ namespace QuanLyNhaKhoa.ViewModels.Receptionist
         public async Task<bool> UpdateSource(string withName = null)
         {
             // get all books from database
-            List<ReceptionistAccount> receps = ((App)Application.Current).CurrentAccount.GetReceptionists(withName);
+            List<CustomerAccount> receps = ((App)Application.Current).CurrentAccount.GetCustomers(withName);
             var disQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
             disQueue.TryEnqueue(() =>
             {
 
-                receptionistList.Clear();
+                CustomerList.Clear();
                 // add each book to the list
                 for (int i = 0; i < receps.Count; i++)
                 {
-                    receptionistList.Add(new BriefInfoViewModel(receps[i]));
+                    CustomerList.Add(new BriefInfoViewModel(receps[i]));
                 };
             });
             return true;
@@ -39,22 +39,22 @@ namespace QuanLyNhaKhoa.ViewModels.Receptionist
         {
             ((App)Application.Current).CurrentAccount.
             LockOrUnlockAccount(
-            receptionistList[index].GetAccount() as ReceptionistAccount,
-            receptionistList[index].Status);
-            receptionistList.ElementAt(index).Status = !receptionistList.ElementAt(index).Status;
+            CustomerList[index].GetAccount() as CustomerAccount,
+            CustomerList[index].Status);
+            CustomerList.ElementAt(index).Status = !CustomerList.ElementAt(index).Status;
         }
 
         public void ReLoad(int index)
         {
-            receptionistList.Insert(index + 1, receptionistList[index]);
-            receptionistList.RemoveAt(index);
+            CustomerList.Insert(index + 1, CustomerList[index]);
+            CustomerList.RemoveAt(index);
         }
 
         public void ResetPassword(int index)
         {
             ((App)Application.Current).CurrentAccount.
             ResetPassword(
-            receptionistList[index].GetAccount() as ReceptionistAccount);
+            CustomerList[index].GetAccount() as CustomerAccount);
         }
     }
 }

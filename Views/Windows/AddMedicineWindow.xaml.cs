@@ -1,6 +1,6 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using QuanLyNhaKhoa.ViewModels;
+using QuanLyNhaKhoa.ViewModels.Medicine;
 using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -11,10 +11,10 @@ namespace QuanLyNhaKhoa.Views
     /// <summary>
     /// An empty window that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class AddAccountWindow : Window
+    public sealed partial class AddMedicineWindow : Window
     {
-        public AccountViewModel accountViewModel { get; private set; } = new();
-        public AddAccountWindow()
+        public MedicineViewModel medicineViewModel { get; private set; } = new(new Models.Medicine());
+        public AddMedicineWindow()
         {
             this.InitializeComponent();
             this.AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
@@ -29,8 +29,8 @@ namespace QuanLyNhaKhoa.Views
             (sender as Button).Visibility = Visibility.Collapsed;
             try
             {
-
-                bool isSuccess = await Task.Run(() => accountViewModel.AddAccount());
+                medicineViewModel.ExpiredDate = DatePickerControl.SelectedDate.Value.Date;
+                bool isSuccess = await Task.Run(() => medicineViewModel.AddMedicine());
                 if (isSuccess)
                 {
                     this.Close();
@@ -40,12 +40,6 @@ namespace QuanLyNhaKhoa.Views
             LoadingRing.IsActive = false;
             (sender as Button).Visibility = Visibility.Visible;
 
-        }
-
-        private void RoleSelected_Click(object sender, RoutedEventArgs e)
-        {
-            var menuFlyoutItem = sender as Microsoft.UI.Xaml.Controls.MenuFlyoutItem;
-            accountViewModel.SelectedRole = menuFlyoutItem.Text;
         }
 
         private void txt_GotFocus(object sender, RoutedEventArgs e)

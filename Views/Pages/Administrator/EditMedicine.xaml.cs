@@ -1,51 +1,44 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using QuanLyNhaKhoa.ViewModels;
+using QuanLyNhaKhoa.ViewModels.Medicine;
 using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace QuanLyNhaKhoa.Views
+namespace QuanLyNhaKhoa.Views.Pages.Administrator
 {
     /// <summary>
-    /// An empty window that can be used on its own or navigated to within a Frame.
+    /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class AddAccountWindow : Window
+    public sealed partial class EditMedicine : Page
     {
-        public AccountViewModel accountViewModel { get; private set; } = new();
-        public AddAccountWindow()
+        public MedicineViewModel medicineViewModel { get; set; }
+        public static MedicineViewModel medicineViewModelTemp { get; set; }
+        public EditMedicine()
         {
+            medicineViewModel = medicineViewModelTemp;
             this.InitializeComponent();
-            this.AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
-            App.SetTitleBarColors(this);
-            this.SetTitleBar(TitleBar);
-            // Reset the stored account
+            DatePickerControl.Date = medicineViewModel.ExpiredDate;
         }
 
-        private async void AddAccount_Click(object sender, RoutedEventArgs e)
+        private async void EditMedc_Click(object sender, RoutedEventArgs e)
         {
             LoadingRing.IsActive = true;
             (sender as Button).Visibility = Visibility.Collapsed;
             try
             {
-
-                bool isSuccess = await Task.Run(() => accountViewModel.AddAccount());
+                medicineViewModel.ExpiredDate = DatePickerControl.SelectedDate.Value.Date;
+                bool isSuccess = await Task.Run(() => medicineViewModel.EditMedicine());
                 if (isSuccess)
                 {
-                    this.Close();
+                    Frame.GoBack();
                 }
             }
             catch (System.Exception) { }
             LoadingRing.IsActive = false;
             (sender as Button).Visibility = Visibility.Visible;
 
-        }
-
-        private void RoleSelected_Click(object sender, RoutedEventArgs e)
-        {
-            var menuFlyoutItem = sender as Microsoft.UI.Xaml.Controls.MenuFlyoutItem;
-            accountViewModel.SelectedRole = menuFlyoutItem.Text;
         }
 
         private void txt_GotFocus(object sender, RoutedEventArgs e)

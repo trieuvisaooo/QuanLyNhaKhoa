@@ -1,6 +1,6 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using QuanLyNhaKhoa.ViewModels.Receptionist;
+using QuanLyNhaKhoa.ViewModels.Administrator;
 using System;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -11,11 +11,11 @@ namespace QuanLyNhaKhoa.Views.Pages.Administrator
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class AdministratorViewReceptionist : Page
+    public sealed partial class AdministratorViewAdministrator : Page
     {
-        internal ReceptionistListViewModel ReceptionistList { get; set; } = new();
+        internal AdministratorListViewModel AdministratorListViewModels { get; set; } = new();
         private static Microsoft.UI.Dispatching.DispatcherQueueTimer _typeTimer = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread().CreateTimer();
-        public AdministratorViewReceptionist()
+        public AdministratorViewAdministrator()
         {
             this.InitializeComponent();
             _typeTimer.Interval = TimeSpan.FromMilliseconds(100);
@@ -25,39 +25,30 @@ namespace QuanLyNhaKhoa.Views.Pages.Administrator
         {
             if ((sender as ListView).SelectedIndex != -1)
             {
-                bool isLocked = ReceptionistList.receptionistList[(sender as ListView).SelectedIndex].Status;
+                bool isLocked = AdministratorListViewModels.AdministratorList[(sender as ListView).SelectedIndex].Status;
                 LockContent.Visibility = isLocked ? Visibility.Visible : Visibility.Collapsed;
                 UnLockContent.Visibility = isLocked ? Visibility.Collapsed : Visibility.Visible;
-                edit_btn.IsEnabled = true;
                 remove_btn.IsEnabled = true;
                 reset_btn.IsEnabled = true;
             }
             else
             {
-                edit_btn.IsEnabled = false;
                 remove_btn.IsEnabled = false;
                 reset_btn.IsEnabled = false;
             }
-        }
-
-        private async void Edit_Click(object sender, RoutedEventArgs e)
-        {
-            throw new NotFiniteNumberException();
-
         }
 
         private void Remove_Click(object sender, RoutedEventArgs e)
         {
             if (RecListView.SelectedIndex == -1)
             {
-                edit_btn.IsEnabled = false;
                 remove_btn.IsEnabled = false;
                 reset_btn.IsEnabled = false;
             }
             else
             {
-                ReceptionistList.LockOrUnlock(RecListView.SelectedIndex);
-                bool isLocked = ReceptionistList.receptionistList[(RecListView).SelectedIndex].Status;
+                bool isLocked = AdministratorListViewModels.AdministratorList[(RecListView).SelectedIndex].Status;
+                AdministratorListViewModels.LockOrUnlock(RecListView.SelectedIndex);
                 LockContent.Visibility = isLocked ? Visibility.Visible : Visibility.Collapsed;
                 UnLockContent.Visibility = isLocked ? Visibility.Collapsed : Visibility.Visible;
             }
@@ -83,7 +74,7 @@ namespace QuanLyNhaKhoa.Views.Pages.Administrator
         private async void PerfomingQuery(AutoSuggestBox sender)
         {
             string textSearch = sender.Text;
-            await ReceptionistList.UpdateSource(textSearch);
+            await AdministratorListViewModels.UpdateSource(textSearch);
             if (LoadingBar.Visibility == Visibility.Visible)
             {
                 LoadingBar.Visibility = Visibility.Collapsed;
@@ -94,13 +85,12 @@ namespace QuanLyNhaKhoa.Views.Pages.Administrator
         {
             if (RecListView.SelectedIndex == -1)
             {
-                edit_btn.IsEnabled = false;
                 remove_btn.IsEnabled = false;
                 reset_btn.IsEnabled = false;
             }
             else
             {
-                ReceptionistList.ResetPassword(RecListView.SelectedIndex);
+                AdministratorListViewModels.ResetPassword(RecListView.SelectedIndex);
             }
         }
     }

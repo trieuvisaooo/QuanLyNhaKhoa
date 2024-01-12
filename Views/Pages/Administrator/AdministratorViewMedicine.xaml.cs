@@ -1,6 +1,6 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using QuanLyNhaKhoa.ViewModels.Receptionist;
+using QuanLyNhaKhoa.ViewModels.Medicine;
 using System;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -11,11 +11,11 @@ namespace QuanLyNhaKhoa.Views.Pages.Administrator
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class AdministratorViewReceptionist : Page
+    public sealed partial class AdministratorViewMedicine : Page
     {
-        internal ReceptionistListViewModel ReceptionistList { get; set; } = new();
+        internal MedicineListViewModel MedicineList { get; set; } = new();
         private static Microsoft.UI.Dispatching.DispatcherQueueTimer _typeTimer = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread().CreateTimer();
-        public AdministratorViewReceptionist()
+        public AdministratorViewMedicine()
         {
             this.InitializeComponent();
             _typeTimer.Interval = TimeSpan.FromMilliseconds(100);
@@ -25,25 +25,32 @@ namespace QuanLyNhaKhoa.Views.Pages.Administrator
         {
             if ((sender as ListView).SelectedIndex != -1)
             {
-                bool isLocked = ReceptionistList.receptionistList[(sender as ListView).SelectedIndex].Status;
-                LockContent.Visibility = isLocked ? Visibility.Visible : Visibility.Collapsed;
-                UnLockContent.Visibility = isLocked ? Visibility.Collapsed : Visibility.Visible;
                 edit_btn.IsEnabled = true;
                 remove_btn.IsEnabled = true;
-                reset_btn.IsEnabled = true;
             }
             else
             {
                 edit_btn.IsEnabled = false;
                 remove_btn.IsEnabled = false;
-                reset_btn.IsEnabled = false;
             }
         }
 
         private async void Edit_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotFiniteNumberException();
+            if (RecListView.SelectedIndex == -1)
+            {
+                edit_btn.IsEnabled = false;
+                remove_btn.IsEnabled = false;
+                return;
+            }
+            EditMedicine.medicineViewModelTemp = MedicineList.MedicineList[(RecListView).SelectedIndex];
+            this.Frame.Navigate(typeof(EditMedicine));
 
+        }
+        private async void Add_Click(object sender, RoutedEventArgs e)
+        {
+            Window medicineWin = new AddMedicineWindow();
+            medicineWin.Activate();
         }
 
         private void Remove_Click(object sender, RoutedEventArgs e)
@@ -52,14 +59,10 @@ namespace QuanLyNhaKhoa.Views.Pages.Administrator
             {
                 edit_btn.IsEnabled = false;
                 remove_btn.IsEnabled = false;
-                reset_btn.IsEnabled = false;
             }
             else
             {
-                ReceptionistList.LockOrUnlock(RecListView.SelectedIndex);
-                bool isLocked = ReceptionistList.receptionistList[(RecListView).SelectedIndex].Status;
-                LockContent.Visibility = isLocked ? Visibility.Visible : Visibility.Collapsed;
-                UnLockContent.Visibility = isLocked ? Visibility.Collapsed : Visibility.Visible;
+                MedicineList.Remove(RecListView.SelectedIndex);
             }
         }
 
@@ -83,24 +86,10 @@ namespace QuanLyNhaKhoa.Views.Pages.Administrator
         private async void PerfomingQuery(AutoSuggestBox sender)
         {
             string textSearch = sender.Text;
-            await ReceptionistList.UpdateSource(textSearch);
+            await MedicineList.UpdateSource(textSearch);
             if (LoadingBar.Visibility == Visibility.Visible)
             {
                 LoadingBar.Visibility = Visibility.Collapsed;
-            }
-        }
-
-        private void Reset_Click(object sender, RoutedEventArgs e)
-        {
-            if (RecListView.SelectedIndex == -1)
-            {
-                edit_btn.IsEnabled = false;
-                remove_btn.IsEnabled = false;
-                reset_btn.IsEnabled = false;
-            }
-            else
-            {
-                ReceptionistList.ResetPassword(RecListView.SelectedIndex);
             }
         }
     }

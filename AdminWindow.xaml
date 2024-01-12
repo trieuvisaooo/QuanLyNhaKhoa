@@ -83,8 +83,9 @@
                     Height="36"
                     VerticalContentAlignment="Center"
                     Margin="6, 0, 0, 0"
+                    Click="NavigateBack_Click"
                     Grid.Column="0">
-                <FontIcon Glyph="&#xE946;" FontSize="14"/>
+                <FontIcon Glyph="&#xE830;" FontSize="12"/>
             </Button>
             <Border x:Name="TitleBar"
             Background="Transparent"

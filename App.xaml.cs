@@ -1,12 +1,9 @@
 ﻿using Microsoft.UI;
-using Microsoft.UI.Input;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using QuanLyNhaKhoa.DataAccess;
 using QuanLyNhaKhoa.Views;
-using System.Collections.Generic;
-using System;
 using Windows.Graphics;
 using Windows.UI;
 
@@ -26,6 +23,7 @@ namespace QuanLyNhaKhoa
         public string ConnectionString { get => connectionString; set => connectionString = value; }
         private DatabaseManagement _databaseManagement;
         public AccountData CurrentAccount;
+        public MedicinesAndServices MedicinesAndServices;
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -36,7 +34,7 @@ namespace QuanLyNhaKhoa
             this.InitializeComponent();
             this._databaseManagement = new DatabaseManagement();
             this.CurrentAccount = new AccountData(_databaseManagement.ConnectionString);
-
+            this.MedicinesAndServices = new MedicinesAndServices(_databaseManagement.ConnectionString);
         }
 
         /// <summary>

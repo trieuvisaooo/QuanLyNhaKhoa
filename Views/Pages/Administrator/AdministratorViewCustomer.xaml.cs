@@ -6,16 +6,16 @@ using System;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace QuanLyNhaKhoa.Views.Pages.Administrator
+namespace QuanLyNhaKhoa.Views.Pages.Customer
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class AdministratorViewReceptionist : Page
+    public sealed partial class AdministratorViewCustomer : Page
     {
-        internal ReceptionistListViewModel ReceptionistList { get; set; } = new();
+        internal CustomerListViewModel CustomerListViewModels { get; set; } = new();
         private static Microsoft.UI.Dispatching.DispatcherQueueTimer _typeTimer = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread().CreateTimer();
-        public AdministratorViewReceptionist()
+        public AdministratorViewCustomer()
         {
             this.InitializeComponent();
             _typeTimer.Interval = TimeSpan.FromMilliseconds(100);
@@ -25,7 +25,7 @@ namespace QuanLyNhaKhoa.Views.Pages.Administrator
         {
             if ((sender as ListView).SelectedIndex != -1)
             {
-                bool isLocked = ReceptionistList.receptionistList[(sender as ListView).SelectedIndex].Status;
+                bool isLocked = CustomerListViewModels.CustomerList[(sender as ListView).SelectedIndex].Status;
                 LockContent.Visibility = isLocked ? Visibility.Visible : Visibility.Collapsed;
                 UnLockContent.Visibility = isLocked ? Visibility.Collapsed : Visibility.Visible;
                 edit_btn.IsEnabled = true;
@@ -56,8 +56,8 @@ namespace QuanLyNhaKhoa.Views.Pages.Administrator
             }
             else
             {
-                ReceptionistList.LockOrUnlock(RecListView.SelectedIndex);
-                bool isLocked = ReceptionistList.receptionistList[(RecListView).SelectedIndex].Status;
+                bool isLocked = CustomerListViewModels.CustomerList[(RecListView).SelectedIndex].Status;
+                CustomerListViewModels.LockOrUnlock(RecListView.SelectedIndex);
                 LockContent.Visibility = isLocked ? Visibility.Visible : Visibility.Collapsed;
                 UnLockContent.Visibility = isLocked ? Visibility.Collapsed : Visibility.Visible;
             }
@@ -83,7 +83,7 @@ namespace QuanLyNhaKhoa.Views.Pages.Administrator
         private async void PerfomingQuery(AutoSuggestBox sender)
         {
             string textSearch = sender.Text;
-            await ReceptionistList.UpdateSource(textSearch);
+            await CustomerListViewModels.UpdateSource(textSearch);
             if (LoadingBar.Visibility == Visibility.Visible)
             {
                 LoadingBar.Visibility = Visibility.Collapsed;
@@ -100,7 +100,7 @@ namespace QuanLyNhaKhoa.Views.Pages.Administrator
             }
             else
             {
-                ReceptionistList.ResetPassword(RecListView.SelectedIndex);
+                CustomerListViewModels.ResetPassword(RecListView.SelectedIndex);
             }
         }
     }
