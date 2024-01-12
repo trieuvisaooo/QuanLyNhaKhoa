@@ -49,7 +49,7 @@ namespace QuanLyNhaKhoa.Views
             String getPatientNameQuery; 
 
             if (ID != "")
-                getPatientNameQuery = $"SELECT BA.MABA, BA.MAKH, KH.HOTEN  FROM BENH_AN BA JOIN KHACH_HANG KH ON BA.MAKH = KH.MAKH WHERE BA.MABA = '{ID}'";
+                getPatientNameQuery = $"SELECT BA.MABA, BA.MAKH, KH.HOTEN  FROM BENH_AN BA JOIN KHACH_HANG KH ON BA.MAKH = KH.MAKH WHERE KH.HOTEN = '{ID}'";
             else
                 getPatientNameQuery = $"SELECT BA.MABA, BA.MAKH, KH.HOTEN FROM BENH_AN BA JOIN KHACH_HANG KH ON BA.MAKH = KH.MAKH";
 

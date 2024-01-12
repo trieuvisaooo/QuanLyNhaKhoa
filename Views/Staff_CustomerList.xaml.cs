@@ -66,7 +66,7 @@ namespace QuanLyNhaKhoa.Views
             List<Staff_CustomerListViewModel> list = new List<Staff_CustomerListViewModel>();
             String getStaffInfoQuery;
             if (ID != "")
-                getStaffInfoQuery = "select MAKH, HOTEN, NGAYSINH, SDT, DIACHI from KHACH_HANG where MAKH = '" + ID + "'";
+                getStaffInfoQuery = "select MAKH, HOTEN, NGAYSINH, SDT, DIACHI from KHACH_HANG where HOTEN = '" + ID + "'";
             else
                 getStaffInfoQuery = "select MAKH, HOTEN, NGAYSINH, SDT, DIACHI from KHACH_HANG";
 
