@@ -101,6 +101,7 @@ namespace QuanLyNhaKhoa.Views.Pages.Administrator
             else
             {
                 DentistList.ResetPassword(RecListView.SelectedIndex);
+                Notify.WriteLine("Đã tái thiết lập mật khẩu mặc định.");
             }
         }
     }

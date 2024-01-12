@@ -91,6 +91,7 @@ namespace QuanLyNhaKhoa.Views.Pages.Administrator
             else
             {
                 AdministratorListViewModels.ResetPassword(RecListView.SelectedIndex);
+                Notify.WriteLine("Đã tái thiết lập mật khẩu mặc định.");
             }
         }
     }

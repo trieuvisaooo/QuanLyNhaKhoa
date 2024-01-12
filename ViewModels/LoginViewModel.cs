@@ -76,7 +76,7 @@ namespace QuanLyNhaKhoa.ViewModels
                 try
                 {
                     bool result = (App.Current as App).CurrentAccount.Login(AccountTemplate);
-                    if (!result) { throw new ArgumentException("Wrong Phone Number Or Password"); }
+                    if (!result) { throw new ArgumentException("Số điện thoại hoặc mật khẩu sai."); }
                     return Task.FromResult(result);
                 }
                 catch (Exception)

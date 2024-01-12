@@ -99,5 +99,8 @@
             </ListView>
             <ProgressBar x:Name="LoadingBar" IsIndeterminate="True" VerticalAlignment="Top" Visibility="Collapsed" />
         </Grid>
+        <Grid Grid.Row="0" Grid.RowSpan="3">
+            <usercontrol:NotificationSystem x:Name="Notify" VerticalAlignment="Bottom"/>
+        </Grid>
     </Grid>
 </Page>

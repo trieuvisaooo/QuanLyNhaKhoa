@@ -27,8 +27,14 @@
                 <StackPanel Orientation="Horizontal" Padding="10 50 0 10" Spacing="10">
                     <usercontrol:AvatarCircle Width="40" Height="40" InfoViewModel="{x:Bind infoViewModel}"></usercontrol:AvatarCircle>
                     <StackPanel Orientation="Vertical">
-                        <TextBlock Text="{x:Bind infoViewModel.Name, Mode=OneWay}"
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{x:Bind infoViewModel.Name, Mode=OneWay}"
+                                       VerticalAlignment="Center"
                                    Style="{StaticResource BodyStrongTextBlockStyle}"/>
+                            <HyperlinkButton Margin="3" VerticalAlignment="Center" ToolTipService.ToolTip="Chỉnh sửa thông tin cá nhân">
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" FontSize="10"/>
+                            </HyperlinkButton>
+                        </StackPanel>
                         <TextBlock Text="{x:Bind infoViewModel.Id, Mode=OneWay}"
                                    Style="{StaticResource CaptionTextBlockStyle}"/>
                     </StackPanel>
