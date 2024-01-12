@@ -26,6 +26,7 @@
     <None Remove="Views\Pages\Administrator\EditMedicine.xaml" />
     <None Remove="Views\Pages\Customer\AdministratorViewCustomer.xaml" />
     <None Remove="Views\UserControls\AvatarCircle.xaml" />
+    <None Remove="Views\UserControls\NotificationSystem.xaml" />
     <None Remove="Views\Windows\AddAccount.xaml" />
     <None Remove="Views\Windows\AddMedicineWindow.xaml" />
     <None Remove="Views\Windows\SignUpAccountWindow.xaml" />
@@ -96,6 +97,9 @@
     <None Update="DataAccess\gendata2012.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\UserControls\NotificationSystem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\Pages\Administrator\EditMedicine.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

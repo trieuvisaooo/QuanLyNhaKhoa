@@ -73,8 +73,16 @@ namespace QuanLyNhaKhoa.ViewModels
                     PhoneNumber = (PhoneNumber.PadRight(15, ' ')).Substring(0, 15),
                     Password = (Password.PadRight(50, ' ')).Substring(0, 50),
                 };
-                bool result = (App.Current as App).CurrentAccount.Login(AccountTemplate);
-                return Task.FromResult(result);
+                try
+                {
+                    bool result = (App.Current as App).CurrentAccount.Login(AccountTemplate);
+                    if (!result) { throw new ArgumentException("Wrong Phone Number Or Password"); }
+                    return Task.FromResult(result);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
             }
             else if (logInHelper.selectedRole == LogInHelper.Role.Customer)
             {

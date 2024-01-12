@@ -44,7 +44,9 @@ namespace QuanLyNhaKhoa.Views
                     this.Close();
                 }
             }
-            catch (System.Exception) { }
+            catch (System.Exception ex) {
+                Notify.WriteLine(ex.Message);
+            }
             LoadingRing.IsActive = false;
             (sender as Button).Visibility = Visibility.Visible;
 
@@ -55,6 +57,7 @@ namespace QuanLyNhaKhoa.Views
             var menuFlyoutItem = sender as Microsoft.UI.Xaml.Controls.MenuFlyoutItem;
             loginViewModel.SelectedRole = menuFlyoutItem.Text;
         }
+        
 
         private void txt_GotFocus(object sender, RoutedEventArgs e)
         {
