@@ -15,6 +15,8 @@ namespace QuanLyNhaKhoa
     /// </summary>
     public sealed partial class CustomerWindow : Window
     {
+        //public CustomerAccount customerCurrentAccount = new CustomerAccount();
+
         public CustomerWindow()
         {
             this.InitializeComponent();
@@ -24,9 +26,10 @@ namespace QuanLyNhaKhoa
             contentFrame.CacheSize = 4;
             NvgtView.SelectedItem = NvgtView.MenuItems[0];
             FrameInflate(0);
+
         }
 
-        public CustomerAccount customer = new CustomerAccount();
+        //public CustomerAccount customer = new CustomerAccount();
 
         private void FrameInflate(int index)
         {
@@ -61,6 +64,11 @@ namespace QuanLyNhaKhoa
                 case "2":
                     FrameInflate(2);
                     break;
+                case "SignOut":
+                    Window LogInWindow = new LogInWindow();
+                    LogInWindow.Activate();
+                    this.Close();
+                    break;
             }
         }
 
@@ -77,6 +85,8 @@ namespace QuanLyNhaKhoa
                     break;
                 case "2":
                     FrameInflate(2);
+                    break;
+                case "SignOut":
                     break;
             }
         }

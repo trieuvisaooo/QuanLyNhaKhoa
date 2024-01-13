@@ -72,7 +72,6 @@ namespace QuanLyNhaKhoa.ViewModels
 
         public ObservableCollection<CustomerAppointmentViewModel> GetAppointments(string connectionString, string cusID)
         {
-            //string CusID = "KH0002";
             string GetAppointmentQuery = "select LH.MALICHHEN, NS.HOTEN, NS.MANS, LH.GIOKHAM, LH.NGAYKHAM from LICH_HEN LH JOIN NHA_SI NS ON LH.NHASI = NS.MANS " +
                                                 "where LH.MAKH = " + "'" + cusID + "' order by LH.NGAYKHAM desc, LH.GIOKHAM desc";
 

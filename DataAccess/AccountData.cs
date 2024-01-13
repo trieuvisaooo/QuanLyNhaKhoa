@@ -20,6 +20,8 @@ namespace QuanLyNhaKhoa.DataAccess
             if (account is AdministratorAccount)
             {
                 accountType = "QTV";
+            } else if (account is CustomerAccount) {
+                accountType = "KHACH_HANG";
             }
             string query = $"SELECT COUNT(*) FROM {accountType} WHERE SDT = '{account.PhoneNumber}' AND MATKHAU = '{account.Password}' AND TRANGTHAI != 0";
 
@@ -45,6 +47,9 @@ namespace QuanLyNhaKhoa.DataAccess
             if (account is AdministratorAccount)
             {
                 return GetAdministratorAccount(account.PhoneNumber);
+            } else if (account is CustomerAccount)
+            {
+                return GetCustomerAccount(account.PhoneNumber);
             }
 
             return null;
@@ -79,6 +84,43 @@ namespace QuanLyNhaKhoa.DataAccess
                     }
                     catch (Exception)
                     {
+                        return null;
+                    }
+                }
+            }
+            return null;
+        }
+
+        private CustomerAccount GetCustomerAccount(string PhoneNumber)
+        {
+            CustomerAccount account = new CustomerAccount();
+            string query = $"SELECT * FROM KHACH_HANG WHERE SDT={PhoneNumber}";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    try
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                account.Id = reader.GetString(reader.GetOrdinal("MAKH"));
+                                account.PhoneNumber = reader.GetString(reader.GetOrdinal("SDT"));
+                                account.Name = reader.GetString(reader.GetOrdinal("HOTEN"));
+                                account.Birthday = reader.GetDateTime(reader.GetOrdinal("NGAYSINH"));
+                                account.Address = reader.GetString(reader.GetOrdinal("DIACHI"));
+                                account.Password = reader.GetString(reader.GetOrdinal("MATKHAU"));
+                                account.Status = reader.GetInt32(reader.GetOrdinal("TRANGTHAI"));
+                                return account;
+                            }
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        Debug.WriteLine("VO DAY");
 
                         return null;
                     }

@@ -22,8 +22,8 @@
                     VerticalAlignment="Center">
             <TextBlock Text="Đăng Kí Lịch Hẹn" Style="{StaticResource TitleLargeTextBlockStyle}"/>
             <StackPanel Orientation="Vertical">
-                <TextBlock Text="{x:Bind customer.CusName}" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                <TextBlock Text="{x:Bind customer.CusID}"/>
+                <TextBlock Text="{x:Bind infoViewModel.Name}" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                <TextBlock Text="{x:Bind infoViewModel.Id}"/>
             </StackPanel>
         </StackPanel>
 

@@ -1,6 +1,8 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
 using QuanLyNhaKhoa.Models;
+using QuanLyNhaKhoa.ViewModels.Customer;
 using System;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -15,33 +17,30 @@ namespace QuanLyNhaKhoa.Views
     /// </summary>
     public sealed partial class CustomerInfo : Page
     {
-        private CustomerInfoViewModel customerInfo = new CustomerInfoViewModel();
+        private CustomerAccount customerAccount = (CustomerAccount)(App.Current as App).CurrentAccount.StoredAccount;
+        private CustomerInfoViewModel customerInfoVM = new CustomerInfoViewModel();
 
         public CustomerInfo()
         {
             this.InitializeComponent();
-            customerInfo.GetCustomerInfo((App.Current as App).ConnectionString, customerInfo);
-
+            customerInfoVM.GetCustomerInfo((App.Current as App).ConnectionString, customerInfoVM, customerAccount.Id);
         }
 
         private async void modifyInfo(object sender, RoutedEventArgs e, string connectionString)
         {
-            //string phoneNum = ;
-            //string address = ;
             SqlConnection con = new SqlConnection(@connectionString);
             try
             {
                 con.Open();
 
-                string update_statement = "UPDATE KHACH_HANG SET SDT = '" + PhoneNum.Text + "', DIACHI = N'" + Addr.Text + "', NGAYSINH = '" + ModifyDateOfBirth.Date + "' WHERE MAKH = '" + customerInfo.CusID + "'";
-                Debug.WriteLine(update_statement);
+                string update_statement = "UPDATE KHACH_HANG SET SDT = '" + PhoneNum.Text + "', DIACHI = N'" + Addr.Text + "', NGAYSINH = '" + ModifyDateOfBirth.Date + "' WHERE MAKH = '" + customerAccount.Id + "'";
                 SqlCommand cmnd = new SqlCommand(update_statement, con);
                 cmnd.ExecuteNonQuery();
                 ContentDialog ModifiedDialog = new ContentDialog
                 {
                     XamlRoot = this.XamlRoot,
                     Title = "Chỉnh Sửa Thông Tin",
-                    Content = "Bạn đã chỉnh sửa thông tin thành công thành công!",
+                    Content = "Bạn đã chỉnh sửa thông tin thành công!",
                     CloseButtonText = "Ok"
                 };
                 ContentDialogResult result = await ModifiedDialog.ShowAsync();
@@ -66,12 +65,13 @@ namespace QuanLyNhaKhoa.Views
             }
         }
 
+
         private void modify_Click(object sender, RoutedEventArgs e)
         {
             Modify.Visibility = Visibility.Collapsed;
             DateOfBirth.Visibility = Visibility.Collapsed;
             ModifyDateOfBirth.Visibility = Visibility.Visible;
-            DateTime dateTime = customerInfo.DateOfBirth.ToDateTime(TimeOnly.MinValue);
+            DateTime dateTime = customerInfoVM.DateOfBirth.ToDateTime(TimeOnly.MinValue);
             ModifyDateOfBirth.Date = dateTime;
             DateRow.Spacing = 15;
             PhoneNum.IsReadOnly = false;
@@ -88,12 +88,14 @@ namespace QuanLyNhaKhoa.Views
 
         private void cancel_Click(object sender, RoutedEventArgs e)
         {
+            this.Frame.Navigate(typeof(CustomerInfo), customerAccount);
             Modify.Visibility= Visibility.Visible;
             DateRow.Spacing = 30;
             DateOfBirth.Visibility = Visibility.Visible;
             ModifyDateOfBirth.Visibility = Visibility.Collapsed;
             PhoneNum.IsReadOnly = true;
             Addr.IsReadOnly = true;
+            ModifyDateOfBirth.IsEnabled = false;
             SaveAndCancel.Visibility= Visibility.Collapsed;
         }
     }

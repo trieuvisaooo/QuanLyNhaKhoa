@@ -3,7 +3,7 @@ using Microsoft.UI.Xaml.Controls;
 using Windows.UI;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
-using QuanLyNhaKhoa.ViewModels;
+using QuanLyNhaKhoa.ViewModels.Customer;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -40,6 +40,8 @@ public sealed partial class CustomerInvoiceDetail : Page
         }
         else
         {
+            Color green = Color.FromArgb(255, 0, 255, 0);
+            status_txtb.Foreground = new SolidColorBrush(green);
             status_txtb.Text = "Đã thanh toán";
         }
     }

@@ -39,9 +39,18 @@ namespace QuanLyNhaKhoa.Views
                 bool isSuccess = await Task.Run(() => loginViewModel.SignIn());
                 if (isSuccess)
                 {
-                    Window mainWindow = new AdminWindow();
-                    mainWindow.Activate();
-                    this.Close();
+                    if (loginViewModel.SelectedRole == "QTV")
+                    {
+                        Window mainWindow = new AdminWindow();
+                        mainWindow.Activate();
+                        this.Close();
+                    } else if (loginViewModel.SelectedRole == "Khách hàng")
+                    {
+                        Window mainWindow = new CustomerWindow();
+                        mainWindow.Activate();
+                        this.Close();
+                    }
+
                 }
             }
             catch (System.Exception ex) {

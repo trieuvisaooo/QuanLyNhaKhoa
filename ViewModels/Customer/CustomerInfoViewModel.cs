@@ -2,6 +2,8 @@
 using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using QuanLyNhaKhoa.Views;
+using System.Reflection.PortableExecutable;
 
 namespace QuanLyNhaKhoa.Models
 {
@@ -62,12 +64,22 @@ namespace QuanLyNhaKhoa.Models
         }
 
 
-
-        public CustomerInfoViewModel GetCustomerInfo(string connectionString, CustomerInfoViewModel customerInfo)
+        public CustomerInfoViewModel(CustomerAccount customerAccount)
         {
-            string CusID = "KH0001";
+            CusID = customerAccount.Id;
+            CusName = customerAccount.Name;
+            DateTime date = customerAccount.Birthday;
+            DateOfBirth = DateOnly.FromDateTime(date);
+            PhoneNum = customerAccount.PhoneNumber;
+            Addr = customerAccount.Address;
+        }
+
+
+
+        public CustomerInfoViewModel GetCustomerInfo(string connectionString, CustomerInfoViewModel customerInfo, string CusId)
+        {
             string GetCustomerInfoQuery = "select MAKH, HOTEN, NGAYSINH, SDT, DIACHI from KHACH_HANG " +
-                                                "where MAKH = " + "'" + CusID + "'";
+                                                "where MAKH = " + "'" + CusId + "'";
 
             try
             {
