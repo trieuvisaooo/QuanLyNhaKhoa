@@ -5,11 +5,13 @@ namespace QuanLyNhaKhoa.Models
 {
     public class CustomerAccount : Interfaces.Account
     {
-        string Account.ID { get; set; }
-        string Account.Name { get; set; }
-        string Account.PhoneNumber { get; set; }
-        string Account.Password { get; set; }
-        string Account.Address { get; set; }
-        DateOnly Account.Birthday { get; set; }
+        public string Name { get; set; }
+        public string Id { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Password { get; set; }
+        public string Address { get; set; }
+        public DateTime Birthday { get; set; }
+        public int Status { get; set; } = 1;
+
     }
 }

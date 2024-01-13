@@ -20,8 +20,17 @@
     <None Remove="Views\CustomerMakeAppointment.xaml" />
     <None Remove="Views\CustomerRecords.xaml" />
     <None Remove="Views\LogInWindow.xaml" />
-    <None Remove="Views\Pages\CustomerInvoiceDetail.xaml" />
-    <None Remove="Views\Pages\CustomerRecordDetail.xaml" />
+    <None Remove="Views\Pages\Administrator\AdministratorViewAdministrator.xaml" />
+    <None Remove="Views\Pages\Administrator\AdministratorViewDentist.xaml" />
+    <None Remove="Views\Pages\Administrator\AdministratorViewMedicine.xaml" />
+    <None Remove="Views\Pages\Administrator\AdministratorViewReceptionist.xaml" />
+    <None Remove="Views\Pages\Administrator\EditMedicine.xaml" />
+    <None Remove="Views\Pages\Customer\AdministratorViewCustomer.xaml" />
+    <None Remove="Views\UserControls\AvatarCircle.xaml" />
+    <None Remove="Views\UserControls\NotificationSystem.xaml" />
+    <None Remove="Views\Windows\AddAccount.xaml" />
+    <None Remove="Views\Windows\AddMedicineWindow.xaml" />
+    <None Remove="Views\Windows\SignUpAccountWindow.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -86,17 +95,47 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Windows\" />
-  </ItemGroup>
-  <ItemGroup>
     <None Update="DataAccess\gendata2012.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Page Update="Views\Pages\CustomerInvoiceDetail.xaml">
+    <Page Update="Views\UserControls\NotificationSystem.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Views\Pages\CustomerRecordDetail.xaml">
+    <Page Update="Views\Pages\Administrator\EditMedicine.xaml">
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\Pages\Administrator\AdministratorViewAdministrator.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Views\Pages\Administrator\AdministratorViewMedicine.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Pages\Administrator\AdministratorViewDentist.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Pages\Customer\AdministratorViewCustomer.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\UserControls\AvatarCircle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\Pages\Administrator\AdministratorViewReceptionist.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Windows\SignUpAccountWindow.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Views\Windows\AddMedicineWindow.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Windows\AddAccount.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
   </ItemGroup>
 

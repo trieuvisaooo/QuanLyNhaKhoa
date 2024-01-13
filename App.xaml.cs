@@ -22,20 +22,9 @@ namespace QuanLyNhaKhoa
         //conect to db in sql server
         private string connectionString = @"Data Source=.\SQLSERVER;Initial Catalog=QLPK;Integrated Security=True";
         public string ConnectionString { get => connectionString; set => connectionString = value; }
-        private Interfaces.Account _currentAccount;
         private DatabaseManagement _databaseManagement;
-
-        public Interfaces.Account CurrentAccount
-        {
-            get
-            {
-                return _currentAccount;
-            }
-            set
-            {
-
-            }
-        }
+        public AccountData CurrentAccount;
+        public MedicinesAndServices MedicinesAndServices;
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -44,8 +33,9 @@ namespace QuanLyNhaKhoa
         public App()
         {
             this.InitializeComponent();
-            //this._databaseManagement = new DatabaseManagement();
-            Debug.WriteLine(connectionString);
+            this._databaseManagement = new DatabaseManagement();
+            this.CurrentAccount = new AccountData(_databaseManagement.ConnectionString);
+            this.MedicinesAndServices = new MedicinesAndServices(_databaseManagement.ConnectionString);
         }
 
         /// <summary>
@@ -54,7 +44,9 @@ namespace QuanLyNhaKhoa
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            //Window mainWindow = new MainWindow();
+            //Window _mWindow = new AdminWindow();
+            //_mWindow.Activate();
+            //Window mainWindow = new AdminWindow();
             //mainWindow.Activate();
             Window CusWindow = new CustomerWindow();
             CusWindow.Activate();
@@ -95,5 +87,35 @@ namespace QuanLyNhaKhoa
 
             return false;
         }
+
+        public static void SetResizability(Window window, bool isResizable = true)
+        {
+            var _presenter = window.AppWindow.Presenter as OverlappedPresenter;
+            _presenter.IsResizable = isResizable;
+            _presenter.IsMaximizable = isResizable;
+            _presenter.IsMinimizable = isResizable;
+        }
+
+
+        //public static void SetDragRegion(Window window, NonClientRegionKind nonClientRegionKind, params FrameworkElement[] frameworkElements)
+        //{
+        //    var nonClientInputSrc = InputNonClientPointerSource.GetForWindowId(window.AppWindow.Id);
+        //    List<Windows.Graphics.RectInt32> rects = new List<Windows.Graphics.RectInt32>();
+
+        //    foreach (var frameworkElement in frameworkElements)
+        //    {
+        //        GeneralTransform transformElement = frameworkElement.TransformToVisual(null);
+        //        Windows.Foundation.Rect bounds = transformElement.TransformBounds(new Windows.Foundation.Rect(0, 0, frameworkElement.ActualWidth, frameworkElement.ActualHeight));
+        //        var transparentRect = new Windows.Graphics.RectInt32(
+        //            _X: (int)Math.Round(bounds.X),
+        //            _Y: (int)Math.Round(bounds.Y),
+        //            _Width: (int)Math.Round(bounds.Width),
+        //            _Height: (int)Math.Round(bounds.Height)
+        //        );
+        //        rects.Add(transparentRect);
+        //    }
+
+        //    nonClientInputSrc.SetRegionRects(nonClientRegionKind, rects.ToArray());
+        //}
     }
 }

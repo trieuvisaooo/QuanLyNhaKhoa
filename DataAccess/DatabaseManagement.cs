@@ -1,8 +1,6 @@
 ﻿using Microsoft.Win32;
-using QuanLyNhaKhoa.Models;
-using QuanLyNhaKhoa.ViewModels;
 using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Diagnostics;
 
@@ -10,69 +8,72 @@ namespace QuanLyNhaKhoa.DataAccess
 {
     public class DatabaseManagement
     {
-        private static string serverName = "localhost";
-        private static string connectionName = "localhost";
+        private static string serverName = Environment.MachineName;
+        private static string connectionName = serverName;
         private static string databaseName = "QLPK";
-        private static string connectionString = $"Data Source={connectionName};Integrated Security=True";
+        private static string connectionString = $"Data Source={connectionName};Integrated Security=True;TrustServerCertificate=True;Connect Timeout=2;";
+        public string ConnectionString { get => connectionString; private set { connectionString = value; } }
 
         public DatabaseManagement()
         {
-            try
+            foreach (var connectionName in GetServerNames())
             {
-                TryConnection();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Error: {ex.Message}");
+                try
+                {
+                    TryConnection();
+                    break;
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine($"No database found in {connectionName}");
+                }
             }
         }
 
         public void TryConnection()
         {
-            try
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                Debug.WriteLine($"Attempting to connect to '{connectionName}'...");
+                // set the timer for the command below before throwing some exception to terminate it
+                connection.Open();
+                if (!DatabaseExists(connection, databaseName))
                 {
-                    Debug.WriteLine($"Attempting to connect to '{connectionName}'...");
-                    connection.Open();
-                    if (!DatabaseExists(connection, databaseName))
-                    {
-                        // If not, create the database
-                        CreateDatabase(connection, databaseName);
-                        Debug.WriteLine($"Database '{databaseName}' created successfully.");
-                    }
-                    else
-                    {
-                        Debug.WriteLine($"Database '{databaseName}' already exists.");
-                    }
-                    connection.Close();
-                    Reconnect();
+                    Debug.WriteLine($"Not found '{databaseName}' on {connectionName}.");
+                    throw new Exception();
                 }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"\nConnection error: {ex.Message} with serverName {connectionName}.\n");
-                if (serverName == "localhost")
+                else
                 {
-                    GetServerName();
-                    TryConnection();
+                    Debug.WriteLine($"Database '{databaseName}' already exists.");
                 }
+                Reconnect();
+                connection.Close();
+                //Reconnect();
             }
         }
-        public static void GetServerName()
+        public static IEnumerable<string> GetServerNames()
         {
-            serverName = Environment.MachineName;
+            yield return connectionName;
             RegistryView registryView = Environment.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Registry32;
+
             using (RegistryKey hklm = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, registryView))
             {
                 RegistryKey instanceKey = hklm.OpenSubKey(@"SOFTWARE\Microsoft\Microsoft SQL Server\Instance Names\SQL", false);
+
                 if (instanceKey != null)
                 {
-                    foreach (var instanceName in instanceKey.GetValueNames())
+                    string[] valueNames = instanceKey.GetValueNames();
+                    foreach (var value in (instanceKey.GetValueNames()))
                     {
-                        Debug.WriteLine("HELLO: " + serverName + "\\" + instanceName);
-                        connectionName = serverName + "\\" + instanceName;
-                        connectionString = $"Data Source={connectionName}; Integrated Security=True";
+                        string instanceName = value;
+                        connectionName = $"{serverName}\\{instanceName}";
+                        connectionString = $"Data Source={connectionName};Integrated Security=True;TrustServerCertificate=True;Connect Timeout=2;";
+                        yield return connectionName;
+
+                    }
+                    if (valueNames.Length == 0)
+                    {
+                        throw new Exception("No more database servers found.");
                     }
                 }
             }
@@ -81,11 +82,11 @@ namespace QuanLyNhaKhoa.DataAccess
         private void Reconnect()
         {
             // Attempt to reconnect using the new database
-            string newConnectionString = $"Data Source={connectionName};Initial Catalog={databaseName};Integrated Security=True";
+            connectionString = $"Data Source={connectionName};Initial Catalog={databaseName};Integrated Security=True;TrustServerCertificate=True;Connect Timeout=2;";
 
             try
             {
-                using (SqlConnection newConnection = new SqlConnection(newConnectionString))
+                using (SqlConnection newConnection = new SqlConnection(connectionString))
                 {
                     newConnection.Open();
                     Debug.WriteLine($"Successfully reconnected to '{databaseName}'.");
@@ -99,7 +100,7 @@ namespace QuanLyNhaKhoa.DataAccess
             }
         }
 
-        static bool DatabaseExists(SqlConnection connection, string databaseName)
+        bool DatabaseExists(SqlConnection connection, string databaseName)
         {
             string query = $"SELECT COUNT(*) FROM sys.databases WHERE name = '{databaseName}'";
 
@@ -110,18 +111,37 @@ namespace QuanLyNhaKhoa.DataAccess
             }
         }
 
-        static void CreateDatabase(SqlConnection connection, string databaseName)
+        void CreateDatabase(SqlConnection connection, string databaseName)
         {
-            // create a blank database of the same names
-            string createDatabaseQuery = $"CREATE DATABASE {databaseName}";
-
-            using (SqlCommand command = new SqlCommand(createDatabaseQuery, connection))
+            try
             {
-                command.ExecuteNonQuery();
+                // create database
+                string createDatabaseQuery = $"CREATE DATABASE {databaseName}";
+
+                using (connection)
+                {
+                    using (SqlCommand command = new SqlCommand(createDatabaseQuery, connection))
+                    {
+                        command.ExecuteNonQuery();
+                        Debug.WriteLine("Create Database executed successfully. Now creating tables.");
+                        CreateTable(connection, databaseName);
+                    }
+                }
+
             }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error executing script: {ex.Message}");
+            }
+
         }
 
-        static void DropDatabase(SqlConnection connection, string databaseName)
+        void CreateTable(SqlConnection connection, string databaseName)
+        {
+            throw new NotImplementedException();
+        }
+
+        void DropDatabase(SqlConnection connection, string databaseName)
         {
             string dropDatabaseQuery = $"DROP DATABASE {databaseName}";
 
@@ -129,27 +149,6 @@ namespace QuanLyNhaKhoa.DataAccess
             {
                 command.ExecuteNonQuery();
             }
-        }
-
-        static bool Login(Interfaces.Account account)
-        {
-            string accountType = "KHACH_HANG";
-            if (account is AdministratorAccount)
-            {
-                accountType = "QUAN_TRI_VIEN";
-            }
-            string query = $"SELECT COUNT(*) FROM {accountType} WHERE Username = '{account.PhoneNumber}' AND Password = '{account.Password}'";
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    int count = (int)command.ExecuteScalar();
-                    return count > 0;
-                }
-            }
-
         }
 
         //public ObservableCollection<CustomerAppointmentViewModel> GetAppointments(string connectionString, string cusID)
