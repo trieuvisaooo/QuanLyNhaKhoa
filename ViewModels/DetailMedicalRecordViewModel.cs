@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace QuanLyNhaKhoa.ViewModels
 {
-    public class Staff_DetailMedicalRecordViewModel : INotifyPropertyChanged
+    public class DetailMedicalRecordViewModel : INotifyPropertyChanged
     {
         private string _mrID;
         private string _description;
@@ -73,7 +73,7 @@ namespace QuanLyNhaKhoa.ViewModels
         } 
 
 
-        public Staff_DetailMedicalRecordViewModel(string mrID, string description, string dentistID,
+        public DetailMedicalRecordViewModel(string mrID, string description, string dentistID,
             string dentistName, DateOnly dateVisit, List<Medicine> medic, 
             List<Service> serviceUsed, string invoiceID, int totalPayment, string paymentStatus)       {
             _mrID = mrID;

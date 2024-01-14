@@ -38,7 +38,7 @@ namespace QuanLyNhaKhoa
                     break;
                 case 1:
                     NvgtView.Header = "Khách hàng";
-                    contentFrame.Navigate(typeof(Staff_MedicalRecord));
+                    contentFrame.Navigate(typeof(MedicalRecord));
                     break;              
             }
         }

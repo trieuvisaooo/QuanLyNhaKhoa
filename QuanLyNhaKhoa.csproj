@@ -91,10 +91,10 @@
     <None Update="Views\UserControls\AvatarCircle.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>
-    <None Update="Views\Pages\NhaSi\Staff_MedicalRecord.xaml">
+    <None Update="Views\Pages\NhaSi\MedicalRecord.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>
-    <None Update="Views\Pages\NhaSi\Staff_MedicalRecordDetailInfo.xaml">
+    <None Update="Views\Pages\NhaSi\MedicalRecordDetailInfo.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>
     <Page Update="Views\Pages\NhaSi\DentistAddSchedule.xaml">

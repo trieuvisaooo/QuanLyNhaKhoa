@@ -28,12 +28,12 @@ namespace QuanLyNhaKhoa.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Staff_MedicalRecordDetailInfo : Page
+    public sealed partial class MedicalRecordDetailInfo : Page
     {
-        private Staff_MedicalRecordViewModels MRViewModel;
-        public Staff_DetailMedicalRecordViewModel MRDViewModel;
+        private MedicalRecordViewModels MRViewModel;
+        public DetailMedicalRecordViewModel MRDViewModel;
 
-        public Staff_MedicalRecordDetailInfo()
+        public MedicalRecordDetailInfo()
         {
             this.InitializeComponent();
         }
@@ -41,7 +41,7 @@ namespace QuanLyNhaKhoa.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            MRViewModel = e.Parameter as Staff_MedicalRecordViewModels;
+            MRViewModel = e.Parameter as MedicalRecordViewModels;
 
             string _mrID;
             string _description = "";
@@ -123,7 +123,7 @@ namespace QuanLyNhaKhoa.Views
                         }
                     }
 
-                    MRDViewModel = new Staff_DetailMedicalRecordViewModel(_mrID, _description, _dentistID, _dentistName, _dateVisit, _medic, _serviceUsed, _invoiceID, _totalPayment, _paymentStatus);
+                    MRDViewModel = new DetailMedicalRecordViewModel(_mrID, _description, _dentistID, _dentistName, _dateVisit, _medic, _serviceUsed, _invoiceID, _totalPayment, _paymentStatus);
 
                 }
 
