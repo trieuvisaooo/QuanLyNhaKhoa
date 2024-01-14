@@ -22,13 +22,13 @@
                 <NavigationViewItem Icon="ContactInfo" Content="Lịch hẹn" Tag="0" />
                 <NavigationViewItem Icon="Calendar" Content="Khách hàng" Tag="1" />
             </NavigationView.MenuItems>
-            <NavigationView.PaneFooter>
+            <NavigationView.FooterMenuItems>
                 <NavigationViewItem Content="Đăng Xuất" Tag="SignOut">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xF3B1;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-            </NavigationView.PaneFooter>
+            </NavigationView.FooterMenuItems>
             <Frame x:Name="contentFrame" Margin="20" Navigated="Frame_Navigated"/>
         </NavigationView>
         <Grid IsHitTestVisible="True"

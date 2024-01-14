@@ -50,7 +50,7 @@ namespace QuanLyNhaKhoa.Views
                         mainWindow.Activate();
                         this.Close();
                     }
-                    else if (loginViewModel.SelectedRole == "Nha Sĩ")
+                    else if (loginViewModel.SelectedRole == "Nha sĩ")
                     {
                         Window mainWindow = new DentistWindow();
                         mainWindow.Activate();

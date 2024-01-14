@@ -20,7 +20,7 @@ namespace QuanLyNhaKhoa
     public partial class App : Application
     {
         //conect to db in sql server
-        private string connectionString = @"Data Source=NHOXIU21\SQLEXPRESS;Initial Catalog=QLPK;Integrated Security=True";
+        private string connectionString = @"";
         public string ConnectionString { get => connectionString; set => connectionString = value; }
         private DatabaseManagement _databaseManagement;
         public AccountData CurrentAccount;
@@ -45,10 +45,10 @@ namespace QuanLyNhaKhoa
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            Window CusWindow = new DentistWindow();
-            CusWindow.Activate();
-            //Window _loginWindow = new LogInWindow();
-            //_loginWindow.Activate();
+            //Window CusWindow = new DentistWindow();
+            //CusWindow.Activate();
+            Window _loginWindow = new LogInWindow();
+            _loginWindow.Activate();
         }
 
         public static bool SetTitleBarColors(Window window)
