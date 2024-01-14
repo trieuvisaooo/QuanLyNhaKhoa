@@ -22,12 +22,12 @@
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="viewmodels:NotificationBadge">
                     <Grid MaxHeight="100" Margin="0 10">
-                        <Rectangle HorizontalAlignment="Stretch" Fill="{StaticResource AcrylicBackgroundFillColorBaseBrush}" RadiusX="8" RadiusY="8"></Rectangle>
+                        <Rectangle HorizontalAlignment="Stretch" Fill="{ThemeResource AcrylicBackgroundFillColorBaseBrush}" RadiusX="8" RadiusY="8"></Rectangle>
                         <Grid Padding="0 16">
                             <StackPanel  Padding ="10"  Orientation="Horizontal" HorizontalAlignment="Stretch" Spacing="10">
                                 <Grid>
                                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF167;" 
-                                          Foreground="{StaticResource AccentTextFillColorPrimaryBrush}" FontSize="24"
+                                          Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}" FontSize="24"
                                           VerticalAlignment="Center"/>
                                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEB90;"
                                             Visibility="{x:Bind IsBad}"
@@ -41,7 +41,7 @@
 
                             </StackPanel>
                                 <Button Margin="10 0" HorizontalAlignment="Right" Click="Close_Click" Width="36" Height="36" Background="Transparent">
-                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE711;" FontSize="12"/>
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE711;" FontSize="12" Foreground="{ThemeResource TextOnAccentFillColorPrimary}"/>
                                 </Button>
                         </Grid>
                     </Grid>
