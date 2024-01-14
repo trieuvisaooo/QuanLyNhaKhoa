@@ -40,14 +40,14 @@ namespace QuanLyNhaKhoa.Views
         {
             base.OnNavigatedTo(e);
             MR = e.Parameter as Staff_DetailMedicalRecordViewModel;
-            donthuoc.ItemsSource = MR.MedicName;
-            dichvu.ItemsSource = MR.ServiceUsed;
+            medicine_list.ItemsSource = MR.MedicName;
+            service_list.ItemsSource = MR.ServiceUsed;
             
         }
         private async void modify_Click(object sender, RoutedEventArgs e)
         {
             int idx;
-            if (status.Text == "Đầy Đủ")
+            if (status_txtb.Text == "Đầy Đủ")
             {
                 idx = 1;
             }   
@@ -56,9 +56,9 @@ namespace QuanLyNhaKhoa.Views
                 idx = 0;
             }
 
-
+            Debug.WriteLine(idx);
             string updateCommand = $"UPDATE HOA_DON SET TINHTRANG = {idx} WHERE HOA_DON.MAHD = '{MR.InvoiceID}'";
-
+            Debug.WriteLine(updateCommand);
             SqlConnection con = new SqlConnection((App.Current as App).ConnectionString);
 
             try
