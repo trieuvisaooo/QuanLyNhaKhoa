@@ -109,7 +109,7 @@
             <StackPanel Orientation="Horizontal"
                         Spacing="20"
                         Margin="0 50 0 0">
-                <StackPanel Orientation="Horizontal"
+                <!--<StackPanel Orientation="Horizontal"
                             Spacing="10"
                             VerticalAlignment="Center">
                     <TextBlock Text="Tổng tiền: "/>
@@ -120,7 +120,7 @@
                         Style="{StaticResource AccentButtonStyle}"
                         Margin="0 0 0 8">
                     Xem hóa đơn
-                </Button>
+                </Button>-->
             </StackPanel>
         </StackPanel>
     </Grid>
