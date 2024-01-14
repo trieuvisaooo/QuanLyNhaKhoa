@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QuanLyNhaKhoa.ViewModels
 {
-    public class Medicine
+    public class Medicines
     {
         public string ID
         {
@@ -35,12 +35,12 @@ namespace QuanLyNhaKhoa.ViewModels
             get; set;
         }
 
-        public Medicine()
+        public Medicines()
         {
 
         }
 
-        public Medicine(string name, int count, int price)
+        public Medicines(string name, int count, int price)
         {
             Name = name;
             Count = count;

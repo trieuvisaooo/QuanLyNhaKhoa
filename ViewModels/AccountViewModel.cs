@@ -71,6 +71,16 @@ namespace QuanLyNhaKhoa.ViewModels
             }
         }
 
+        public DateTime Birthday
+        {
+            get => accountHelper.birthday;
+            set
+            {
+                accountHelper.birthday = value;
+                NotifyPropertyChanged(nameof(Birthday));
+            }
+        }
+
         public AccountViewModel()
         {
 
@@ -115,6 +125,7 @@ namespace QuanLyNhaKhoa.ViewModels
             AccountTemplate.Password = (Password.PadRight(50, ' ')).Substring(0, 50);
             AccountTemplate.Name = Name;
             AccountTemplate.Address = Address;
+            AccountTemplate.Birthday = Birthday;
             AccountTemplate.Status = 1;
             bool result = (App.Current as App).CurrentAccount.AddAccount(AccountTemplate);
             return Task.FromResult(result);

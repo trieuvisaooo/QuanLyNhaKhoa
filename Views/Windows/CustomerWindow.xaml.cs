@@ -13,9 +13,11 @@ namespace QuanLyNhaKhoa
     /// <summary>
     /// An empty window that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class DentistWindow : Window
+    public sealed partial class CustomerWindow : Window
     {
-        public DentistWindow()
+        //public CustomerAccount customerCurrentAccount = new CustomerAccount();
+
+        public CustomerWindow()
         {
             this.InitializeComponent();
             App.SetTitleBarColors(this);
@@ -24,21 +26,26 @@ namespace QuanLyNhaKhoa
             contentFrame.CacheSize = 4;
             NvgtView.SelectedItem = NvgtView.MenuItems[0];
             FrameInflate(0);
+
         }
 
-        //public DentistAccount customer = new DentistAccount();
+        //public CustomerAccount customer = new CustomerAccount();
 
         private void FrameInflate(int index)
         {
             switch (index)
             {
                 case 0:
-                    NvgtView.Header = "Lịch hẹn";
-                    contentFrame.Navigate(typeof(DentistAppointment));
+                    NvgtView.Header = "Thông Tin Cá Nhân";
+                    contentFrame.Navigate(typeof(CustomerInfo));
                     break;
                 case 1:
-                    NvgtView.Header = "Khách hàng";
-                    contentFrame.Navigate(typeof(MedicalRecord));
+                    NvgtView.Header = "Lịch Hẹn Cá Nhân";
+                    contentFrame.Navigate(typeof(CustomerAppointment));
+                    break;
+                case 2:
+                    NvgtView.Header = "Hồ Sơ Bệnh Án";
+                    contentFrame.Navigate(typeof(CustomerRecords));
                     break;
             }
         }
@@ -53,6 +60,9 @@ namespace QuanLyNhaKhoa
                     break;
                 case "1":
                     FrameInflate(1);
+                    break;
+                case "2":
+                    FrameInflate(2);
                     break;
                 case "SignOut":
                     Window LogInWindow = new LogInWindow();
@@ -73,7 +83,10 @@ namespace QuanLyNhaKhoa
                 case "1":
                     FrameInflate(1);
                     break;
-                case "SignOut":                  
+                case "2":
+                    FrameInflate(2);
+                    break;
+                case "SignOut":
                     break;
             }
         }

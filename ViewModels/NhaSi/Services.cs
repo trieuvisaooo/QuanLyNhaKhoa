@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace QuanLyNhaKhoa.ViewModels
 {
-    public class Service
+    public class Services
     {
         public string Name { get; set; }
         public int Price { get; set; }
 
-        public Service(string name, int price) { 
+        public Services(string name, int price) { 
             Name = name;
             Price = price;
         }

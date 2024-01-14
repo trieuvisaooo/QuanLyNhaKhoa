@@ -24,7 +24,7 @@ namespace QuanLyNhaKhoa
         public string ConnectionString { get => connectionString; set => connectionString = value; }
         private DatabaseManagement _databaseManagement;
         public AccountData CurrentAccount;
-        //public MedicinesAndServices MedicinesAndServices;
+        public MedicinesAndServices MedicinesAndServices;
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -36,7 +36,7 @@ namespace QuanLyNhaKhoa
             this._databaseManagement = new DatabaseManagement();
             this.connectionString = _databaseManagement.ConnectionString;
             this.CurrentAccount = new AccountData(_databaseManagement.ConnectionString);
-            //this.MedicinesAndServices = new MedicinesAndServices(_databaseManagement.ConnectionString);
+            this.MedicinesAndServices = new MedicinesAndServices(_databaseManagement.ConnectionString);
         }
 
         /// <summary>
@@ -45,8 +45,8 @@ namespace QuanLyNhaKhoa
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            Window DenWindow = new DentistWindow();
-            DenWindow.Activate();
+            Window CusWindow = new DentistWindow();
+            CusWindow.Activate();
             //Window _loginWindow = new LogInWindow();
             //_loginWindow.Activate();
         }

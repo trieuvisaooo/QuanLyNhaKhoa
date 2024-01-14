@@ -23,7 +23,7 @@ namespace QuanLyNhaKhoa.Views.UserControls
 
         public AvatarCircle()
         {
-            //this.InitializeComponent();
+            this.InitializeComponent();
         }
 
         private void UserControl_Loaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)

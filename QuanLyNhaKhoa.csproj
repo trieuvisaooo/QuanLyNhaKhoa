@@ -10,23 +10,29 @@
     <PublishProfile>win10-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
-	  <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+	<WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="NewFolder\**" />
-    <EmbeddedResource Remove="NewFolder\**" />
-    <None Remove="NewFolder\**" />
-    <Page Remove="NewFolder\**" />
-  </ItemGroup>
-  <ItemGroup>
+    <None Remove="CustomerWindow.xaml" />
     <None Remove="MakeAppointmentPage.xaml" />
     <None Remove="Views\CustomerAppointment.xaml" />
     <None Remove="Views\CustomerInfo.xaml" />
     <None Remove="Views\CustomerMakeAppointment.xaml" />
     <None Remove="Views\CustomerRecords.xaml" />
     <None Remove="Views\LogInWindow.xaml" />
+    <None Remove="Views\Pages\Administrator\AdministratorViewAdministrator.xaml" />
+    <None Remove="Views\Pages\Administrator\AdministratorViewDentist.xaml" />
+    <None Remove="Views\Pages\Administrator\AdministratorViewMedicine.xaml" />
+    <None Remove="Views\Pages\Administrator\AdministratorViewReceptionist.xaml" />
+    <None Remove="Views\Pages\Administrator\EditMedicine.xaml" />
+    <None Remove="Views\Pages\Customer\AdministratorViewCustomer.xaml" />
     <None Remove="Views\Pages\NhaSi\DentistAddSchedule.xaml" />
+    <None Remove="Views\UserControls\AvatarCircle.xaml" />
+    <None Remove="Views\UserControls\NotificationSystem.xaml" />
+    <None Remove="Views\Windows\AddAccount.xaml" />
+    <None Remove="Views\Windows\AddMedicineWindow.xaml" />
     <None Remove="Views\Windows\DentistWindow.xaml" />
+    <None Remove="Views\Windows\SignUpAccountWindow.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,7 +46,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231115000" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231219000" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.2428" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
     <PackageReference Include="System.Management" Version="8.0.0" />
@@ -71,6 +77,11 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="CustomerWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="Views\CustomerInfo.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -89,20 +100,50 @@
     <None Update="DataAccess\gendata2012.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Views\UserControls\AvatarCircle.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
-    <None Update="Views\Pages\NhaSi\MedicalRecord.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
-    <None Update="Views\Pages\NhaSi\MedicalRecordDetailInfo.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
     <Page Update="Views\Pages\NhaSi\DentistAddSchedule.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\Windows\DentistWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\UserControls\NotificationSystem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\Pages\Administrator\EditMedicine.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\Pages\Administrator\AdministratorViewAdministrator.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Views\Pages\Administrator\AdministratorViewMedicine.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Pages\Administrator\AdministratorViewDentist.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Pages\Customer\AdministratorViewCustomer.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\UserControls\AvatarCircle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\Pages\Administrator\AdministratorViewReceptionist.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Windows\SignUpAccountWindow.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Views\Windows\AddMedicineWindow.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Windows\AddAccount.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
   </ItemGroup>
 
@@ -114,12 +155,4 @@
   <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
   </PropertyGroup>
-  <ItemGroup>
-    <PRIResource Remove="NewFolder\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Remove="Views\Staff_MedicalRecord.xaml" />
-    <Page Remove="Views\Staff_MedicalRecordDetailInfo.xaml" />
-    <Page Remove="Views\UserControls\AvatarCircle.xaml" />
-  </ItemGroup>
 </Project>

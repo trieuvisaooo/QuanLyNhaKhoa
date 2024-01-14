@@ -53,10 +53,10 @@ namespace QuanLyNhaKhoa.Views
 
                     string _description = GetDescription(conn, _mrID);
                     DateOnly _dateVisit = GetDateVisit(conn, _mrID);
-                    List<Medicine> _medic = GetMedicines(conn, _mrID);
+                    List<Medicines> _medic = GetMedicines(conn, _mrID);
                     (string _dentistID, string _dentistName) = GetDentistInfo(conn, _mrID);
                     (string _invoiceID, int _totalPayment, string _paymentStatus) = GetInvoiceInfo(conn, _mrID);
-                    List<Service> _serviceUsed = GetServicesUsed(conn, _mrID);
+                    List<Services> _serviceUsed = GetServicesUsed(conn, _mrID);
 
                     MRDViewModel = new DetailMedicalRecordViewModel(_mrID, _description, _dentistID, _dentistName, _dateVisit, _medic, _serviceUsed, _invoiceID, _totalPayment, _paymentStatus);
                 }
@@ -91,10 +91,10 @@ namespace QuanLyNhaKhoa.Views
             }
         }
 
-        private List<Medicine> GetMedicines(SqlConnection conn, string mrID)
+        private List<Medicines> GetMedicines(SqlConnection conn, string mrID)
         {
             string query = $"SELECT T.TENTHUOC, CTDT.DONGIA, CTDT.SOLUONG FROM BENH_AN BA JOIN CT_DON_THUOC CTDT ON BA.MABA = CTDT.MABA JOIN THUOC T ON T.MATHUOC = CTDT.MATHUOC WHERE BA.MABA = @mrID";
-            List<Medicine> medicines = new List<Medicine>();
+            List<Medicines> medicines = new List<Medicines>();
             using (SqlCommand cmd = new SqlCommand(query, conn))
             {
                 cmd.Parameters.AddWithValue("@mrID", mrID);
@@ -102,7 +102,7 @@ namespace QuanLyNhaKhoa.Views
                 {
                     while (reader.Read())
                     {
-                        medicines.Add(new Medicine(reader.GetString(0), reader.GetInt32(2), reader.GetInt32(1)));
+                        medicines.Add(new Medicines(reader.GetString(0), reader.GetInt32(2), reader.GetInt32(1)));
                     }
                 }
             }
@@ -151,10 +151,10 @@ namespace QuanLyNhaKhoa.Views
             return (invoiceID, totalPayment, paymentStatus);
         }
 
-        private List<Service> GetServicesUsed(SqlConnection conn, string mrID)
+        private List<Services> GetServicesUsed(SqlConnection conn, string mrID)
         {
             string query = $"SELECT DV.TENDICHVU, DV.DONGIA FROM BENH_AN BA JOIN PHIEU_DV PDV ON BA.MABA = PDV.MABA JOIN DICH_VU DV ON PDV.MADV = DV.MADV WHERE BA.MABA = @mrID";
-            List<Service> services = new List<Service>();
+            List<Services> services = new List<Services>();
             using (SqlCommand cmd = new SqlCommand(query, conn))
             {
                 cmd.Parameters.AddWithValue("@mrID", mrID);
@@ -162,13 +162,14 @@ namespace QuanLyNhaKhoa.Views
                 {
                     while (reader.Read())
                     {
-                        services.Add(new Service(reader.GetString(0), reader.GetInt32(1)));
+                        services.Add(new Services(reader.GetString(0), reader.GetInt32(1)));
                     }
                 }
             }
             return services;
         }
 
+       
         private void ViewInvoice_Click(object sender, RoutedEventArgs e)
         {
             //this.Frame.Navigate(typeof(Staff_InvoiceDetail), MRDViewModel);

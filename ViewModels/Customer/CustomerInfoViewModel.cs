@@ -1,28 +1,25 @@
-﻿using QuanLyNhaKhoa.Models;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using QuanLyNhaKhoa.Views;
+using System.Reflection.PortableExecutable;
 
-namespace QuanLyNhaKhoa.ViewModels
+namespace QuanLyNhaKhoa.Models
 {
-    public class DentistInforViewModel : INotifyPropertyChanged
+    public class CustomerInfoViewModel : INotifyPropertyChanged
     {
-        private string _denID;
-        private string _denName;
+        private string _cusID;
+        private string _cusName;
         private DateOnly _dateOfBirth;
         private string _phoneNum;
         private string _addr;
 
-        public string DenID
+        public string CusID
         {
             get; set;
         }
-        public string DenName
+        public string CusName
         {
             get; set;
         }
@@ -61,27 +58,28 @@ namespace QuanLyNhaKhoa.ViewModels
             }
         }
 
-        public DentistInforViewModel()
+        public CustomerInfoViewModel()
         {
-
+        
         }
 
-        public DentistInforViewModel(DentistAccount dentistAccount)
+
+        public CustomerInfoViewModel(CustomerAccount customerAccount)
         {
-            DenID = dentistAccount.Id;
-            DenName = dentistAccount.Name;
-            DateTime date = dentistAccount.Birthday;
+            CusID = customerAccount.Id;
+            CusName = customerAccount.Name;
+            DateTime date = customerAccount.Birthday;
             DateOfBirth = DateOnly.FromDateTime(date);
-            PhoneNum = dentistAccount.PhoneNumber;
-            Addr = dentistAccount.Address;
+            PhoneNum = customerAccount.PhoneNumber;
+            Addr = customerAccount.Address;
         }
 
-        public DentistInforViewModel GetDentistInfo(string connectionString, DentistInforViewModel dentistInfo)
-        {
-            string DenID = "NS0001";
-            string GetDentistInfoQuery = "select NS.MANS, NS.HOTEN, NS.NGAYSINH, NS.SDT, NS.DIACHI from NHA_SI NS " +
-                             "where NS.MANS = '" + DenID + "'";
 
+
+        public CustomerInfoViewModel GetCustomerInfo(string connectionString, CustomerInfoViewModel customerInfo, string CusId)
+        {
+            string GetCustomerInfoQuery = "select MAKH, HOTEN, NGAYSINH, SDT, DIACHI from KHACH_HANG " +
+                                                "where MAKH = " + "'" + CusId + "'";
 
             try
             {
@@ -92,24 +90,26 @@ namespace QuanLyNhaKhoa.ViewModels
                     {
                         using (SqlCommand cmd = conn.CreateCommand())
                         {
-                            cmd.CommandText = GetDentistInfoQuery;
+                            cmd.CommandText = GetCustomerInfoQuery;
                             using (SqlDataReader reader = cmd.ExecuteReader())
                             {
+                                //var customerInfo = new CustomerInfoViewModel();
+
                                 while (reader.Read())
                                 {
-                                    dentistInfo.DenID = reader.GetString(0);
-                                    dentistInfo.DenName = reader.GetString(1);
+                                    customerInfo.CusID = reader.GetString(0);
+                                    customerInfo.CusName = reader.GetString(1);
                                     DateTime date = reader.GetDateTime(2);
-                                    dentistInfo.DateOfBirth = DateOnly.FromDateTime(date);
-                                    dentistInfo.PhoneNum = reader.GetString(3);
-                                    dentistInfo.Addr = reader.GetString(4);
+                                    customerInfo.DateOfBirth = DateOnly.FromDateTime(date);
+                                    customerInfo.PhoneNum = reader.GetString(3);
+                                    customerInfo.Addr = reader.GetString(4);
                                 }
 
                             }
                         }
                     }
                 }
-                return dentistInfo;
+                return customerInfo;
 
             }
             catch (Exception eSql)
@@ -119,11 +119,16 @@ namespace QuanLyNhaKhoa.ViewModels
             return null;
         }
 
+
+
+
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        
     }
 }
 

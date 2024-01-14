@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 
 namespace QuanLyNhaKhoa.Helpers
 {
@@ -18,6 +19,7 @@ namespace QuanLyNhaKhoa.Helpers
         public string id = "";
         public string name = "";
         public string address = "";
+        public DateTime birthday = DateTime.Parse("2000-01-01");
 
         public static string NormalizeVietnamesePhoneNumber(string phoneNumber)
         {

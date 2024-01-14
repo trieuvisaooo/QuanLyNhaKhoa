@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="QuanLyNhaKhoa.Views.CustomerRecords"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:QuanLyNhaKhoa.ViewModels.Customer"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="Transparent">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="32 0 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBox x:Name="search_box" 
+                     PlaceholderText="tìm kiếm theo tên nha sĩ"
+                     Grid.Column="0" Margin="0,0,10,0"
+                     Height="36"/>
+            <Button Grid.Column="1" Content="Tìm"  Click="Search_click"/>
+        </Grid>
+        <RelativePanel Grid.Row="1">
+            <ListView Name="RecordList"
+                      SelectionMode="Single"
+                      IsItemClickEnabled="True"
+                      ItemClick="lvItemClick"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto"
+                      ScrollViewer.IsVerticalRailEnabled="True"
+                      ScrollViewer.VerticalScrollMode="Enabled"
+                      ScrollViewer.HorizontalScrollMode="Enabled"
+                      ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                      ScrollViewer.IsHorizontalRailEnabled="True"
+                      Margin="20">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="local:CustomerRecordViewModel">
+                        <StackPanel>
+                            <StackPanel
+                                    Orientation="Horizontal"
+                                    Spacing="400"
+                                    Background="DeepSkyBlue">
+                                <StackPanel Orientation="Horizontal"
+                                        Spacing="5"
+                                        VerticalAlignment="Center"
+                                        Margin="20 0 0 0">
+                                    <TextBlock Text="Ngày khám: "/>
+                                    <TextBlock Text="{x:Bind RecordDate}"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal"
+                                        Spacing="10"
+                                        VerticalAlignment="Center">
+                                    <FontIcon Glyph="&#xEC25;" />
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal"
+                                            Spacing="10">
+                                            <TextBlock Text="Nha sĩ: "/>
+                                            <TextBlock Text="{x:Bind DenName}"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal"
+                                            Spacing="10">
+                                            <TextBlock Text="Mã nha sĩ: "/>
+                                            <TextBlock Text="{x:Bind DenID}"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Vertical"
+                                        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                                        Padding="20"
+                                        Margin="0 0 0 40">
+                                <StackPanel Orientation="Horizontal"
+                                            Spacing="10">
+                                    <TextBlock Text="Mô tả: " />
+                                    <TextBlock Text="{x:Bind Description}"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal"
+                                   Spacing="20"
+                                   Margin="0 50 0 0">
+                                    <StackPanel Orientation="Horizontal"
+                                       Spacing="10"
+                                       VerticalAlignment="Center">
+                                        <TextBlock Text="Tổng tiền: "/>
+                                        <TextBlock Text="{x:Bind TotalCost}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+
+                        </StackPanel>
+
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </RelativePanel>
+        
+    </Grid>
+
+</Page>

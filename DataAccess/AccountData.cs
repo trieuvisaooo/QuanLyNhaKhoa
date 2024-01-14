@@ -20,6 +20,12 @@ namespace QuanLyNhaKhoa.DataAccess
             if (account is AdministratorAccount)
             {
                 accountType = "QTV";
+            } else if (account is CustomerAccount) {
+                accountType = "KHACH_HANG";
+            }
+            else if (account is DentistAccount)
+            {
+                accountType = "NHA_SI";
             }
             string query = $"SELECT COUNT(*) FROM {accountType} WHERE SDT = '{account.PhoneNumber}' AND MATKHAU = '{account.Password}' AND TRANGTHAI != 0";
 
@@ -37,7 +43,6 @@ namespace QuanLyNhaKhoa.DataAccess
                     return count > 0;
                 }
             }
-
         }
 
         public Interfaces.Account GetAccountInfo(Interfaces.Account account)
@@ -45,6 +50,13 @@ namespace QuanLyNhaKhoa.DataAccess
             if (account is AdministratorAccount)
             {
                 return GetAdministratorAccount(account.PhoneNumber);
+            } else if (account is CustomerAccount)
+            {
+                return GetCustomerAccount(account.PhoneNumber);
+            }
+            else if (account is DentistAccount)
+            {
+                return GetDentistAccount(account.PhoneNumber);
             }
 
             return null;
@@ -79,6 +91,82 @@ namespace QuanLyNhaKhoa.DataAccess
                     }
                     catch (Exception)
                     {
+                        return null;
+                    }
+                }
+            }
+            return null;
+        }
+
+        private CustomerAccount GetCustomerAccount(string PhoneNumber)
+        {
+            CustomerAccount account = new CustomerAccount();
+            string query = $"SELECT * FROM KHACH_HANG WHERE SDT={PhoneNumber}";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    try
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                account.Id = reader.GetString(reader.GetOrdinal("MAKH"));
+                                account.PhoneNumber = reader.GetString(reader.GetOrdinal("SDT"));
+                                account.Name = reader.GetString(reader.GetOrdinal("HOTEN"));
+                                account.Birthday = reader.GetDateTime(reader.GetOrdinal("NGAYSINH"));
+                                account.Address = reader.GetString(reader.GetOrdinal("DIACHI"));
+                                account.Password = reader.GetString(reader.GetOrdinal("MATKHAU"));                             
+                                account.Status = reader.GetInt32(reader.GetOrdinal("TRANGTHAI"));
+                                return account;
+                            }
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        Debug.WriteLine("VO DAY");
+
+                        return null;
+                    }
+                }
+            }
+            return null;
+        }
+
+        private DentistAccount GetDentistAccount(string PhoneNumber)
+        {
+            DentistAccount account = new DentistAccount();
+            string query = $"SELECT * FROM NHA_SI WHERE SDT={PhoneNumber}";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    try
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                account.Id = reader.GetString(reader.GetOrdinal("MANS"));
+                                account.PhoneNumber = reader.GetString(reader.GetOrdinal("SDT"));
+                                account.Name = reader.GetString(reader.GetOrdinal("HOTEN"));
+                                account.Birthday = reader.GetDateTime(reader.GetOrdinal("NGAYSINH"));
+                                account.Address = reader.GetString(reader.GetOrdinal("DIACHI"));
+                                account.Password = reader.GetString(reader.GetOrdinal("MATKHAU"));
+                                //account.Chuyenmon = reader.GetString(reader.GetOrdinal("CHUYENMON"));
+                                account.Status = reader.GetInt32(reader.GetOrdinal("TRANGTHAI"));
+                                return account;
+                            }
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        Debug.WriteLine("VO DAY");
 
                         return null;
                     }
@@ -119,7 +207,32 @@ namespace QuanLyNhaKhoa.DataAccess
 
         bool SignUpDentist(Interfaces.Account account)
         {
-            throw new NotImplementedException();
+            string query = "INSERT INTO NHA_SI (MANS, SDT, HOTEN, NGAYSINH, DIACHI, MATKHAU, TRANGTHAI)"
+                + "VALUES (@MAKH, @SDT, @HOTEN, @NGAYSINH, @DIACHI, @MATKHAU, @TRANGTHAI)";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@MANS", account.Id);
+                        command.Parameters.AddWithValue("@SDT", account.PhoneNumber);
+                        command.Parameters.AddWithValue("@HOTEN", account.Name);
+                        command.Parameters.AddWithValue("@NGAYSINH", account.Birthday);
+                        command.Parameters.AddWithValue("@DIACHI", account.Address);
+                        command.Parameters.AddWithValue("@MATKHAU", account.Password);
+                        command.Parameters.AddWithValue("@TRANGTHAI", account.Status);
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
         }
 
         bool SignUpReceptionist(Interfaces.Account account)
@@ -370,7 +483,8 @@ namespace QuanLyNhaKhoa.DataAccess
             }
 
             string query = $"SELECT {accountIdName} FROM {accountType}";
-            string id = "";
+            string latestId = "";
+            int latestIdParse = -1;
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -388,12 +502,201 @@ namespace QuanLyNhaKhoa.DataAccess
                                 return "";
                             }
                             // Access columns from the result set
-                            id = reader.GetString(reader.GetOrdinal($"{accountIdName}"));
+                            string tempIdString = reader.GetString(reader.GetOrdinal($"{accountIdName}"));
+                            int tempId = int.Parse(tempIdString.Substring(2, 4));
+                            if (tempId > latestIdParse)
+                            {
+                                latestIdParse = tempId;
+                                latestId = tempIdString;
+                            }
                         }
                     }
                 }
             }
-            return id;
+            return latestId;
+        }
+
+        public List<CustomerAccount> GetCustomers(string byName = null, int offset = 0, int fetchSize = 50)
+        {
+            List<CustomerAccount> customers = new();
+            // query the database to get all orders
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string query = "SELECT * FROM KHACH_HANG ";
+                if (byName is not null)
+                {
+                    query += $"WHERE HOTEN LIKE N'%{byName}%' ";
+                }
+                query += $"ORDER BY MAKH OFFSET {offset} ROWS FETCH NEXT {fetchSize} ROWS ONLY";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+
+                        while (reader.Read())
+                        {
+                            // check if there are result
+                            if (!reader.HasRows)
+                            {
+                                return null;
+                            }
+                            // Access columns from the result set
+                            string id = reader.GetString(reader.GetOrdinal("MAKH"));
+                            string name = reader.GetString(reader.GetOrdinal("HOTEN"));
+                            int status = reader.GetInt32(reader.GetOrdinal("TRANGTHAI"));
+                            customers.Add(new CustomerAccount()
+                            {
+                                Id = id,
+                                Name = name,
+                                Status = status,
+                            });
+                        }
+                    }
+                }
+            }
+            return customers;
+        }
+
+        public List<DentistAccount> GetDentists(string byName = null, int offset = 0, int fetchSize = 50)
+        {
+            List<DentistAccount> dentists = new();
+            // query the database to get all orders
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string query = "SELECT * FROM NHA_SI ";
+                if (byName is not null)
+                {
+                    query += $"WHERE HOTEN LIKE N'%{byName}%' ";
+                }
+                query += $"ORDER BY MANS OFFSET {offset} ROWS FETCH NEXT {fetchSize} ROWS ONLY";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+
+                        while (reader.Read())
+                        {
+                            // check if there are result
+                            if (!reader.HasRows)
+                            {
+                                return null;
+                            }
+                            // Access columns from the result set
+                            string id = reader.GetString(reader.GetOrdinal("MANS"));
+                            string name = reader.GetString(reader.GetOrdinal("HOTEN"));
+                            int status = reader.GetInt32(reader.GetOrdinal("TRANGTHAI"));
+                            dentists.Add(new DentistAccount()
+                            {
+                                Id = id,
+                                Name = name,
+                                Status = status,
+                            });
+                        }
+                    }
+                }
+            }
+            return dentists;
+        }
+
+        public List<AdministratorAccount> GetAdministrators(string byName = null, int offset = 0, int fetchSize = 50)
+        {
+            List<AdministratorAccount> admins = new();
+            // query the database to get all orders
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string query = "SELECT * FROM QTV ";
+                if (byName is not null)
+                {
+                    query += $"WHERE HOTEN LIKE N'%{byName}%' ";
+                }
+                query += $"ORDER BY MAQTV OFFSET {offset} ROWS FETCH NEXT {fetchSize} ROWS ONLY";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+
+                        while (reader.Read())
+                        {
+                            // check if there are result
+                            if (!reader.HasRows)
+                            {
+                                return null;
+                            }
+                            // Access columns from the result set
+                            string id = reader.GetString(reader.GetOrdinal("MAQTV"));
+                            string name = reader.GetString(reader.GetOrdinal("HOTEN"));
+                            int status = reader.GetInt32(reader.GetOrdinal("TRANGTHAI"));
+                            admins.Add(new AdministratorAccount()
+                            {
+                                Id = id,
+                                Name = name,
+                                Status = status,
+                            });
+                        }
+                    }
+                }
+            }
+            return admins;
+        }
+
+        public bool ResetPassword(Interfaces.Account account)
+        {
+            string accountType;
+            string accountIdName;
+            if (account is AdministratorAccount)
+            {
+                accountType = "QTV";
+                accountIdName = "MAQTV";
+            }
+            else if (account is ReceptionistAccount)
+            {
+                accountType = "NHAN_VIEN";
+                accountIdName = "MANV";
+            }
+            else if (account is DentistAccount)
+            {
+                accountType = "NHA_SI";
+                accountIdName = "MANS";
+            }
+            else if (account is CustomerAccount)
+            {
+                accountType = "KHACH_HANG";
+                accountIdName = "MAKH";
+            }
+            else
+            {
+                return false;
+            }
+
+            string query = $"UPDATE {accountType} SET MATKHAU = @MATKHAU WHERE {accountIdName} = '{account.Id}'";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@MATKHAU", "123456789".PadRight(50, ' '));
+
+                        command.ExecuteNonQuery();
+                        return true;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }
