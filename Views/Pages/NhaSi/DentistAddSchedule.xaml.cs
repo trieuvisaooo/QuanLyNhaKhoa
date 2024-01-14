@@ -14,6 +14,7 @@ namespace QuanLyNhaKhoa.Views
     public partial class DentistAddSchedule : Page
     {
         private DentistInforViewModel dentist = new DentistInforViewModel();
+        internal ViewModels.BriefInfoViewModel infoViewModel = new((App.Current as App).CurrentAccount.StoredAccount);
         public DentistAddSchedule()
         {
             this.InitializeComponent();
@@ -35,7 +36,7 @@ namespace QuanLyNhaKhoa.Views
                 con.Open();
 
                 //dentist.DenID = "NS0001";
-                string insert_statement = "EXEC sp_ThemLichCaNhanNhaSi '" + dentist.DenID + "', '" + Date.Date + "', '" + StartTime.Time + "', '" + EndTime.Time + "'";
+                string insert_statement = "EXEC sp_ThemLichCaNhanNhaSi '" + infoViewModel.Id + "', '" + Date.Date + "', '" + StartTime.Time + "', '" + EndTime.Time + "'";
                 SqlCommand cmnd = new SqlCommand(insert_statement, con);
                 cmnd.ExecuteNonQuery();
                 this.Frame.Navigate(typeof(DentistAppointment));

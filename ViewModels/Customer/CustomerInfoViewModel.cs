@@ -63,7 +63,6 @@ namespace QuanLyNhaKhoa.Models
         
         }
 
-
         public CustomerInfoViewModel(CustomerAccount customerAccount)
         {
             CusID = customerAccount.Id;
@@ -73,9 +72,6 @@ namespace QuanLyNhaKhoa.Models
             PhoneNum = customerAccount.PhoneNumber;
             Addr = customerAccount.Address;
         }
-
-
-
         public CustomerInfoViewModel GetCustomerInfo(string connectionString, CustomerInfoViewModel customerInfo, string CusId)
         {
             string GetCustomerInfoQuery = "select MAKH, HOTEN, NGAYSINH, SDT, DIACHI from KHACH_HANG " +
@@ -119,16 +115,11 @@ namespace QuanLyNhaKhoa.Models
             return null;
         }
 
-
-
-
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        
+        }     
     }
 }
 

@@ -78,7 +78,7 @@ namespace QuanLyNhaKhoa.ViewModels
 
         public DentistInforViewModel GetDentistInfo(string connectionString, DentistInforViewModel dentistInfo)
         {
-            string DenID = "NS0001";
+            //string DenID = "NS0001";
             string GetDentistInfoQuery = "select NS.MANS, NS.HOTEN, NS.NGAYSINH, NS.SDT, NS.DIACHI from NHA_SI NS " +
                              "where NS.MANS = '" + DenID + "'";
 

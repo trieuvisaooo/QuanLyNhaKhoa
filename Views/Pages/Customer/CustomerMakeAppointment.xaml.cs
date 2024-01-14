@@ -26,7 +26,6 @@ namespace QuanLyNhaKhoa.Views
             DenList.ItemsSource = getDentists((App.Current as App).ConnectionString);
         }
 
-        
         public List<string> DenNameList = new List<string>();
         public List<string> getDentists(string connectionString)
         {
@@ -61,8 +60,6 @@ namespace QuanLyNhaKhoa.Views
             }
             return null;
         }
-
-
         private async void makeAppointment_Click(object sender, RoutedEventArgs e)
         {
             string connectionString = (App.Current as App).ConnectionString;
@@ -107,7 +104,6 @@ namespace QuanLyNhaKhoa.Views
 
 
         }
-
         private void cancel_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(CustomerAppointment));

@@ -18,7 +18,7 @@ namespace QuanLyNhaKhoa.Views
         {
             this.InitializeComponent();
             dentistInfo.GetDentistInfo((App.Current as App).ConnectionString, dentistInfo);
-            AppointmentList.ItemsSource = dentistAppointmentViewModel.GetAppointments((App.Current as App).ConnectionString, dentistInfo.DenID);
+            AppointmentList.ItemsSource = dentistAppointmentViewModel.GetAppointments((App.Current as App).ConnectionString, (App.Current as App).CurrentAccount.StoredAccount.Id);
         }
 
         private DentistAppointmentViewModel dentistAppointmentViewModel = new DentistAppointmentViewModel();

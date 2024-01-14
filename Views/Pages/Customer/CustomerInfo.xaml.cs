@@ -65,7 +65,6 @@ namespace QuanLyNhaKhoa.Views
             }
         }
 
-
         private void modify_Click(object sender, RoutedEventArgs e)
         {
             Modify.Visibility = Visibility.Collapsed;
@@ -85,7 +84,6 @@ namespace QuanLyNhaKhoa.Views
             this.Frame.Navigate(typeof(CustomerInfo));
 
         }
-
         private void cancel_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(CustomerInfo), customerAccount);
