@@ -17,7 +17,7 @@ namespace QuanLyNhaKhoa.Views
         public LogInWindow()
         {
             this.InitializeComponent();
-            this.AppWindow.Resize(new Windows.Graphics.SizeInt32(720, 500));
+            this.AppWindow.Resize(new Windows.Graphics.SizeInt32(1000, 700));
             this.AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
             App.SetTitleBarColors(this);
             App.SetResizability(this, false);
@@ -44,7 +44,8 @@ namespace QuanLyNhaKhoa.Views
                         Window mainWindow = new AdminWindow();
                         mainWindow.Activate();
                         this.Close();
-                    } else if (loginViewModel.SelectedRole == "Khách hàng")
+                    }
+                    else if (loginViewModel.SelectedRole == "Khách hàng")
                     {
                         Window mainWindow = new CustomerWindow();
                         mainWindow.Activate();
@@ -53,7 +54,8 @@ namespace QuanLyNhaKhoa.Views
 
                 }
             }
-            catch (System.Exception ex) {
+            catch (System.Exception ex)
+            {
                 Notify.WriteLine(ex.Message);
             }
             LoadingRing.IsActive = false;
@@ -66,7 +68,7 @@ namespace QuanLyNhaKhoa.Views
             var menuFlyoutItem = sender as Microsoft.UI.Xaml.Controls.MenuFlyoutItem;
             loginViewModel.SelectedRole = menuFlyoutItem.Text;
         }
-        
+
 
         private void txt_GotFocus(object sender, RoutedEventArgs e)
         {
