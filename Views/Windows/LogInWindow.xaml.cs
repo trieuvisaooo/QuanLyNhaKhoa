@@ -1,4 +1,4 @@
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using QuanLyNhaKhoa.ViewModels;
 using System.Threading.Tasks;
@@ -45,9 +45,15 @@ namespace QuanLyNhaKhoa.Views
                         mainWindow.Activate();
                         this.Close();
                     }
-                    else if (loginViewModel.SelectedRole == "Kh�ch h�ng")
+                    else if (loginViewModel.SelectedRole == "Khách hàng")
                     {
                         Window mainWindow = new CustomerWindow();
+                        mainWindow.Activate();
+                        this.Close();
+                    }
+                    else if (loginViewModel.SelectedRole == "Nha sĩ")
+                    {
+                        Window mainWindow = new DentistWindow();
                         mainWindow.Activate();
                         this.Close();
                     }

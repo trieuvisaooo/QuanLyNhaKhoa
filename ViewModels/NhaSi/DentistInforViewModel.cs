@@ -1,23 +1,28 @@
-﻿using System;
+﻿using QuanLyNhaKhoa.Models;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace QuanLyNhaKhoa.Models
+namespace QuanLyNhaKhoa.ViewModels
 {
-    public class CustomerInfoViewModel : INotifyPropertyChanged
+    public class DentistInforViewModel : INotifyPropertyChanged
     {
-        private string _cusID;
-        private string _cusName;
+        private string _denID;
+        private string _denName;
         private DateOnly _dateOfBirth;
         private string _phoneNum;
         private string _addr;
 
-        public string CusID
+        public string DenID
         {
             get; set;
         }
-        public string CusName
+        public string DenName
         {
             get; set;
         }
@@ -56,28 +61,27 @@ namespace QuanLyNhaKhoa.Models
             }
         }
 
-        public CustomerInfoViewModel()
+        public DentistInforViewModel()
         {
 
         }
 
-
-        public CustomerInfoViewModel(CustomerAccount customerAccount)
+        public DentistInforViewModel(DentistAccount dentistAccount)
         {
-            CusID = customerAccount.Id;
-            CusName = customerAccount.Name;
-            DateTime date = customerAccount.Birthday;
+            DenID = dentistAccount.Id;
+            DenName = dentistAccount.Name;
+            DateTime date = dentistAccount.Birthday;
             DateOfBirth = DateOnly.FromDateTime(date);
-            PhoneNum = customerAccount.PhoneNumber;
-            Addr = customerAccount.Address;
+            PhoneNum = dentistAccount.PhoneNumber;
+            Addr = dentistAccount.Address;
         }
 
-
-
-        public CustomerInfoViewModel GetCustomerInfo(string connectionString, CustomerInfoViewModel customerInfo, string CusId)
+        public DentistInforViewModel GetDentistInfo(string connectionString, DentistInforViewModel dentistInfo)
         {
-            string GetCustomerInfoQuery = "select MAKH, HOTEN, NGAYSINH, SDT, DIACHI from KHACH_HANG " +
-                                                "where MAKH = " + "'" + CusId + "'";
+            //string DenID = "NS0001";
+            string GetDentistInfoQuery = "select NS.MANS, NS.HOTEN, NS.NGAYSINH, NS.SDT, NS.DIACHI from NHA_SI NS " +
+                             "where NS.MANS = '" + DenID + "'";
+
 
             try
             {
@@ -88,26 +92,24 @@ namespace QuanLyNhaKhoa.Models
                     {
                         using (SqlCommand cmd = conn.CreateCommand())
                         {
-                            cmd.CommandText = GetCustomerInfoQuery;
+                            cmd.CommandText = GetDentistInfoQuery;
                             using (SqlDataReader reader = cmd.ExecuteReader())
                             {
-                                //var customerInfo = new CustomerInfoViewModel();
-
                                 while (reader.Read())
                                 {
-                                    customerInfo.CusID = reader.GetString(0);
-                                    customerInfo.CusName = reader.GetString(1);
+                                    dentistInfo.DenID = reader.GetString(0);
+                                    dentistInfo.DenName = reader.GetString(1);
                                     DateTime date = reader.GetDateTime(2);
-                                    customerInfo.DateOfBirth = DateOnly.FromDateTime(date);
-                                    customerInfo.PhoneNum = reader.GetString(3);
-                                    customerInfo.Addr = reader.GetString(4);
+                                    dentistInfo.DateOfBirth = DateOnly.FromDateTime(date);
+                                    dentistInfo.PhoneNum = reader.GetString(3);
+                                    dentistInfo.Addr = reader.GetString(4);
                                 }
 
                             }
                         }
                     }
                 }
-                return customerInfo;
+                return dentistInfo;
 
             }
             catch (Exception eSql)

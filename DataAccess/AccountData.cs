@@ -20,8 +20,14 @@ namespace QuanLyNhaKhoa.DataAccess
             if (account is AdministratorAccount)
             {
                 accountType = "QTV";
-            } else if (account is CustomerAccount) {
+            }
+            else if (account is CustomerAccount)
+            {
                 accountType = "KHACH_HANG";
+            }
+            else if (account is DentistAccount)
+            {
+                accountType = "NHA_SI";
             }
             string query = $"SELECT COUNT(*) FROM {accountType} WHERE SDT = '{account.PhoneNumber}' AND MATKHAU = '{account.Password}' AND TRANGTHAI != 0";
 
@@ -47,9 +53,14 @@ namespace QuanLyNhaKhoa.DataAccess
             if (account is AdministratorAccount)
             {
                 return GetAdministratorAccount(account.PhoneNumber);
-            } else if (account is CustomerAccount)
+            }
+            else if (account is CustomerAccount)
             {
                 return GetCustomerAccount(account.PhoneNumber);
+            }
+            else if (account is DentistAccount)
+            {
+                return GetDentistAccount(account.PhoneNumber);
             }
 
             return null;
@@ -129,6 +140,45 @@ namespace QuanLyNhaKhoa.DataAccess
             return null;
         }
 
+        private DentistAccount GetDentistAccount(string PhoneNumber)
+        {
+            DentistAccount account = new DentistAccount();
+            string query = $"SELECT * FROM NHA_SI WHERE SDT={PhoneNumber}";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    try
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                account.Id = reader.GetString(reader.GetOrdinal("MANS"));
+                                account.PhoneNumber = reader.GetString(reader.GetOrdinal("SDT"));
+                                account.Name = reader.GetString(reader.GetOrdinal("HOTEN"));
+                                account.Birthday = reader.GetDateTime(reader.GetOrdinal("NGAYSINH"));
+                                account.Address = reader.GetString(reader.GetOrdinal("DIACHI"));
+                                account.Password = reader.GetString(reader.GetOrdinal("MATKHAU"));
+                                //account.Chuyenmon = reader.GetString(reader.GetOrdinal("CHUYENMON"));
+                                account.Status = reader.GetInt32(reader.GetOrdinal("TRANGTHAI"));
+                                return account;
+                            }
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        Debug.WriteLine("VO DAY");
+
+                        return null;
+                    }
+                }
+            }
+            return null;
+        }
+
         bool SignUpCustomer(Interfaces.Account account)
         {
             string query = "INSERT INTO KHACH_HANG (MAKH, SDT, HOTEN, NGAYSINH, DIACHI, MATKHAU, TRANGTHAI)"
@@ -161,7 +211,32 @@ namespace QuanLyNhaKhoa.DataAccess
 
         bool SignUpDentist(Interfaces.Account account)
         {
-            throw new NotImplementedException();
+            string query = "INSERT INTO NHA_SI (MANS, SDT, HOTEN, NGAYSINH, DIACHI, MATKHAU, TRANGTHAI)"
+                + "VALUES (@MAKH, @SDT, @HOTEN, @NGAYSINH, @DIACHI, @MATKHAU, @TRANGTHAI)";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@MANS", account.Id);
+                        command.Parameters.AddWithValue("@SDT", account.PhoneNumber);
+                        command.Parameters.AddWithValue("@HOTEN", account.Name);
+                        command.Parameters.AddWithValue("@NGAYSINH", account.Birthday);
+                        command.Parameters.AddWithValue("@DIACHI", account.Address);
+                        command.Parameters.AddWithValue("@MATKHAU", account.Password);
+                        command.Parameters.AddWithValue("@TRANGTHAI", account.Status);
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
         }
 
         bool SignUpReceptionist(Interfaces.Account account)

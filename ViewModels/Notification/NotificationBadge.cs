@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Timers;
-using System.Xml.Linq;
 using Timer = System.Threading.Timer;
 
 namespace QuanLyNhaKhoa.ViewModels.Notification
@@ -23,7 +16,7 @@ namespace QuanLyNhaKhoa.ViewModels.Notification
         private int secondsTillDestroy = 2;
         public Action<string> DestroyEvent;
         private Timer _timer;
-        
+
 
 
         public NotificationBadge(string message, bool isBad = false, int secondTillDestroy = 2)

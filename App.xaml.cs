@@ -1,15 +1,13 @@
-﻿using Microsoft.UI;
+﻿// To learn more about WinUI, the WinUI project structure,
+// and more about our project templates, see: http://aka.ms/winui-project-info.
+using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using QuanLyNhaKhoa.DataAccess;
 using QuanLyNhaKhoa.Views;
-using System.Diagnostics;
 using Windows.Graphics;
 using Windows.UI;
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace QuanLyNhaKhoa
 {

@@ -1,12 +1,11 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using QuanLyNhaKhoa.Models;
+using QuanLyNhaKhoa.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.SqlClient;
 using System.Diagnostics;
-using QuanLyNhaKhoa.ViewModels;
-using System.Collections.ObjectModel;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -26,7 +25,6 @@ namespace QuanLyNhaKhoa.Views
             DenList.ItemsSource = getDentists((App.Current as App).ConnectionString);
         }
 
-        
         public List<string> DenNameList = new List<string>();
         public List<string> getDentists(string connectionString)
         {
@@ -61,8 +59,6 @@ namespace QuanLyNhaKhoa.Views
             }
             return null;
         }
-
-
         private async void makeAppointment_Click(object sender, RoutedEventArgs e)
         {
             string connectionString = (App.Current as App).ConnectionString;
@@ -73,7 +69,7 @@ namespace QuanLyNhaKhoa.Views
             {
                 con.Open();
 
-                string insert_statement = "EXEC sp_themLHCoTenNS '" + infoViewModel.Id + "', '" + AppoDate.Date + "', '" + AppoTime.Time + "', N'" + denName + "'"; 
+                string insert_statement = "EXEC sp_themLHCoTenNS '" + infoViewModel.Id + "', '" + AppoDate.Date + "', '" + AppoTime.Time + "', N'" + denName + "'";
                 SqlCommand cmnd = new SqlCommand(insert_statement, con);
                 cmnd.ExecuteNonQuery();
                 this.Frame.Navigate(typeof(CustomerAppointment));
@@ -107,7 +103,6 @@ namespace QuanLyNhaKhoa.Views
 
 
         }
-
         private void cancel_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(CustomerAppointment));

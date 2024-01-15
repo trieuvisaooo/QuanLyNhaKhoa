@@ -1,8 +1,6 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Navigation;
 using QuanLyNhaKhoa.Models;
-using QuanLyNhaKhoa.ViewModels.Customer;
 using System;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -85,18 +83,17 @@ namespace QuanLyNhaKhoa.Views
             this.Frame.Navigate(typeof(CustomerInfo));
 
         }
-
         private void cancel_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(CustomerInfo), customerAccount);
-            Modify.Visibility= Visibility.Visible;
+            Modify.Visibility = Visibility.Visible;
             DateRow.Spacing = 30;
             DateOfBirth.Visibility = Visibility.Visible;
             ModifyDateOfBirth.Visibility = Visibility.Collapsed;
             PhoneNum.IsReadOnly = true;
             Addr.IsReadOnly = true;
             ModifyDateOfBirth.IsEnabled = false;
-            SaveAndCancel.Visibility= Visibility.Collapsed;
+            SaveAndCancel.Visibility = Visibility.Collapsed;
         }
     }
 }
