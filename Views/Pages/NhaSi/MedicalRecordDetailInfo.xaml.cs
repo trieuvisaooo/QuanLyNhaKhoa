@@ -169,11 +169,11 @@ namespace QuanLyNhaKhoa.Views
             return services;
         }
 
-       
+
         private void ViewInvoice_Click(object sender, RoutedEventArgs e)
         {
             //this.Frame.Navigate(typeof(Staff_InvoiceDetail), MRDViewModel);
         }
 
-    }    
+    }
 }
