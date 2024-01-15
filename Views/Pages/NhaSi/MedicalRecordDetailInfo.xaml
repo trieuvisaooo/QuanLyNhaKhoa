@@ -75,14 +75,21 @@
                             <DataTemplate x:DataType="local:Medicines">
                                 <Grid>
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{x:Bind Name}" Margin="10"/>
-                                        <TextBlock Text="{x:Bind Count}" Margin="10"/>
+                                        <StackPanel Orientation="Horizontal" Spacing="1" Margin="10">
+                                            <TextBlock Text="+"/>
+                                            <TextBlock Text="{x:Bind Name}" Width="120"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="10">
+                                            <TextBlock Text="x"/>
+                                            <TextBlock Text="{x:Bind Count}" Width="20"/>
+                                        </StackPanel>
                                     </StackPanel>
+
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                    
+
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical"

@@ -23,11 +23,6 @@ namespace QuanLyNhaKhoa.Views
 
         private async void addSchedule_Click(object sender, RoutedEventArgs e)
         {
-            //var builder = new SqlConnectionStringBuilder();
-            //builder.DataSource = @".\SQLSERVER";
-            //builder.InitialCatalog = "QLPK";
-            //builder.IntegratedSecurity = true;
-            //string connectionString = builder.ConnectionString;
             string connectionString = (App.Current as App).ConnectionString;
             SqlConnection con = new SqlConnection(@connectionString);
             Debug.WriteLine(@connectionString);
@@ -35,9 +30,14 @@ namespace QuanLyNhaKhoa.Views
             {
                 con.Open();
 
-                //dentist.DenID = "NS0001";
-                string insert_statement = "EXEC sp_ThemLichCaNhanNhaSi '" + infoViewModel.Id + "', '" + Date.Date + "', '" + StartTime.Time + "', '" + EndTime.Time + "'";
-                SqlCommand cmnd = new SqlCommand(insert_statement, con);
+                SqlCommand cmnd = new SqlCommand("sp_ThemLichCaNhanNhaSi", con);
+                cmnd.CommandType = CommandType.StoredProcedure;
+
+                cmnd.Parameters.AddWithValue("@Id", infoViewModel.Id);
+                cmnd.Parameters.AddWithValue("@Date", Date.Date);
+                cmnd.Parameters.AddWithValue("@StartTime", StartTime.Time);
+                cmnd.Parameters.AddWithValue("@EndTime", EndTime.Time);
+
                 cmnd.ExecuteNonQuery();
                 this.Frame.Navigate(typeof(DentistAppointment));
                 ContentDialog AddScheduleDialog = new ContentDialog
@@ -75,3 +75,5 @@ namespace QuanLyNhaKhoa.Views
         }
     }
 }
+
+
