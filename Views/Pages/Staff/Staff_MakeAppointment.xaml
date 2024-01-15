@@ -36,7 +36,7 @@
             <!--<TextBox Name="DenID" 
                      AutomationProperties.Name="simple TextBox"
                      Width="200" Height="30"/>-->
-            <ComboBox Name="DenList" IsEditable="True" Width="200" />
+            <ComboBox Name="DenList" IsEditable="True" Width="200"  />
         </StackPanel>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal"
@@ -45,7 +45,7 @@
                         VerticalAlignment="Center"
                         Spacing="10">
                 <TextBlock Text="Chọn ngày hẹn: "/>
-                <CalendarDatePicker Name="AppoDate"/>
+                <CalendarDatePicker Name="AppoDate" DateChanged="OnDateChanged"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal"

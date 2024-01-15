@@ -7,6 +7,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using QuanLyNhaKhoa.DataAccess;
 using QuanLyNhaKhoa.Views;
+using System.Diagnostics;
 using Windows.Graphics;
 using Windows.UI;
 
@@ -46,7 +47,10 @@ namespace QuanLyNhaKhoa
         {
             //Window CusWindow = new CustomerWindow();
             //CusWindow.Activate();
+            Debug.WriteLine("App: " + this.connectionString);
             Window _loginWindow = new LogInWindow();
+            this.connectionString = "Data Source=DESKTOP-3TQQ5PF\\MSSQLSERVER01;Initial Catalog=QLPK;Integrated Security=True;TrustServerCertificate=True;Connect Timeout=2;\r\n";
+
             _loginWindow.Activate();
         }
 

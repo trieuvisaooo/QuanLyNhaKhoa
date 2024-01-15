@@ -38,7 +38,7 @@ namespace QuanLyNhaKhoa.DataAccess
                 return false;
             }
             string query = $"SELECT COUNT(*) FROM {accountType} WHERE SDT = '{account.PhoneNumber}' AND MATKHAU = '{account.Password}' AND TRANGTHAI != 0";
-
+            Debug.WriteLine("Login " + query);
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
@@ -114,6 +114,7 @@ namespace QuanLyNhaKhoa.DataAccess
         {
             CustomerAccount account = new CustomerAccount();
             string query = $"SELECT * FROM KHACH_HANG WHERE SDT={PhoneNumber}";
+            Debug.WriteLine("customer: " + query);
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
