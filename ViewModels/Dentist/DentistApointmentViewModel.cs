@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System;
 
-namespace QuanLyNhaKhoa.ViewModels
+namespace QuanLyNhaKhoa.ViewModels.Dentist
 {
     public class DentistAppointmentViewModel : INotifyPropertyChanged
     {
@@ -21,7 +21,10 @@ namespace QuanLyNhaKhoa.ViewModels
         }
         public string CusID
         {
-            get { return _cusID; }
+            get
+            {
+                return _cusID;
+            }
             set
             {
                 _cusID = value;
@@ -31,7 +34,10 @@ namespace QuanLyNhaKhoa.ViewModels
 
         public string CusName
         {
-            get { return _cusName; }
+            get
+            {
+                return _cusName;
+            }
             set
             {
                 _cusName = value;
@@ -47,12 +53,18 @@ namespace QuanLyNhaKhoa.ViewModels
                 NotifyPropertyChanged(nameof(_mrID));
 
             }
-            get { return _mrID; }
+            get
+            {
+                return _mrID;
+            }
         }
 
         public DateOnly AppoDate
         {
-            get { return _appoDate; }
+            get
+            {
+                return _appoDate;
+            }
             set
             {
                 _appoDate = value;
@@ -62,7 +74,10 @@ namespace QuanLyNhaKhoa.ViewModels
 
         public TimeOnly AppoTime
         {
-            get { return _appoTime; }
+            get
+            {
+                return _appoTime;
+            }
             set
             {
                 _appoTime = value;
@@ -72,7 +87,7 @@ namespace QuanLyNhaKhoa.ViewModels
 
         public ObservableCollection<DentistAppointmentViewModel> GetAppointments(string connectionString, string denID)
         {
-            string GetAppointmentQuery = "select LH.MALICHHEN, KH.HOTEN, KH.MAKH, LH.GIOKHAM, LH.NGAYKHAM from LICH_HEN LH " +
+            var GetAppointmentQuery = "select LH.MALICHHEN, KH.HOTEN, KH.MAKH, LH.GIOKHAM, LH.NGAYKHAM from LICH_HEN LH " +
                              "join KHACH_HANG KH on LH.MAKH = KH.MAKH " +
                              "join NHA_SI NS on LH.NHASI = NS.MANS " +
                              "where NS.MANS = '" + denID + "' " +
@@ -86,10 +101,10 @@ namespace QuanLyNhaKhoa.ViewModels
                     conn.Open();
                     if (conn.State == System.Data.ConnectionState.Open)
                     {
-                        using (SqlCommand cmd = conn.CreateCommand())
+                        using (var cmd = conn.CreateCommand())
                         {
                             cmd.CommandText = GetAppointmentQuery;
-                            using (SqlDataReader reader = cmd.ExecuteReader())
+                            using (var reader = cmd.ExecuteReader())
                             {
                                 while (reader.Read())
                                 {
@@ -97,9 +112,9 @@ namespace QuanLyNhaKhoa.ViewModels
                                     DentistAppointment.AppoID = reader.GetString(0);
                                     DentistAppointment.CusName = reader.GetString(1);
                                     DentistAppointment.CusID = reader.GetString(2);
-                                    TimeSpan time = reader.GetTimeSpan(3);
+                                    var time = reader.GetTimeSpan(3);
                                     DentistAppointment.AppoTime = TimeOnly.FromTimeSpan(time);
-                                    DateTime date = reader.GetDateTime(4);
+                                    var date = reader.GetDateTime(4);
                                     DentistAppointment.AppoDate = DateOnly.FromDateTime(date);
 
 

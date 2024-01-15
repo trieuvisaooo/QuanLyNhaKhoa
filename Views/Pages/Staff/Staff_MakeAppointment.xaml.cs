@@ -9,6 +9,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using QuanLyNhaKhoa.ViewModels;
+using QuanLyNhaKhoa.ViewModels.Receptionist;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -93,7 +94,7 @@ namespace QuanLyNhaKhoa.Views
                 Debug.WriteLine(insert_statement);
                 SqlCommand cmnd = new SqlCommand(insert_statement, con);
                 cmnd.ExecuteNonQuery();
-                this.Frame.Navigate(typeof(CustomerAppointment));
+                //this.Frame.Navigate(typeof(Staff_CustomerDetailInfo));
                 ContentDialog MadeAppointmentDialog = new ContentDialog
                 {
                     XamlRoot = this.XamlRoot,

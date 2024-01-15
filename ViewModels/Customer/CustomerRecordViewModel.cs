@@ -20,8 +20,8 @@ namespace QuanLyNhaKhoa.ViewModels.Customer
         private int _totalCost;
         private int _status;
         //private ObservableCollection<Medicine> _medicine = new ObservableCollection<Medicine>();
-        private List<ViewModels.MedicineViewModel> _medicines = new List<ViewModels.MedicineViewModel>();
-        private List<ServiceViewModel> _services = new List<ServiceViewModel>();
+        private List<Models.Medicine> _medicines = new List<Models.Medicine>();
+        private List<Models.Service> _services = new List<Models.Service>();
 
         public CustomerRecordViewModel()
         {
@@ -149,7 +149,7 @@ namespace QuanLyNhaKhoa.ViewModels.Customer
             }
         }
 
-        public List<ViewModels.MedicineViewModel> Medicines
+        public List<Models.Medicine> Medicines
         {
             get
             {
@@ -163,7 +163,7 @@ namespace QuanLyNhaKhoa.ViewModels.Customer
             }
         }
 
-        public List<ServiceViewModel> Services
+        public List<Models.Service> Services
         {
             get
             {
@@ -180,7 +180,6 @@ namespace QuanLyNhaKhoa.ViewModels.Customer
 
         public ObservableCollection<CustomerRecordViewModel> GetRecords(string connectionString, string cusID)
         {
-            //string CusID = "KH0002";
             var getRecordQuery = "SELECT BA.MABA, NS.MANS, NS.HOTEN, BA.MOTA, BA.NGAYKHAM, HD.PHIKHAM, HD.TONGTIEN, HD.TINHTRANG FROM BENH_AN BA JOIN NHA_SI NS ON BA.NHASITHUCHIEN = NS.MANS " +
                                                 " JOIN HOA_DON HD ON HD.MABA = BA.MABA " +
                                                 "where BA.MAKH = " + "'" + cusID + "' ORDER BY BA.NGAYKHAM DESC";
@@ -229,7 +228,6 @@ namespace QuanLyNhaKhoa.ViewModels.Customer
 
         public ObservableCollection<CustomerRecordViewModel> GetRecordsByDenName(string connectionString, string cusID, string denName)
         {
-            //string CusID = "KH0002";
             var getRecordQuery = "SELECT BA.MABA, NS.MANS, NS.HOTEN, BA.MOTA, BA.NGAYKHAM, HD.PHIKHAM, HD.TONGTIEN, HD.TINHTRANG FROM BENH_AN BA JOIN NHA_SI NS ON BA.NHASITHUCHIEN = NS.MANS " +
                                     "JOIN HOA_DON HD ON HD.MABA = BA.MABA " +
                                     "WHERE BA.MAKH = " + "'" + cusID + "' AND NS.HOTEN = N" + "'" + denName + "' ORDER BY BA.NGAYKHAM DESC";
@@ -275,7 +273,7 @@ namespace QuanLyNhaKhoa.ViewModels.Customer
             return null;
         }
 
-        public List<ViewModels.MedicineViewModel> GetMedicine(string connectionString)
+        public List<Models.Medicine> GetMedicine(string connectionString)
         {
             Medicines.Clear();
             var getMedicineQuery = "SELECT T.MATHUOC, T.TENTHUOC, CTDT.SOLUONG, T.DONVITINH, T.DONGIA FROM CT_DON_THUOC CTDT JOIN THUOC T ON CTDT.MATHUOC = T.MATHUOC WHERE CTDT.MABA = " +
@@ -295,7 +293,7 @@ namespace QuanLyNhaKhoa.ViewModels.Customer
                             {
                                 while (reader.Read())
                                 {
-                                    var medicine = new ViewModels.MedicineViewModel();
+                                    var medicine = new Models.Medicine();
                                     medicine.ID = reader.GetString(0);
                                     medicine.Name = reader.GetString(1);
                                     medicine.Count = reader.GetInt32(2);
@@ -318,7 +316,7 @@ namespace QuanLyNhaKhoa.ViewModels.Customer
 
         }
 
-        public List<ServiceViewModel> GetService(string connectionString)
+        public List<Models.Service> GetService(string connectionString)
         {
             Services.Clear();
             var getServiceQuery = "SELECT DV.MADV, DV.TENDICHVU, DV.DONGIA FROM PHIEU_DV PDV JOIN DICH_VU DV ON PDV.MADV = DV.MADV WHERE PDV.MABA = " +
@@ -338,7 +336,7 @@ namespace QuanLyNhaKhoa.ViewModels.Customer
                             {
                                 while (reader.Read())
                                 {
-                                    var service = new ServiceViewModel();
+                                    var service = new Models.Service();
                                     service.ID = reader.GetString(0);
                                     service.Name = reader.GetString(1);
                                     service.Price = reader.GetInt32(2);

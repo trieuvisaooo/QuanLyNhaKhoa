@@ -8,7 +8,7 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
-using QuanLyNhaKhoa.ViewModels;
+using QuanLyNhaKhoa.ViewModels.Receptionist;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -60,7 +60,7 @@ namespace QuanLyNhaKhoa.Views
                 {
                     XamlRoot = this.XamlRoot,
                     Title = "Chỉnh Sửa Thông Tin",
-                    Content = "Bạn đã chỉnh sửa thông tin thành công thành công!",
+                    Content = "Bạn đã chỉnh sửa thông tin thành công!",
                     CloseButtonText = "Ok"
                 };
                 ContentDialogResult result = await ModifiedDialog.ShowAsync();

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuanLyNhaKhoa.ViewModels
+namespace QuanLyNhaKhoa.ViewModels.Dentist
 {
     public class DentistInforViewModel : INotifyPropertyChanged
     {
@@ -29,7 +29,10 @@ namespace QuanLyNhaKhoa.ViewModels
 
         public DateOnly DateOfBirth
         {
-            get { return _dateOfBirth; }
+            get
+            {
+                return _dateOfBirth;
+            }
             set
             {
                 _dateOfBirth = value;
@@ -70,7 +73,7 @@ namespace QuanLyNhaKhoa.ViewModels
         {
             DenID = dentistAccount.Id;
             DenName = dentistAccount.Name;
-            DateTime date = dentistAccount.Birthday;
+            var date = dentistAccount.Birthday;
             DateOfBirth = DateOnly.FromDateTime(date);
             PhoneNum = dentistAccount.PhoneNumber;
             Addr = dentistAccount.Address;
@@ -79,7 +82,7 @@ namespace QuanLyNhaKhoa.ViewModels
         public DentistInforViewModel GetDentistInfo(string connectionString, DentistInforViewModel dentistInfo)
         {
             //string DenID = "NS0001";
-            string GetDentistInfoQuery = "select NS.MANS, NS.HOTEN, NS.NGAYSINH, NS.SDT, NS.DIACHI from NHA_SI NS " +
+            var GetDentistInfoQuery = "select NS.MANS, NS.HOTEN, NS.NGAYSINH, NS.SDT, NS.DIACHI from NHA_SI NS " +
                              "where NS.MANS = '" + DenID + "'";
 
 
@@ -90,16 +93,16 @@ namespace QuanLyNhaKhoa.ViewModels
                     conn.Open();
                     if (conn.State == System.Data.ConnectionState.Open)
                     {
-                        using (SqlCommand cmd = conn.CreateCommand())
+                        using (var cmd = conn.CreateCommand())
                         {
                             cmd.CommandText = GetDentistInfoQuery;
-                            using (SqlDataReader reader = cmd.ExecuteReader())
+                            using (var reader = cmd.ExecuteReader())
                             {
                                 while (reader.Read())
                                 {
                                     dentistInfo.DenID = reader.GetString(0);
                                     dentistInfo.DenName = reader.GetString(1);
-                                    DateTime date = reader.GetDateTime(2);
+                                    var date = reader.GetDateTime(2);
                                     dentistInfo.DateOfBirth = DateOnly.FromDateTime(date);
                                     dentistInfo.PhoneNum = reader.GetString(3);
                                     dentistInfo.Addr = reader.GetString(4);

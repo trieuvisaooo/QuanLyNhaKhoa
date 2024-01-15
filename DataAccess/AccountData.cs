@@ -139,8 +139,6 @@ namespace QuanLyNhaKhoa.DataAccess
                     }
                     catch (Exception)
                     {
-                        Debug.WriteLine("VO DAY");
-
                         return null;
                     }
                 }
@@ -178,8 +176,6 @@ namespace QuanLyNhaKhoa.DataAccess
                     }
                     catch (Exception)
                     {
-                        Debug.WriteLine("VO DAY");
-
                         return null;
                     }
                 }

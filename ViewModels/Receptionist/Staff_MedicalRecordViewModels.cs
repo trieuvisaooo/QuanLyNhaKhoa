@@ -8,24 +8,27 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuanLyNhaKhoa.ViewModels
+namespace QuanLyNhaKhoa.ViewModels.Receptionist
 {
     public class Staff_MedicalRecordViewModels : INotifyPropertyChanged
     {
-       
+
         private string _mrID;
         private string _cusID;
         private string _cusName;
 
-        public string _MrID 
-        { 
+        public string _MrID
+        {
             set
             {
                 _mrID = value;
                 OnPropertyChanged(nameof(_mrID));
 
-            }        
-            get { return _mrID; }
+            }
+            get
+            {
+                return _mrID;
+            }
         }
         public string _CusID
         {
@@ -35,7 +38,10 @@ namespace QuanLyNhaKhoa.ViewModels
                 OnPropertyChanged(nameof(_cusID));
 
             }
-            get { return _cusID; }
+            get
+            {
+                return _cusID;
+            }
         }
         public string _CusName
         {
@@ -44,7 +50,10 @@ namespace QuanLyNhaKhoa.ViewModels
                 _cusName = value;
                 OnPropertyChanged(nameof(_cusName));
             }
-            get { return _cusName; }
+            get
+            {
+                return _cusName;
+            }
         }
 
 

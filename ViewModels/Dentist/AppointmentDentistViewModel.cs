@@ -1,7 +1,7 @@
 ﻿using QuanLyNhaKhoa.Models;
 using System.ComponentModel;
 
-namespace QuanLyNhaKhoa.ViewModels
+namespace QuanLyNhaKhoa.ViewModels.Dentist
 {
     public class AppointmentDentistViewModel : INotifyPropertyChanged
     {

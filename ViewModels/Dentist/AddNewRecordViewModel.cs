@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuanLyNhaKhoa.ViewModels
+namespace QuanLyNhaKhoa.ViewModels.Dentist
 {
     public class AddNewRecordViewModel : INotifyPropertyChanged
     {
@@ -16,7 +16,10 @@ namespace QuanLyNhaKhoa.ViewModels
         private string _service;
         public string DenID
         {
-            get { return _denID; }
+            get
+            {
+                return _denID;
+            }
             set
             {
                 _denID = value;

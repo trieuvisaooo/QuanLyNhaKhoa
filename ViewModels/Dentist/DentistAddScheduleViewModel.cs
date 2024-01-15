@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace QuanLyNhaKhoa.ViewModels
+namespace QuanLyNhaKhoa.ViewModels.Dentist
 {
     public class DentistAddScheduleViewModel : INotifyPropertyChanged
     {
@@ -12,7 +12,10 @@ namespace QuanLyNhaKhoa.ViewModels
 
         public string DenID
         {
-            get { return _denID; }
+            get
+            {
+                return _denID;
+            }
             set
             {
                 _denID = value;
@@ -22,7 +25,10 @@ namespace QuanLyNhaKhoa.ViewModels
 
         public DateTime WorkDate
         {
-            get { return _workDate; }
+            get
+            {
+                return _workDate;
+            }
             set
             {
                 _workDate = value;
@@ -32,7 +38,10 @@ namespace QuanLyNhaKhoa.ViewModels
 
         public TimeSpan StartTime
         {
-            get { return _startTime; }
+            get
+            {
+                return _startTime;
+            }
             set
             {
                 _startTime = value;
@@ -42,7 +51,10 @@ namespace QuanLyNhaKhoa.ViewModels
 
         public TimeSpan EndTime
         {
-            get { return _endTime; }
+            get
+            {
+                return _endTime;
+            }
             set
             {
                 _endTime = value;

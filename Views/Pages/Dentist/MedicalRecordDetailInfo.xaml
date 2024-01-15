@@ -7,7 +7,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:QuanLyNhaKhoa.ViewModels"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local1="using:QuanLyNhaKhoa.Models"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -72,7 +72,7 @@
                         HorizontalAlignment="Left"
                         IsItemClickEnabled="True">
                         <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="local:Medicines">
+                            <DataTemplate x:DataType="local1:Medicine">
                                 <Grid>
                                     <StackPanel Orientation="Horizontal">
                                         <StackPanel Orientation="Horizontal" Spacing="1" Margin="10">
@@ -101,7 +101,7 @@
                         HorizontalAlignment="Left"
                         IsItemClickEnabled="True">
                         <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="local:Services">
+                            <DataTemplate x:DataType="local1:Service">
                                 <Grid>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="{x:Bind Name}" Margin="10"/>

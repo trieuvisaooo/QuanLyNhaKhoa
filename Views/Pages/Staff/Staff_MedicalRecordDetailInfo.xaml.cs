@@ -4,7 +4,7 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
-using QuanLyNhaKhoa.ViewModels;
+using QuanLyNhaKhoa.ViewModels.Receptionist;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -38,8 +38,8 @@ namespace QuanLyNhaKhoa.Views
             string _dentistID = "";
             string _dentistName = "";
             DateOnly _dateVisit = DateOnly.MinValue;
-            List<MedicineViewModel> _medic = new List<MedicineViewModel>();
-            List<ServiceViewModel> _serviceUsed = new List<ServiceViewModel>();
+            List<Models.Medicine> _medic = new List<Models.Medicine>();
+            List<Models.Service> _serviceUsed = new List<Models.Service>();
             string _invoiceID = "";
             int _totalPayment = 0;
             string _paymentStatus = "";
@@ -64,7 +64,7 @@ namespace QuanLyNhaKhoa.Views
                         {
                             while (reader.Read())
                             {
-                                _medic.Add(new MedicineViewModel(reader.GetString(0), reader.GetInt32(2), reader.GetInt32(1)));
+                                _medic.Add(new Models.Medicine(reader.GetString(0), reader.GetInt32(2), reader.GetInt32(1)));
                             }
                         }
                     }
@@ -108,7 +108,7 @@ namespace QuanLyNhaKhoa.Views
                         {
                             while (reader.Read())
                             {
-                                _serviceUsed.Add(new ServiceViewModel(reader.GetString(0), reader.GetInt32(1)));
+                                _serviceUsed.Add(new Models.Service(reader.GetString(0), reader.GetInt32(1)));
                             }
                         }
                     }

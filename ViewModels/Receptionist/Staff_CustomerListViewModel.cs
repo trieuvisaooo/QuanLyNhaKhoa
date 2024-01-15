@@ -5,17 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuanLyNhaKhoa.ViewModels
+namespace QuanLyNhaKhoa.ViewModels.Receptionist
 {
     public class Staff_CustomerListViewModel : INotifyPropertyChanged
     {
-        private String cusID;
-        private String cusName;
+        private string cusID;
+        private string cusName;
         private DateOnly dateOfBirth;
-        private String phoneNumber;
-        private String address;
+        private string phoneNumber;
+        private string address;
 
-        public String CusID
+        public string CusID
         {
             get
             {
@@ -27,7 +27,7 @@ namespace QuanLyNhaKhoa.ViewModels
                 OnPropertyChanged(nameof(cusID));
             }
         }
-        public String CusName
+        public string CusName
         {
             get
             {
@@ -51,7 +51,7 @@ namespace QuanLyNhaKhoa.ViewModels
                 OnPropertyChanged(nameof(dateOfBirth));
             }
         }
-        public String PhoneNumber
+        public string PhoneNumber
         {
             get
             {
@@ -63,7 +63,7 @@ namespace QuanLyNhaKhoa.ViewModels
                 OnPropertyChanged(nameof(phoneNumber));
             }
         }
-        public String Address
+        public string Address
         {
             get
             {

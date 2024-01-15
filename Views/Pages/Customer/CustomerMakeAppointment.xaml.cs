@@ -63,7 +63,6 @@ namespace QuanLyNhaKhoa.Views
         {
             string connectionString = (App.Current as App).ConnectionString;
             SqlConnection con = new SqlConnection(@connectionString);
-            Debug.WriteLine(@connectionString);
             string denName = (string)DenList.SelectedValue;
             try
             {

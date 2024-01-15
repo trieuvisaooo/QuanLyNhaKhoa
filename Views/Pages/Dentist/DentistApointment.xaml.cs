@@ -1,7 +1,7 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using QuanLyNhaKhoa.Models;
-using QuanLyNhaKhoa.ViewModels;
+using QuanLyNhaKhoa.ViewModels.Dentist;
 using QuanLyNhaKhoa.Views;
 using System;
 using System.Collections.ObjectModel;

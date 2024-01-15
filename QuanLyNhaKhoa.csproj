@@ -27,7 +27,7 @@
     <None Remove="Views\Pages\Administrator\AdministratorViewReceptionist.xaml" />
     <None Remove="Views\Pages\Administrator\EditMedicine.xaml" />
     <None Remove="Views\Pages\Customer\AdministratorViewCustomer.xaml" />
-    <None Remove="Views\Pages\NhaSi\DentistAddSchedule.xaml" />
+    <None Remove="Views\Pages\Dentist\DentistAddSchedule.xaml" />
     <None Remove="Views\UserControls\AvatarCircle.xaml" />
     <None Remove="Views\UserControls\NotificationSystem.xaml" />
     <None Remove="Views\Windows\AddAccount.xaml" />
@@ -242,6 +242,9 @@
     <Page Update="Views\Windows\AddAccount.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Pages\Staff\" />
   </ItemGroup>
 
   <!-- 
