@@ -15,6 +15,7 @@
   <ItemGroup>
     <None Remove="CustomerWindow.xaml" />
     <None Remove="MakeAppointmentPage.xaml" />
+    <None Remove="StaffWindow.xaml" />
     <None Remove="Views\CustomerAppointment.xaml" />
     <None Remove="Views\CustomerInfo.xaml" />
     <None Remove="Views\CustomerMakeAppointment.xaml" />
@@ -45,6 +46,12 @@
     <None Remove="Views\Windows\AddAccount.xaml" />
     <None Remove="Views\Windows\AddMedicineWindow.xaml" />
     <None Remove="Views\Windows\SignUpAccountWindow.xaml" />
+    <None Remove="Views\Staff_CustomerDetailInfo.xaml" />
+    <None Remove="Views\Staff_CustomerList.xaml" />
+    <None Remove="Views\Staff_InvoiceDetail.xaml" />
+    <None Remove="Views\Staff_MakeAppointment.xaml" />
+    <None Remove="Views\Staff_MedicalRecord.xaml" />
+    <None Remove="Views\Staff_MedicalRecordDetailInfo.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -72,6 +79,41 @@
   -->
   <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <ProjectCapability Include="Msix" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Staff_MakeAppointment.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Staff_InvoiceDetail.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Staff_MedicalRecordDetailInfo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Staff_MedicalRecord.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Staff_CustomerDetailInfo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Staff_CustomerList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="StaffWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\LogInWindow.xaml">
