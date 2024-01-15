@@ -27,14 +27,14 @@
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.MenuItems>
-            <NavigationView.PaneFooter>
+            <NavigationView.FooterMenuItems>
                 <NavigationViewItem Content="Đăng Xuất" Tag="SignOut">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xF3B1;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-            </NavigationView.PaneFooter>
-            <Frame x:Name="contentFrame" Margin="20"/>
+            </NavigationView.FooterMenuItems>
+            <Frame x:Name="contentFrame" Margin="20" Navigated="Frame_Navigated"/>
         </NavigationView>
         <Grid IsHitTestVisible="True"
               VerticalAlignment="Top"
@@ -47,15 +47,19 @@
                 <ColumnDefinition Width="45"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button Background="Transparent"
+            <Button x:Name="BackButton"
+                    Click="BackButton_Click"
+                    Background="Transparent"
                     BorderThickness="0"
                     VerticalAlignment="Center"
                     Width="36"
                     Height="36"
                     VerticalContentAlignment="Center"
                     Margin="6, 0, 0, 0"
+                    Visibility="Collapsed"
+                    
                     Grid.Column="0">
-                <FontIcon Glyph="&#xE946;" FontSize="14"/>
+                <FontIcon Glyph="&#xE72B;" FontSize="14"/>
             </Button>
             <Border x:Name="TitleBar"
             Background="Transparent"

@@ -1,13 +1,6 @@
-﻿using QuanLyNhaKhoa.Models;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Data.SqlTypes;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 using System.Data.SqlClient;
 using System.Diagnostics;
 
@@ -23,7 +16,15 @@ namespace QuanLyNhaKhoa.ViewModels
 
         public string AppoID
         {
-            get; set;
+            get
+            {
+                return _appoID;
+            }
+            set
+            {
+                _appoID = value;
+                NotifyPropertyChanged(nameof(_appoID));
+            }
         }
         public string DenName
         {
@@ -71,9 +72,8 @@ namespace QuanLyNhaKhoa.ViewModels
 
         public ObservableCollection<CustomerAppointmentViewModel> GetAppointments(string connectionString, string cusID)
         {
-            //string CusID = "KH0002";
             string GetAppointmentQuery = "select LH.MALICHHEN, NS.HOTEN, NS.MANS, LH.GIOKHAM, LH.NGAYKHAM from LICH_HEN LH JOIN NHA_SI NS ON LH.NHASI = NS.MANS " +
-                                                "where LH.MAKH = " + "'" + cusID + "' order by LH.NGAYKHAM asc, LH.GIOKHAM asc";
+                                                "where LH.MAKH = " + "'" + cusID + "' order by LH.NGAYKHAM desc, LH.GIOKHAM desc";
 
             var appointments = new ObservableCollection<CustomerAppointmentViewModel>();
             try

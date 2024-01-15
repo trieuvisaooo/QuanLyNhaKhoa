@@ -22,8 +22,8 @@
                     VerticalAlignment="Center">
             <TextBlock Text="Đăng Kí Lịch Hẹn" Style="{StaticResource TitleLargeTextBlockStyle}"/>
             <StackPanel Orientation="Vertical">
-                <TextBlock Text="{x:Bind customer.CusName}" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                <TextBlock Text="{x:Bind customer.CusID}"/>
+                <TextBlock Text="{x:Bind infoViewModel.Name}" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                <TextBlock Text="{x:Bind infoViewModel.Id}"/>
             </StackPanel>
         </StackPanel>
 
@@ -31,9 +31,6 @@
                     VerticalAlignment="Center"
                     Spacing="10">
             <TextBlock Text="Chọn nha sĩ: "/>
-            <!--<TextBox Name="DenID" 
-                     AutomationProperties.Name="simple TextBox"
-                     Width="200" Height="30"/>-->
             <ComboBox Name="DenList" IsEditable="True" Width="200" />
         </StackPanel>
 

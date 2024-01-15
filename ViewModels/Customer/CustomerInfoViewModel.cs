@@ -1,14 +1,9 @@
-﻿using QuanLyNhaKhoa.ViewModels;
-using QuanLyNhaKhoa.Views;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System;
 using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using QuanLyNhaKhoa.Views;
+using System.Reflection.PortableExecutable;
 
 namespace QuanLyNhaKhoa.Models
 {
@@ -69,16 +64,26 @@ namespace QuanLyNhaKhoa.Models
         }
 
 
-
-        public CustomerInfoViewModel GetCustomerInfo(string connectionString, CustomerInfoViewModel customerInfo)
+        public CustomerInfoViewModel(CustomerAccount customerAccount)
         {
-            string CusID = "KH0002";
+            CusID = customerAccount.Id;
+            CusName = customerAccount.Name;
+            DateTime date = customerAccount.Birthday;
+            DateOfBirth = DateOnly.FromDateTime(date);
+            PhoneNum = customerAccount.PhoneNumber;
+            Addr = customerAccount.Address;
+        }
+
+
+
+        public CustomerInfoViewModel GetCustomerInfo(string connectionString, CustomerInfoViewModel customerInfo, string CusId)
+        {
             string GetCustomerInfoQuery = "select MAKH, HOTEN, NGAYSINH, SDT, DIACHI from KHACH_HANG " +
-                                                "where MAKH = " + "'" + CusID + "'";
+                                                "where MAKH = " + "'" + CusId + "'";
 
             try
             {
-                using (var conn = new SqlConnection(connectionString))
+                using (var conn = new SqlConnection(@connectionString))
                 {
                     conn.Open();
                     if (conn.State == System.Data.ConnectionState.Open)

@@ -2,12 +2,6 @@
 using Microsoft.UI.Xaml.Controls;
 using QuanLyNhaKhoa.Models;
 using QuanLyNhaKhoa.ViewModels;
-using System;
-using System.Collections.ObjectModel;
-using System.Data;
-using System.Data.SqlClient;
-using System.Diagnostics;
-using Windows.ApplicationModel.Appointments;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -19,15 +13,13 @@ namespace QuanLyNhaKhoa.Views
     /// </summary>
     public partial class CustomerAppointment : Page
     {
+        private CustomerAppointmentViewModel customerAppointmentViewModel = new CustomerAppointmentViewModel();
+
         public CustomerAppointment()
         {
             this.InitializeComponent();
-            customerInfo.GetCustomerInfo((App.Current as App).ConnectionString, customerInfo);
-            AppointmentList.ItemsSource = customerAppointmentViewModel.GetAppointments((App.Current as App).ConnectionString, customerInfo.CusID);
+            AppointmentList.ItemsSource = customerAppointmentViewModel.GetAppointments((App.Current as App).ConnectionString, (App.Current as App).CurrentAccount.StoredAccount.Id);
         }
-
-        private CustomerAppointmentViewModel customerAppointmentViewModel = new CustomerAppointmentViewModel();
-        private CustomerInfoViewModel customerInfo = new CustomerInfoViewModel();
 
         private void myButton_Click(object sender, RoutedEventArgs e)
         {

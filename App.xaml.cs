@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using QuanLyNhaKhoa.DataAccess;
 using QuanLyNhaKhoa.Views;
+using System.Diagnostics;
 using Windows.Graphics;
 using Windows.UI;
 
@@ -19,7 +20,7 @@ namespace QuanLyNhaKhoa
     public partial class App : Application
     {
         //conect to db in sql server
-        private string connectionString = @"Data Source=localhost;Initial Catalog=QLPK;Integrated Security=True";
+        private string connectionString = @"";
         public string ConnectionString { get => connectionString; set => connectionString = value; }
         private DatabaseManagement _databaseManagement;
         public AccountData CurrentAccount;
@@ -33,6 +34,7 @@ namespace QuanLyNhaKhoa
         {
             this.InitializeComponent();
             this._databaseManagement = new DatabaseManagement();
+            this.connectionString = _databaseManagement.ConnectionString;
             this.CurrentAccount = new AccountData(_databaseManagement.ConnectionString);
             this.MedicinesAndServices = new MedicinesAndServices(_databaseManagement.ConnectionString);
         }
@@ -43,10 +45,6 @@ namespace QuanLyNhaKhoa
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            //Window _mWindow = new AdminWindow();
-            //_mWindow.Activate();
-            //Window mainWindow = new AdminWindow();
-            //mainWindow.Activate();
             //Window CusWindow = new CustomerWindow();
             //CusWindow.Activate();
             Window _loginWindow = new LogInWindow();

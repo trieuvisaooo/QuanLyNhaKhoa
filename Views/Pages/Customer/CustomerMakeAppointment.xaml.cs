@@ -1,21 +1,9 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using QuanLyNhaKhoa.Models;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using System.Data.SqlClient;
-using Microsoft.VisualBasic;
-using Windows.UI.Notifications;
 using System.Diagnostics;
 using QuanLyNhaKhoa.ViewModels;
 using System.Collections.ObjectModel;
@@ -30,14 +18,14 @@ namespace QuanLyNhaKhoa.Views
     /// </summary>
     public sealed partial class CustomerMakeAppointment : Page
     {
+        internal ViewModels.BriefInfoViewModel infoViewModel = new((App.Current as App).CurrentAccount.StoredAccount);
+
         public CustomerMakeAppointment()
         {
             this.InitializeComponent();
-            customer = customer.GetCustomerInfo((App.Current as App).ConnectionString, customer);
             DenList.ItemsSource = getDentists((App.Current as App).ConnectionString);
         }
 
-        private CustomerInfoViewModel customer = new CustomerInfoViewModel();
         
         public List<string> DenNameList = new List<string>();
         public List<string> getDentists(string connectionString)
@@ -75,22 +63,17 @@ namespace QuanLyNhaKhoa.Views
         }
 
 
-
         private async void makeAppointment_Click(object sender, RoutedEventArgs e)
         {
-            var builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "LAPTOP-QHS1R0BJ";
-            builder.InitialCatalog = "QLPK";
-            builder.IntegratedSecurity = true;
-            string connectionString = builder.ConnectionString;
+            string connectionString = (App.Current as App).ConnectionString;
             SqlConnection con = new SqlConnection(@connectionString);
-            //string appointID = "LH5555";
+            Debug.WriteLine(@connectionString);
             string denName = (string)DenList.SelectedValue;
             try
             {
                 con.Open();
 
-                string insert_statement = "EXEC sp_themLHCoTenNS '" + customer.CusID + "', '" + AppoDate.Date + "', '" + AppoTime.Time + "', N'" + denName + "'"; 
+                string insert_statement = "EXEC sp_themLHCoTenNS '" + infoViewModel.Id + "', '" + AppoDate.Date + "', '" + AppoTime.Time + "', N'" + denName + "'"; 
                 SqlCommand cmnd = new SqlCommand(insert_statement, con);
                 cmnd.ExecuteNonQuery();
                 this.Frame.Navigate(typeof(CustomerAppointment));
