@@ -20,7 +20,7 @@ namespace QuanLyNhaKhoa.ViewModels.Customer
         private int _totalCost;
         private int _status;
         //private ObservableCollection<Medicine> _medicine = new ObservableCollection<Medicine>();
-        private List<Models.Medicine> _medicines = new List<Models.Medicine>();
+        private List<ViewModels.MedicineViewModel> _medicines = new List<ViewModels.MedicineViewModel>();
         private List<ServiceViewModel> _services = new List<ServiceViewModel>();
 
         public CustomerRecordViewModel()
@@ -149,7 +149,7 @@ namespace QuanLyNhaKhoa.ViewModels.Customer
             }
         }
 
-        public List<Models.Medicine> Medicines
+        public List<ViewModels.MedicineViewModel> Medicines
         {
             get
             {
@@ -275,7 +275,7 @@ namespace QuanLyNhaKhoa.ViewModels.Customer
             return null;
         }
 
-        public List<Models.Medicine> GetMedicine(string connectionString)
+        public List<ViewModels.MedicineViewModel> GetMedicine(string connectionString)
         {
             Medicines.Clear();
             var getMedicineQuery = "SELECT T.MATHUOC, T.TENTHUOC, CTDT.SOLUONG, T.DONVITINH, T.DONGIA FROM CT_DON_THUOC CTDT JOIN THUOC T ON CTDT.MATHUOC = T.MATHUOC WHERE CTDT.MABA = " +
@@ -295,7 +295,7 @@ namespace QuanLyNhaKhoa.ViewModels.Customer
                             {
                                 while (reader.Read())
                                 {
-                                    var medicine = new Models.Medicine();
+                                    var medicine = new ViewModels.MedicineViewModel();
                                     medicine.ID = reader.GetString(0);
                                     medicine.Name = reader.GetString(1);
                                     medicine.Count = reader.GetInt32(2);
