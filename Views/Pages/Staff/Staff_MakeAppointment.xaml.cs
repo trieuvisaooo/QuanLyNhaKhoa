@@ -13,6 +13,7 @@ using QuanLyNhaKhoa.ViewModels.Receptionist;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.IO;
@@ -41,42 +42,56 @@ namespace QuanLyNhaKhoa.Views
         {
             base.OnNavigatedTo(e);
             CustomerDetailInfo = e.Parameter as Staff_CustomerListViewModel;
-            DenList.ItemsSource = getDentists((App.Current as App).ConnectionString);
 
         }
+        private void OnDateChanged(CalendarDatePicker sender, CalendarDatePickerDateChangedEventArgs args)
+        {
+            DenList.ItemsSource = null;
+            DenNameList.Clear();
+            DenList.ItemsSource = getDentists((App.Current as App).ConnectionString);
+        }
+
         public List<string> DenNameList = new List<string>();
         public List<string> getDentists(string connectionString)
         {
-            string getDenListQuery = "select HOTEN from NHA_SI";
-
-            var dentists = new ObservableCollection<CustomerMakeAppointmentViewModel>();
-            try
+            if(AppoDate.Date.HasValue)
             {
-                using (var conn = new SqlConnection(connectionString))
+                DateTimeOffset selectedDate = AppoDate.Date.Value;
+                string getDenListQuery = "EXEC SP_TIMHOTENNHASIRANH '" + selectedDate.ToString("yyyy-MM-dd") + "'";
+                var dentists = new ObservableCollection<CustomerMakeAppointmentViewModel>();
+                try
                 {
-                    conn.Open();
-                    if (conn.State == System.Data.ConnectionState.Open)
+                    using (var conn = new SqlConnection(connectionString))
                     {
-                        using (SqlCommand cmd = conn.CreateCommand())
+                        conn.Open();
+                        if (conn.State == System.Data.ConnectionState.Open)
                         {
-                            cmd.CommandText = getDenListQuery;
-                            using (SqlDataReader reader = cmd.ExecuteReader())
+                            using (SqlCommand cmd = conn.CreateCommand())
                             {
-                                while (reader.Read())
+                                cmd.CommandText = getDenListQuery;
+                                using (SqlDataReader reader = cmd.ExecuteReader())
                                 {
-                                    DenNameList.Add(reader.GetString(0));
+                                    while (reader.Read())
+                                    {
+                                        DenNameList.Add(reader.GetString(0));
+                                    }
                                 }
                             }
                         }
                     }
+                    return DenNameList;
                 }
-                return DenNameList;
+                catch (Exception eSql)
+                {
+                    Debug.WriteLine($"Exception: {eSql.Message}");
+                    return null;
+                }
+
             }
-            catch (Exception eSql)
+            else
             {
-                Debug.WriteLine($"Exception: {eSql.Message}");
+                return null;
             }
-            return null;
         }
 
 
@@ -85,16 +100,26 @@ namespace QuanLyNhaKhoa.Views
             SqlConnection con = new SqlConnection((App.Current as App).ConnectionString);
             //string appointID = "LH5555";
             string denName = (string)DenList.SelectedValue;
+            string appodate = "";
+            TimeSpan selectedTime = AppoTime.Time;
+            string formattedTime = selectedTime.ToString(@"hh\:mm\:ss");
             try
             {
                 con.Open();
 
-                string insert_statement = "EXEC sp_themLHCoTenNS '" + CustomerDetailInfo.CusID + "', '" + AppoDate.Date + "', '" + AppoTime.Time + "', N'" + denName + "'";
+                if (AppoDate.Date.HasValue)
+                {
+                    DateTimeOffset selectedDate = AppoDate.Date.Value;
+                    appodate = selectedDate.ToString("yyyy-MM-dd");
+
+                }
+            
+                string insert_statement = "EXEC sp_themLHCoTenNS '" + CustomerDetailInfo.CusID + "', '" + appodate + "', '" + formattedTime + "', N'" + denName + "'";
 
                 Debug.WriteLine(insert_statement);
                 SqlCommand cmnd = new SqlCommand(insert_statement, con);
                 cmnd.ExecuteNonQuery();
-                //this.Frame.Navigate(typeof(Staff_CustomerDetailInfo));
+
                 ContentDialog MadeAppointmentDialog = new ContentDialog
                 {
                     XamlRoot = this.XamlRoot,

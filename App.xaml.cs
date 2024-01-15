@@ -7,6 +7,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using QuanLyNhaKhoa.DataAccess;
 using QuanLyNhaKhoa.Views;
+using System.Diagnostics;
 using Windows.Graphics;
 using Windows.UI;
 
