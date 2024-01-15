@@ -72,11 +72,11 @@
                 </ListView.ItemTemplate>
             </ListView>
         </RelativePanel>
-        <StackPanel Grid.Row="2"
+        <!--<StackPanel Grid.Row="2"
             Orientation="Horizontal"
             HorizontalAlignment="Right"
             VerticalAlignment="Center">
             <Button Content="Tạo bệnh án mới" Click="onCreateNewRecord" Background="DarkBlue" Foreground="White" Margin="0 10 0 0"/>
-        </StackPanel>
+        </StackPanel>-->
     </Grid>
 </Page>
