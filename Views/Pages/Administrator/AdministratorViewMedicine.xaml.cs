@@ -1,6 +1,5 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using QuanLyNhaKhoa.ViewModels.Medicine;
 using System;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -13,7 +12,7 @@ namespace QuanLyNhaKhoa.Views.Pages.Administrator
     /// </summary>
     public sealed partial class AdministratorViewMedicine : Page
     {
-        internal MedicineListViewModel MedicineList { get; set; } = new();
+        internal ViewModels.Medicine.MedicineListViewModel MedicineList { get; set; } = new();
         private static Microsoft.UI.Dispatching.DispatcherQueueTimer _typeTimer = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread().CreateTimer();
         public AdministratorViewMedicine()
         {

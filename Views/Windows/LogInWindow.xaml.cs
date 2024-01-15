@@ -1,6 +1,7 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using QuanLyNhaKhoa.ViewModels;
+using QuanLyNhaKhoa.Windows;
 using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -54,6 +55,12 @@ namespace QuanLyNhaKhoa.Views
                     else if (loginViewModel.SelectedRole == "Nha sĩ")
                     {
                         Window mainWindow = new DentistWindow();
+                        mainWindow.Activate();
+                        this.Close();
+                    }
+                    else if (loginViewModel.SelectedRole == "Nhân viên")
+                    {
+                        Window mainWindow = new StaffWindow();
                         mainWindow.Activate();
                         this.Close();
                     }

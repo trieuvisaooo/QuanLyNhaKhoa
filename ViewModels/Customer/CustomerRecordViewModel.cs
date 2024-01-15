@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Diagnostics;
-using QuanLyNhaKhoa.Models;
 
 
 namespace QuanLyNhaKhoa.ViewModels.Customer
@@ -22,7 +21,7 @@ namespace QuanLyNhaKhoa.ViewModels.Customer
         private int _status;
         //private ObservableCollection<Medicine> _medicine = new ObservableCollection<Medicine>();
         private List<Models.Medicine> _medicines = new List<Models.Medicine>();
-        private List<Service> _services = new List<Service>();
+        private List<ServiceViewModel> _services = new List<ServiceViewModel>();
 
         public CustomerRecordViewModel()
         {
@@ -164,7 +163,7 @@ namespace QuanLyNhaKhoa.ViewModels.Customer
             }
         }
 
-        public List<Service> Services
+        public List<ServiceViewModel> Services
         {
             get
             {
@@ -319,7 +318,7 @@ namespace QuanLyNhaKhoa.ViewModels.Customer
 
         }
 
-        public List<Service> GetService(string connectionString)
+        public List<ServiceViewModel> GetService(string connectionString)
         {
             Services.Clear();
             var getServiceQuery = "SELECT DV.MADV, DV.TENDICHVU, DV.DONGIA FROM PHIEU_DV PDV JOIN DICH_VU DV ON PDV.MADV = DV.MADV WHERE PDV.MABA = " +
@@ -339,7 +338,7 @@ namespace QuanLyNhaKhoa.ViewModels.Customer
                             {
                                 while (reader.Read())
                                 {
-                                    var service = new Service();
+                                    var service = new ServiceViewModel();
                                     service.ID = reader.GetString(0);
                                     service.Name = reader.GetString(1);
                                     service.Price = reader.GetInt32(2);

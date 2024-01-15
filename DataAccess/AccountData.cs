@@ -29,6 +29,14 @@ namespace QuanLyNhaKhoa.DataAccess
             {
                 accountType = "NHA_SI";
             }
+            else if (account is ReceptionistAccount)
+            {
+                accountType = "NHAN_VIEN";
+            }
+            else
+            {
+                return false;
+            }
             string query = $"SELECT COUNT(*) FROM {accountType} WHERE SDT = '{account.PhoneNumber}' AND MATKHAU = '{account.Password}' AND TRANGTHAI != 0";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -171,6 +179,44 @@ namespace QuanLyNhaKhoa.DataAccess
                     catch (Exception)
                     {
                         Debug.WriteLine("VO DAY");
+
+                        return null;
+                    }
+                }
+            }
+            return null;
+        }
+
+        private ReceptionistAccount GetReceptionistAccount(string PhoneNumber)
+        {
+            ReceptionistAccount account = new ReceptionistAccount();
+            string query = $"SELECT * FROM NHAN_VIEN WHERE SDT={PhoneNumber}";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    try
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                account.Id = reader.GetString(reader.GetOrdinal("MANV"));
+                                account.PhoneNumber = reader.GetString(reader.GetOrdinal("SDT"));
+                                account.Name = reader.GetString(reader.GetOrdinal("HOTEN"));
+                                account.Birthday = reader.GetDateTime(reader.GetOrdinal("NGAYSINH"));
+                                account.Address = reader.GetString(reader.GetOrdinal("DIACHI"));
+                                account.Password = reader.GetString(reader.GetOrdinal("MATKHAU"));
+                                account.Status = reader.GetInt32(reader.GetOrdinal("TRANGTHAI"));
+                                return account;
+                            }
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        Debug.WriteLine("Receptionist");
 
                         return null;
                     }

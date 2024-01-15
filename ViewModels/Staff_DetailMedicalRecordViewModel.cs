@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QuanLyNhaKhoa.ViewModels
 {
@@ -14,8 +11,8 @@ namespace QuanLyNhaKhoa.ViewModels
         private string _dentistID;
         private string _dentistName;
         private DateOnly _dateVisit;
-        private List<Medicine> _medic;
-        private List<Service> _serviceUsed;
+        private List<MedicineViewModel> _medic;
+        private List<ServiceViewModel> _serviceUsed;
         private string _invoiceID;
         private int _totalPayment;
         private string _paymentStatus;
@@ -45,15 +42,15 @@ namespace QuanLyNhaKhoa.ViewModels
             get { return _dateVisit; }
             set { _dateVisit = value; OnPropertyChanged(nameof(_dateVisit)); }
         }
-        public List<Medicine> MedicName
+        public List<MedicineViewModel> MedicName
         {
             get => _medic;
             set { _medic = value; OnPropertyChanged(nameof(_medic)); }
         }
 
-        public List<Service> ServiceUsed
+        public List<ServiceViewModel> ServiceUsed
         {
-            get { return new List<Service>(_serviceUsed); }
+            get { return new List<ServiceViewModel>(_serviceUsed); }
             set { _serviceUsed = value; OnPropertyChanged(nameof(_serviceUsed)); }
         }
         public string InvoiceID
@@ -64,18 +61,19 @@ namespace QuanLyNhaKhoa.ViewModels
         public int TotalPayment
         {
             get { return (int)_totalPayment; }
-            set { _totalPayment =  value; OnPropertyChanged(nameof(_totalPayment));}
-        } 
+            set { _totalPayment = value; OnPropertyChanged(nameof(_totalPayment)); }
+        }
         public string PaymentStatus
         {
             get { return _paymentStatus; }
-            set { _paymentStatus = value; OnPropertyChanged(nameof(_paymentStatus));}
-        } 
+            set { _paymentStatus = value; OnPropertyChanged(nameof(_paymentStatus)); }
+        }
 
 
         public Staff_DetailMedicalRecordViewModel(string mrID, string description, string dentistID,
-            string dentistName, DateOnly dateVisit, List<Medicine> medic, 
-            List<Service> serviceUsed, string invoiceID, int totalPayment, string paymentStatus)       {
+            string dentistName, DateOnly dateVisit, List<MedicineViewModel> medic,
+            List<ServiceViewModel> serviceUsed, string invoiceID, int totalPayment, string paymentStatus)
+        {
             _mrID = mrID;
             _description = description;
             _dentistID = dentistID;

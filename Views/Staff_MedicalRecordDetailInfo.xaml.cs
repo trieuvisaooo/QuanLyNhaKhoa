@@ -3,23 +3,12 @@
 
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using QuanLyNhaKhoa.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Devices.Enumeration;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -49,8 +38,8 @@ namespace QuanLyNhaKhoa.Views
             string _dentistID = "";
             string _dentistName = "";
             DateOnly _dateVisit = DateOnly.MinValue;
-            List<Medicine> _medic = new List<Medicine>();
-            List<Service> _serviceUsed = new List<Service>();
+            List<MedicineViewModel> _medic = new List<MedicineViewModel>();
+            List<ServiceViewModel> _serviceUsed = new List<ServiceViewModel>();
             string _invoiceID = "";
             int _totalPayment = 0;
             string _paymentStatus = "";
@@ -75,7 +64,7 @@ namespace QuanLyNhaKhoa.Views
                         {
                             while (reader.Read())
                             {
-                                _medic.Add(new Medicine(reader.GetString(0), reader.GetInt32(2), reader.GetInt32(1)));
+                                _medic.Add(new MedicineViewModel(reader.GetString(0), reader.GetInt32(2), reader.GetInt32(1)));
                             }
                         }
                     }
@@ -109,7 +98,7 @@ namespace QuanLyNhaKhoa.Views
                             {
                                 _invoiceID = reader.GetString(0);
                                 _totalPayment = reader.GetInt32(1);
-                                _paymentStatus = (reader.GetInt32(2) == 1 ? "Đầy Đủ":"Chưa Đầy Đủ") ;
+                                _paymentStatus = (reader.GetInt32(2) == 1 ? "Đầy Đủ" : "Chưa Đầy Đủ");
                             }
                         }
                     }
@@ -119,7 +108,7 @@ namespace QuanLyNhaKhoa.Views
                         {
                             while (reader.Read())
                             {
-                                _serviceUsed.Add(new Service(reader.GetString(0), reader.GetInt32(1)));
+                                _serviceUsed.Add(new ServiceViewModel(reader.GetString(0), reader.GetInt32(1)));
                             }
                         }
                     }
@@ -142,5 +131,5 @@ namespace QuanLyNhaKhoa.Views
             this.Frame.Navigate(typeof(Staff_InvoiceDetail), MRDViewModel);
         }
 
-    }    
+    }
 }

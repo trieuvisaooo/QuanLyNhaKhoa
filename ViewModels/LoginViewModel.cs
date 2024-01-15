@@ -123,7 +123,21 @@ namespace QuanLyNhaKhoa.ViewModels
             else if (logInHelper.selectedRole == LogInHelper.Role.Receptionist)
             {
                 // call the database for authentication
-                throw new NotImplementedException();
+                Interfaces.Account AccountTemplate = new ReceptionistAccount()
+                {
+                    PhoneNumber = (PhoneNumber.PadRight(15, ' ')).Substring(0, 15),
+                    Password = (Password.PadRight(50, ' ')).Substring(0, 50),
+                };
+                try
+                {
+                    bool result = (App.Current as App).CurrentAccount.Login(AccountTemplate);
+                    if (!result) { throw new ArgumentException("Số điện thoại hoặc mật khẩu sai."); }
+                    return Task.FromResult(result);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
             }
             else
             {

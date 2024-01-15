@@ -88,7 +88,7 @@
                                   HorizontalAlignment="Left"
                                   IsItemClickEnabled="True">
                         <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="local:Medicine" >
+                            <DataTemplate x:DataType="local:MedicineViewModel" >
                                 <Grid>
                                     <StackPanel Orientation="Horizontal"
                                             Spacing= "10">
@@ -128,7 +128,7 @@
                                   HorizontalAlignment="Left"
                                   IsItemClickEnabled="True">
                         <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="local:Service" >
+                            <DataTemplate x:DataType="local:ServiceViewModel" >
                                 <Grid>
                                     <StackPanel Orientation="Horizontal">
                                         <StackPanel Orientation="Horizontal" Spacing="1">

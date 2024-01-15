@@ -1,7 +1,6 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Navigation;
-using QuanLyNhaKhoa.Models;
 using QuanLyNhaKhoa.Views;
 
 
@@ -73,7 +72,7 @@ namespace QuanLyNhaKhoa
                 case "1":
                     FrameInflate(1);
                     break;
-                case "SignOut":                  
+                case "SignOut":
                     break;
             }
         }

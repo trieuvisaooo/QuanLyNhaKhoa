@@ -1,6 +1,5 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using QuanLyNhaKhoa.ViewModels.Medicine;
 using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -13,7 +12,7 @@ namespace QuanLyNhaKhoa.Views
     /// </summary>
     public sealed partial class AddMedicineWindow : Window
     {
-        public MedicineViewModel medicineViewModel { get; private set; } = new(new Models.Medicine());
+        public ViewModels.Medicine.MedicineViewModel medicineViewModel { get; private set; } = new(new Models.Medicine());
         public AddMedicineWindow()
         {
             this.InitializeComponent();

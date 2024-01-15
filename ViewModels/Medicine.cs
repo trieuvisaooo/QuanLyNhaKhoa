@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace QuanLyNhaKhoa.ViewModels
+﻿namespace QuanLyNhaKhoa.ViewModels
 {
-    public class Medicine
+    public class MedicineViewModel
     {
         public string Name { get; set; }
         public int Count { get; set; }
         public int Price { get; set; }
         public int Total { get; set; }
 
-        public Medicine(string name, int count , int price)
+        public MedicineViewModel(string name, int count, int price)
         {
             Name = name;
             Count = count;

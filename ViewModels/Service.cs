@@ -1,19 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace QuanLyNhaKhoa.ViewModels
+﻿namespace QuanLyNhaKhoa.ViewModels
 {
-    public class Service
+    public class ServiceViewModel
     {
+        public string ID { get; set; }
         public string Name { get; set; }
         public int Price { get; set; }
 
-        public Service(string name, int price) { 
+        public ServiceViewModel(string name, int price)
+        {
             Name = name;
             Price = price;
+        }
+
+        public ServiceViewModel()
+        {
+
         }
     }
 }

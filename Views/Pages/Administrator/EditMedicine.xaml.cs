@@ -1,6 +1,5 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using QuanLyNhaKhoa.ViewModels.Medicine;
 using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -13,8 +12,8 @@ namespace QuanLyNhaKhoa.Views.Pages.Administrator
     /// </summary>
     public sealed partial class EditMedicine : Page
     {
-        public MedicineViewModel medicineViewModel { get; set; }
-        public static MedicineViewModel medicineViewModelTemp { get; set; }
+        public ViewModels.Medicine.MedicineViewModel medicineViewModel { get; set; }
+        public static ViewModels.Medicine.MedicineViewModel medicineViewModelTemp { get; set; }
         public EditMedicine()
         {
             medicineViewModel = medicineViewModelTemp;
