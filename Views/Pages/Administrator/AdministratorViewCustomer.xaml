@@ -89,7 +89,7 @@
                                 </StackPanel>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                <Button Background="Transparent" Padding="10" Style="{StaticResource ButtonRevealStyle}" ToolTipService.ToolTip="Xem chi tiết">
+                                <Button Background="Transparent" Padding="10" Click="Button_Click"  Style="{StaticResource ButtonRevealStyle}" ToolTipService.ToolTip="Xem chi tiết" Tag="{x:Bind PhoneNumber}">
                                     <FontIcon VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" Glyph="&#xE76C;" FontSize="14"/>
                                 </Button>
                             </StackPanel>

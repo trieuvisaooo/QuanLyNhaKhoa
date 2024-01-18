@@ -48,11 +48,23 @@ namespace QuanLyNhaKhoa.ViewModels
             }
         }
 
+        private string _phoneNumber = "";
+        public string PhoneNumber
+        {
+            get => _phoneNumber;
+            set
+            {
+                _phoneNumber = value;
+                NotifyPropertyChanged(nameof(PhoneNumber));
+            }
+        }
+
         public BriefInfoViewModel(Interfaces.Account account)
         {
             _account = account;
             Id = account.Id;
             Name = account.Name;
+            PhoneNumber = account.PhoneNumber;
             Status = account.Status == 1;
         }
 

@@ -31,6 +31,16 @@ namespace QuanLyNhaKhoa.ViewModels
             "Khách hàng", "Nhân viên", "Nha sĩ", "QTV"
         };
 
+        private string _id = "";
+        public string Id
+        {
+            get => _id;
+            set
+            {
+                _id = value;
+                NotifyPropertyChanged(nameof(Id));
+            }
+        }
         public string PhoneNumber
         {
             get => accountHelper.phoneNumber;
@@ -120,7 +130,7 @@ namespace QuanLyNhaKhoa.ViewModels
             {
                 return Task.FromResult(false);
             }
-
+            AccountTemplate.Id = Id;
             AccountTemplate.PhoneNumber = (PhoneNumber.PadRight(15, ' ')).Substring(0, 15);
             AccountTemplate.Password = (Password.PadRight(50, ' ')).Substring(0, 50);
             AccountTemplate.Name = Name;
@@ -128,6 +138,45 @@ namespace QuanLyNhaKhoa.ViewModels
             AccountTemplate.Birthday = Birthday;
             AccountTemplate.Status = 1;
             bool result = (App.Current as App).CurrentAccount.AddAccount(AccountTemplate);
+            return Task.FromResult(result);
+        }
+
+        internal Task<bool> UpdateAccount()
+        {
+            Interfaces.Account AccountTemplate;
+            // call the database for authentication
+            if (accountHelper.selectedRole == AccountHelper.Role.Admin)
+            {
+                AccountTemplate = new AdministratorAccount();
+            }
+            else if (accountHelper.selectedRole == AccountHelper.Role.Customer)
+            {
+                // call the database for authentication
+                AccountTemplate = new CustomerAccount();
+            }
+            else if (accountHelper.selectedRole == AccountHelper.Role.Dentist)
+            {
+                // call the database for authentication
+                AccountTemplate = new DentistAccount();
+            }
+            else if (accountHelper.selectedRole == AccountHelper.Role.Receptionist)
+            {
+                // call the database for authentication
+                AccountTemplate = new ReceptionistAccount();
+            }
+            else
+            {
+                return Task.FromResult(false);
+            }
+
+            AccountTemplate.PhoneNumber = (PhoneNumber.PadRight(15, ' ')).Substring(0, 15);
+            AccountTemplate.Password = (Password.PadRight(50, ' ')).Substring(0, 50);
+            AccountTemplate.Id = Id;
+            AccountTemplate.Name = Name;
+            AccountTemplate.Address = Address;
+            AccountTemplate.Birthday = Birthday;
+            AccountTemplate.Status = 1;
+            bool result = (App.Current as App).CurrentAccount.UpdateAccount(AccountTemplate);
             return Task.FromResult(result);
         }
     }

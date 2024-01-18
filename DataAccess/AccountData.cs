@@ -381,7 +381,6 @@ namespace QuanLyNhaKhoa.DataAccess
                         command.Parameters.AddWithValue("@MATKHAU", account.Password);
 
                         command.ExecuteNonQuery();
-                        return true;
                     }
                 }
             }
@@ -389,6 +388,7 @@ namespace QuanLyNhaKhoa.DataAccess
             {
                 return false;
             }
+            return true;
         }
 
         public bool LockOrUnlockAccount(Interfaces.Account account, bool isLocked)
@@ -594,11 +594,13 @@ namespace QuanLyNhaKhoa.DataAccess
                             string id = reader.GetString(reader.GetOrdinal("MAKH"));
                             string name = reader.GetString(reader.GetOrdinal("HOTEN"));
                             int status = reader.GetInt32(reader.GetOrdinal("TRANGTHAI"));
+                            string phone = reader.GetString(reader.GetOrdinal("SDT"));
                             customers.Add(new CustomerAccount()
                             {
                                 Id = id,
                                 Name = name,
                                 Status = status,
+                                PhoneNumber = phone
                             });
                         }
                     }

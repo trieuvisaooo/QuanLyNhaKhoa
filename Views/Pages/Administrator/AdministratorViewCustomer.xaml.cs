@@ -1,5 +1,6 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using QuanLyNhaKhoa.Models;
 using QuanLyNhaKhoa.ViewModels.Receptionist;
 using System;
 
@@ -102,6 +103,15 @@ namespace QuanLyNhaKhoa.Views.Pages.Customer
             {
                 CustomerListViewModels.ResetPassword(RecListView.SelectedIndex);
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            string tag = (sender as Button).Tag.ToString();
+            CustomerAccount cus = (App.Current as App).
+                CurrentAccount.GetAccountInfo(new CustomerAccount() { PhoneNumber = tag }) as CustomerAccount;
+            Window editWindow = new EditAccountWindow(cus);
+            editWindow.Activate();
         }
     }
 }

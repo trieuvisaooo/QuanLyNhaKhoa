@@ -128,7 +128,7 @@
                             >Đăng nhập</Button>
                         </Grid>
                         <HyperlinkButton HorizontalAlignment="Center" Click="SignUp_Click">Đăng kí tài khoản</HyperlinkButton>
-                        <HyperlinkButton HorizontalAlignment="Center" >Đăng kí lịch hẹn không cần tài khoản</HyperlinkButton>
+                        <!--<HyperlinkButton HorizontalAlignment="Center" >Đăng kí lịch hẹn không cần tài khoản</HyperlinkButton>-->
                     </StackPanel>
                 </Grid>
             </StackPanel>

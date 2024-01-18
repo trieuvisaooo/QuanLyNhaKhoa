@@ -66,6 +66,7 @@ namespace QuanLyNhaKhoa.Windows
                     FrameInflate(1);
                     break;
                 case "SignOut":
+
                     break;
 
             }

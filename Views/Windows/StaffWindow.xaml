@@ -34,9 +34,13 @@
 
             </NavigationView.MenuItems>
 
-            <NavigationView.PaneFooter>
-                <NavigationViewItem Icon="Contact" Content="Đăng Xuất" Tag="SignOut" />
-            </NavigationView.PaneFooter>
+            <NavigationView.FooterMenuItems>
+                <NavigationViewItem Content="Đăng Xuất" Tag="SignOut">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xF3B1;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.FooterMenuItems>
 
             <Frame x:Name="contentFrame"/>
         </NavigationView>

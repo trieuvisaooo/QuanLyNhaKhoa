@@ -115,6 +115,8 @@ namespace QuanLyNhaKhoa.Views
 
                     MRDViewModel = new Staff_DetailMedicalRecordViewModel(_mrID, _description, _dentistID, _dentistName, _dateVisit, _medic, _serviceUsed, _invoiceID, _totalPayment, _paymentStatus);
 
+                    donthuoc.ItemsSource = MRDViewModel.MedicName;
+                    dichvu.ItemsSource = MRDViewModel.ServiceUsed;
                 }
 
             }
@@ -123,8 +125,6 @@ namespace QuanLyNhaKhoa.Views
                 Debug.WriteLine($"Exception: {eSql.Message}");
             }
 
-            donthuoc.ItemsSource = MRDViewModel.MedicName;
-            dichvu.ItemsSource = MRDViewModel.ServiceUsed;
         }
         private void ViewInvoice_Click(object sender, RoutedEventArgs e)
         {

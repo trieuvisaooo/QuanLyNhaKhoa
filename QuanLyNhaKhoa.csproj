@@ -33,6 +33,7 @@
     <None Remove="Views\Windows\AddAccount.xaml" />
     <None Remove="Views\Windows\AddMedicineWindow.xaml" />
     <None Remove="Views\Windows\DentistWindow.xaml" />
+    <None Remove="Views\Windows\EditAccount.xaml" />
     <None Remove="Views\Windows\SignUpAccountWindow.xaml" />
     <None Remove="Views\LogInWindow.xaml" />
     <None Remove="Views\Pages\Administrator\AdministratorViewAdministrator.xaml" />
@@ -166,6 +167,10 @@
     </None>
     <Page Update="Views\Pages\NhaSi\DentistAddSchedule.xaml">
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\Windows\EditAccount.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Windows\DentistWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
